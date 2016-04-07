@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
 import kz.nmbet.betradar.dao.repository.UserRepository;
 
 import org.jooq.DSLContext;
@@ -24,9 +23,8 @@ import com.sportradar.sdk.feed.sdk.Sdk;
 @Component
 public class SdkInitialize implements CommandLineRunner {
 
-	private static final Logger logger = LoggerFactory.getLogger(SdkInitialize.class);
-
-
+	private static final Logger logger = LoggerFactory
+			.getLogger(SdkInitialize.class);
 
 	@Autowired
 	private UserRepository userRepository;
@@ -63,7 +61,8 @@ public class SdkInitialize implements CommandLineRunner {
 			}
 		}
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				System.in));
 
 		logger.info("The sdk is running. Hit any key to exit");
 		try {

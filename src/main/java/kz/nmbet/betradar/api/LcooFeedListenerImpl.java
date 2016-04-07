@@ -1,8 +1,7 @@
 package kz.nmbet.betradar.api;
 
-import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
-import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
 import kz.nmbet.betradar.dao.service.PrivateMatchService;
+import kz.nmbet.betradar.dao.service.PrivateOutrightService;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 
 import org.slf4j.Logger;
@@ -26,9 +25,13 @@ public class LcooFeedListenerImpl implements LcooFeedListener {
 	private PrivateMatchService privateMatchService;
 
 	@Autowired
+	private PrivateOutrightService privateOutrightService;
+
+	@Autowired
 	private TextsEntityUtils textsEntityUtils;
 
-	private final static Logger logger = LoggerFactory.getLogger(LcooFeedListenerImpl.class);
+	private final static Logger logger = LoggerFactory
+			.getLogger(LcooFeedListenerImpl.class);
 
 	/**
 	 * Invoked by the observed
@@ -70,7 +73,8 @@ public class LcooFeedListenerImpl implements LcooFeedListener {
 		logger.info(threeBall.toString());
 	}
 
-	public void onBatchCompleted(LcooFeed lcooFeed, BatchCompleted batchCompleted) {
+	public void onBatchCompleted(LcooFeed lcooFeed,
+			BatchCompleted batchCompleted) {
 		// Only used for two phase commit.
 	}
 
@@ -90,8 +94,10 @@ public class LcooFeedListenerImpl implements LcooFeedListener {
 	 */
 
 	public void onOutrightsReceived(LcooFeed sender, OutrightsEntity outrights) {
-		logger.info("On outrights with nr of {} outrights", outrights.getOutrightEntities().size());
+		logger.info("On outrights with nr of {} outrights", outrights
+				.getOutrightEntities().size());
 		logger.info(outrights.toString());
+		privateOutrightService.create(outrights);
 	}
 
 	/**

@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GlTeamEntityRepository extends JpaRepository<GlTeamEntity, Long> {
 
-	GlTeamEntity findByTeamId(long id);
+	GlTeamEntity findBySuperTeamId(long id);
+	
 }

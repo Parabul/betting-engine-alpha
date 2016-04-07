@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GlOutrightEntityRepository extends JpaRepository<GlOutrightEntity, Long> {
 
+	GlOutrightEntity findByOutrightId(long id);
+
 	
 }

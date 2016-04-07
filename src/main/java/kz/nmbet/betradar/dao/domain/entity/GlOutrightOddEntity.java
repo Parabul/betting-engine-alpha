@@ -1,5 +1,6 @@
 package kz.nmbet.betradar.dao.domain.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,10 +23,12 @@ public class GlOutrightOddEntity {
 
 	private Double value;
 
+	private String specialBetValue;
+
 	@Enumerated(EnumType.STRING)
 	private OutrightOddsType oddsType;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_outright_id")
 	private GlOutrightEntity outright;
 
@@ -67,6 +70,14 @@ public class GlOutrightOddEntity {
 
 	public void setOutright(GlOutrightEntity outright) {
 		this.outright = outright;
+	}
+
+	public String getSpecialBetValue() {
+		return specialBetValue;
+	}
+
+	public void setSpecialBetValue(String specialBetValue) {
+		this.specialBetValue = specialBetValue;
 	}
 
 }

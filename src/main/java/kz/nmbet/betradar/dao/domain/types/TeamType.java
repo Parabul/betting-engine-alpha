@@ -1,5 +1,7 @@
 package kz.nmbet.betradar.dao.domain.types;
 
+import org.apache.commons.lang3.StringUtils;
+
 public enum TeamType {
 	HOME(1), AWAY(2);
 
@@ -14,7 +16,9 @@ public enum TeamType {
 	}
 
 	public static TeamType find(String type) {
-		return find(Integer.valueOf(type));
+		if (StringUtils.isNumeric(type))
+			return find(Integer.valueOf(type));
+		return null;
 	}
 
 	public static TeamType find(int type) {

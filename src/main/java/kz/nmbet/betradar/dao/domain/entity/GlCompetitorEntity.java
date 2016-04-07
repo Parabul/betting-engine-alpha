@@ -33,6 +33,10 @@ public class GlCompetitorEntity {
 	@JoinColumn(name = "gl_match_id")
 	private GlMatchEntity match;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "gl_outright_id")
+	private GlOutrightEntity outright;
+
 	@Enumerated(EnumType.STRING)
 	private TeamType teamType;
 
@@ -90,6 +94,14 @@ public class GlCompetitorEntity {
 
 	public void setMatch(GlMatchEntity match) {
 		this.match = match;
+	}
+
+	public GlOutrightEntity getOutright() {
+		return outright;
+	}
+
+	public void setOutright(GlOutrightEntity outright) {
+		this.outright = outright;
 	}
 
 }

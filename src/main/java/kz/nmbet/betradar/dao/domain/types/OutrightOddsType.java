@@ -14,7 +14,7 @@ public enum OutrightOddsType {
 		return type;
 	}
 
-	public static OutrightOddsType findByType(int type) {
+	public static OutrightOddsType find(int type) {
 		for (OutrightOddsType oddsType : values()) {
 			if (oddsType.type == type)
 				return oddsType;
