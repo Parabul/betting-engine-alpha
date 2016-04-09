@@ -13,9 +13,9 @@ public class GlPlayerEntity implements LocalizedEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
-	private long playerId;
+	private Integer playerId;
 
 	@Column(length = 512)
 	private String givenname;
@@ -26,34 +26,34 @@ public class GlPlayerEntity implements LocalizedEntity {
 	@Column(length = 512)
 	private String translation;
 
-	private long teamId;
+	private Integer teamId;
 
 	@Column(length = 512)
 	private String shirtnumber;
 
-	private long sportid;
+	private Integer sportid;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public long getTeamId() {
+	public Integer getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(long teamId) {
+	public void setTeamId(Integer teamId) {
 		this.teamId = teamId;
 	}
 
-	public long getPlayerId() {
+	public Integer getPlayerId() {
 		return playerId;
 	}
 
-	public void setPlayerId(long playerId) {
+	public void setPlayerId(Integer playerId) {
 		this.playerId = playerId;
 	}
 
@@ -89,11 +89,11 @@ public class GlPlayerEntity implements LocalizedEntity {
 		this.shirtnumber = shirtnumber;
 	}
 
-	public long getSportid() {
+	public Integer getSportid() {
 		return sportid;
 	}
 
-	public void setSportid(long sportid) {
+	public void setSportid(Integer sportid) {
 		this.sportid = sportid;
 	}
 

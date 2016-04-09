@@ -17,13 +17,17 @@ public class GlOutrightOddEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
-	private long teamId;
+	private Integer teamId;
 
 	private Double value;
 
 	private String specialBetValue;
+
+	private String outCome;
+	
+	private String outcomeId;
 
 	@Enumerated(EnumType.STRING)
 	private OutrightOddsType oddsType;
@@ -32,19 +36,19 @@ public class GlOutrightOddEntity {
 	@JoinColumn(name = "gl_outright_id")
 	private GlOutrightEntity outright;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public long getTeamId() {
+	public Integer getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(long teamId) {
+	public void setTeamId(Integer teamId) {
 		this.teamId = teamId;
 	}
 
@@ -78,6 +82,22 @@ public class GlOutrightOddEntity {
 
 	public void setSpecialBetValue(String specialBetValue) {
 		this.specialBetValue = specialBetValue;
+	}
+
+	public String getOutCome() {
+		return outCome;
+	}
+
+	public void setOutCome(String outCome) {
+		this.outCome = outCome;
+	}
+
+	public String getOutcomeId() {
+		return outcomeId;
+	}
+
+	public void setOutcomeId(String outcomeId) {
+		this.outcomeId = outcomeId;
 	}
 
 }

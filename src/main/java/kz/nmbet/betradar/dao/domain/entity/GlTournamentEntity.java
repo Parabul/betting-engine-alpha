@@ -13,9 +13,9 @@ public class GlTournamentEntity implements LocalizedEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
-	private long tournamentId;
+	private Integer tournamentId;
 
 	@Column(length = 512)
 	private String nameRu;
@@ -26,11 +26,11 @@ public class GlTournamentEntity implements LocalizedEntity {
 	@Column(length = 512)
 	private String nameEn;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -58,11 +58,11 @@ public class GlTournamentEntity implements LocalizedEntity {
 		this.nameEn = nameEn;
 	}
 
-	public long getTournamentId() {
+	public Integer getTournamentId() {
 		return tournamentId;
 	}
 
-	public void setTournamentId(long tournamentId) {
+	public void setTournamentId(Integer tournamentId) {
 		this.tournamentId = tournamentId;
 	}
 

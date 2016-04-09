@@ -16,9 +16,9 @@ public class GlSportEntity implements LocalizedEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
-	private long sportId;
+	private Integer sportId;
 
 	@Column(length = 512)
 	private String nameRu;
@@ -32,19 +32,19 @@ public class GlSportEntity implements LocalizedEntity {
 	@OneToMany(mappedBy = "sport")
 	private List<GlCategoryEntity> categories;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public long getSportId() {
+	public Integer getSportId() {
 		return sportId;
 	}
 
-	public void setSportId(long sportId) {
+	public void setSportId(Integer sportId) {
 		this.sportId = sportId;
 	}
 

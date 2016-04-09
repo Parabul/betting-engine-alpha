@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class GlUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
 	@Column(unique = true)
 	private String email;
@@ -37,11 +37,11 @@ public class GlUser {
 	@Column(name = "account_mon_locked")
 	private boolean accountNonLocked;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

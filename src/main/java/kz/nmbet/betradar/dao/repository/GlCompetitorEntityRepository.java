@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GlCompetitorEntityRepository extends JpaRepository<GlCompetitorEntity, Long> {
+public interface GlCompetitorEntityRepository extends JpaRepository<GlCompetitorEntity, Integer> {
 
 }

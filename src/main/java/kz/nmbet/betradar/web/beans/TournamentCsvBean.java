@@ -5,27 +5,27 @@ import org.apache.commons.lang3.StringUtils;
 
 public class TournamentCsvBean {
 
-	private Long sportId;
-	private Long categoryId;
-	private Long tournamentId;
-	private Long uniqueTournamentId;
+	private Integer sportId;
+	private Integer categoryId;
+	private Integer tournamentId;
+	private Integer uniqueTournamentId;
 	private String sport;
 	private String category;
 	private String tournament;
 	private String uniqueTournamentName;
-	private Long teamId;
+	private Integer teamId;
 	private String teamName;
-	private Long superTeamId;
+	private Integer superTeamId;
 
 	public TournamentCsvBean(CSVRecord record) {
 		if (StringUtils.isNotBlank(record.get(0)))
-			this.sportId = Long.parseLong(record.get(0));
+			this.sportId = Integer.parseInt(record.get(0));
 		if (StringUtils.isNotBlank(record.get(1)))
-			this.categoryId = Long.parseLong(record.get(1));
+			this.categoryId = Integer.parseInt(record.get(1));
 		if (StringUtils.isNotBlank(record.get(2)))
-			this.tournamentId = Long.parseLong(record.get(2));
+			this.tournamentId = Integer.parseInt(record.get(2));
 		if (StringUtils.isNotBlank(record.get(3)))
-			this.uniqueTournamentId = Long.parseLong(record.get(3));
+			this.uniqueTournamentId = Integer.parseInt(record.get(3));
 		if (StringUtils.isNotBlank(record.get(4)))
 			this.sport = StringUtils.trim(record.get(4));
 		if (StringUtils.isNotBlank(record.get(5)))
@@ -35,11 +35,11 @@ public class TournamentCsvBean {
 		if (StringUtils.isNotBlank(record.get(7)))
 			this.uniqueTournamentName = StringUtils.trim(record.get(7));
 		if (StringUtils.isNotBlank(record.get(8)))
-			this.teamId = Long.parseLong(record.get(8));
+			this.teamId = Integer.parseInt(record.get(8));
 		if (StringUtils.isNotBlank(record.get(9)))
 			this.teamName = StringUtils.trim(record.get(9));
 		if (StringUtils.isNotBlank(record.get(10)))
-			this.superTeamId = Long.parseLong(record.get(10));
+			this.superTeamId = Integer.parseInt(record.get(10));
 	}
 
 	public boolean isNotEmpty() {
@@ -57,35 +57,35 @@ public class TournamentCsvBean {
 				+ ", superTeamId=" + superTeamId + "]";
 	}
 
-	public Long getSportId() {
+	public Integer getSportId() {
 		return sportId;
 	}
 
-	public void setSportId(Long sportId) {
+	public void setSportId(Integer sportId) {
 		this.sportId = sportId;
 	}
 
-	public Long getCategoryId() {
+	public Integer getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Long categoryId) {
+	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
 	}
 
-	public Long getTournamentId() {
+	public Integer getTournamentId() {
 		return tournamentId;
 	}
 
-	public void setTournamentId(Long tournamentId) {
+	public void setTournamentId(Integer tournamentId) {
 		this.tournamentId = tournamentId;
 	}
 
-	public Long getUniqueTournamentId() {
+	public Integer getUniqueTournamentId() {
 		return uniqueTournamentId;
 	}
 
-	public void setUniqueTournamentId(Long uniqueTournamentId) {
+	public void setUniqueTournamentId(Integer uniqueTournamentId) {
 		this.uniqueTournamentId = uniqueTournamentId;
 	}
 
@@ -121,11 +121,11 @@ public class TournamentCsvBean {
 		this.uniqueTournamentName = uniqueTournamentName;
 	}
 
-	public Long getTeamId() {
+	public Integer getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(Long teamId) {
+	public void setTeamId(Integer teamId) {
 		this.teamId = teamId;
 	}
 
@@ -137,11 +137,11 @@ public class TournamentCsvBean {
 		this.teamName = teamName;
 	}
 
-	public Long getSuperTeamId() {
+	public Integer getSuperTeamId() {
 		return superTeamId;
 	}
 
-	public void setSuperTeamId(Long superTeamId) {
+	public void setSuperTeamId(Integer superTeamId) {
 		this.superTeamId = superTeamId;
 	}
 

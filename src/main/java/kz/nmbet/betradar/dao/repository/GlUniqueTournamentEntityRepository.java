@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GlUniqueTournamentEntityRepository extends JpaRepository<GlUniqueTournamentEntity, Long> {
+public interface GlUniqueTournamentEntityRepository extends JpaRepository<GlUniqueTournamentEntity, Integer> {
 
 	
 }

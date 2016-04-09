@@ -102,12 +102,12 @@ public class PrivateMatchService {
 
 		GlCompetitorEntity competitor = new GlCompetitorEntity();
 		if (superTeamId != null) {
-			competitor.setSuperId(superTeamId.longValue());
+			competitor.setSuperId(superTeamId.intValue());
 			GlTeamEntity team = teamService.find(competitor.getSuperId());
 			competitor.setTeam(team);
 		}
 		if (teamId != null) {
-			competitor.setTeamId(teamId.longValue());
+			competitor.setTeamId(teamId.intValue());
 		}
 
 		competitor.setTitle(text.getValue());

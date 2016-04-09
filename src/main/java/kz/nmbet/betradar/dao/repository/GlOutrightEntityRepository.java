@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GlOutrightEntityRepository extends JpaRepository<GlOutrightEntity, Long> {
+public interface GlOutrightEntityRepository extends
+		JpaRepository<GlOutrightEntity, Integer> {
 
-	GlOutrightEntity findByOutrightId(long id);
+	GlOutrightEntity findByOutrightId(Integer id);
 
-	
 }

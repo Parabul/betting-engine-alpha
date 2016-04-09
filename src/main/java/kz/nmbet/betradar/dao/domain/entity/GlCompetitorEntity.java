@@ -17,13 +17,13 @@ public class GlCompetitorEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Integer id;
 
 	private String title;
 
-	private Long teamId;
+	private Integer teamId;
 
-	private Long superId;
+	private Integer superId;
 
 	@ManyToOne
 	@JoinColumn(name = "gl_team_id")
@@ -40,11 +40,11 @@ public class GlCompetitorEntity {
 	@Enumerated(EnumType.STRING)
 	private TeamType teamType;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -56,19 +56,19 @@ public class GlCompetitorEntity {
 		this.title = title;
 	}
 
-	public Long getTeamId() {
+	public Integer getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(Long teamId) {
+	public void setTeamId(Integer teamId) {
 		this.teamId = teamId;
 	}
 
-	public Long getSuperId() {
+	public Integer getSuperId() {
 		return superId;
 	}
 
-	public void setSuperId(Long superId) {
+	public void setSuperId(Integer superId) {
 		this.superId = superId;
 	}
 

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface GlMatchEntityRepository extends JpaRepository<GlMatchEntity, Long> {
+public interface GlMatchEntityRepository extends JpaRepository<GlMatchEntity, Integer> {
 
-	GlMatchEntity findByMatchId(long matchId);
+	GlMatchEntity findByMatchId(Long matchId);
 }

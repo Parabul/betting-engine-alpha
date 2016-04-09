@@ -1,39 +1,43 @@
 package kz.nmbet.betradar.dao.domain.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 @Entity
 public class GlOutrightResultEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
-	private long teamId;
+	private Integer teamId;
 
 	private int result;
 
-	@ManyToOne
+	private Double deadHeatFactor;
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_outright_id")
 	private GlOutrightEntity outright;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public long getTeamId() {
+	public Integer getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(long teamId) {
+	public void setTeamId(Integer teamId) {
 		this.teamId = teamId;
 	}
 
@@ -51,6 +55,14 @@ public class GlOutrightResultEntity {
 
 	public void setOutright(GlOutrightEntity outright) {
 		this.outright = outright;
+	}
+
+	public Double getDeadHeatFactor() {
+		return deadHeatFactor;
+	}
+
+	public void setDeadHeatFactor(Double deadHeatFactor) {
+		this.deadHeatFactor = deadHeatFactor;
 	}
 
 }

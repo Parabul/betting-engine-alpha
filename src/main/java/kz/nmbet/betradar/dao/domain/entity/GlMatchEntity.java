@@ -17,9 +17,9 @@ public class GlMatchEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
-	private long matchId;
+	private Long matchId;
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
 	private List<GlCompetitorEntity> competitors;
@@ -31,11 +31,11 @@ public class GlMatchEntity {
 	@Column(length = 512)
 	private String title;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -47,11 +47,11 @@ public class GlMatchEntity {
 		this.title = title;
 	}
 
-	public long getMatchId() {
+	public Long getMatchId() {
 		return matchId;
 	}
 
-	public void setMatchId(long matchId) {
+	public void setMatchId(Long matchId) {
 		this.matchId = matchId;
 	}
 

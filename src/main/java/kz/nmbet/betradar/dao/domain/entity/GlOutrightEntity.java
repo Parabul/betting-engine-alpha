@@ -20,12 +20,9 @@ public class GlOutrightEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private Integer id;
 
-	private long outrightId;
-
-	@OneToMany(mappedBy = "match")
-	private List<GlCompetitorEntity> competitors;
+	private Integer outrightId;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date eventDate;
@@ -40,26 +37,30 @@ public class GlOutrightEntity {
 	@ManyToOne
 	@JoinColumn(name = "gl_category_id")
 	private GlCategoryEntity category;
+	
+
+	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
+	private List<GlCompetitorEntity> competitors;
 
 	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
 	private List<GlOutrightOddEntity> odds;
 
-	@OneToMany(mappedBy = "outright")
+	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
 	private List<GlOutrightResultEntity> results;
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public long getOutrightId() {
+	public Integer getOutrightId() {
 		return outrightId;
 	}
 
-	public void setOutrightId(long outrightId) {
+	public void setOutrightId(Integer outrightId) {
 		this.outrightId = outrightId;
 	}
 

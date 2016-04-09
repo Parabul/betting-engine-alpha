@@ -10,6 +10,7 @@ import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightOddEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlOutrightResultEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlTeamEntity;
 import kz.nmbet.betradar.dao.domain.types.OutrightOddsType;
 import kz.nmbet.betradar.dao.domain.types.TeamType;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import com.sportradar.sdk.feed.lcoo.entities.CategoryEntity;
 import com.sportradar.sdk.feed.lcoo.entities.OddsEntity;
 import com.sportradar.sdk.feed.lcoo.entities.OutrightEntity;
+import com.sportradar.sdk.feed.lcoo.entities.OutrightResultEntity;
 import com.sportradar.sdk.feed.lcoo.entities.OutrightsEntity;
 import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
 import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
@@ -67,6 +69,7 @@ public class PrivateOutrightService {
 			return glOutrightEntity;
 		}
 		logger.info("Save new " + outright.getId());
+		logger.info(outright.toString());
 		glOutrightEntity = new GlOutrightEntity();
 
 		glOutrightEntity.setOutrightId(outright.getId());
@@ -93,24 +96,28 @@ public class PrivateOutrightService {
 		int oddsType = outright.getOdds().getOddsType();
 		OutrightOddsType outrightOddsType = OutrightOddsType.find(oddsType);
 		for (OddsEntity odd : outright.getOdds().getOdds()) {
-			logger.error("----------------------------");
-			logger.error(odd.toString());
-			logger.error("----------------------------");
+			logger.info("----------------------------");
+			logger.info(odd.toString());
+			logger.info("----------------------------");
 			GlOutrightOddEntity outrightOddEntity = new GlOutrightOddEntity();
 			outrightOddEntity.setOddsType(outrightOddsType);
 			outrightOddEntity.setOutright(glOutrightEntity);
-			logger.error(" odd.getTeamId() " + odd.getId());
+
 			try {
-				outrightOddEntity.setTeamId(Long.valueOf(odd.getId()));
+				outrightOddEntity.setTeamId(Integer.valueOf(odd.getId()));
 			} catch (Exception e) {
-				logger.error(e.getMessage());
+				logger.error(e.getMessage(), e);
 			}
 			try {
 				outrightOddEntity.setValue(Double.valueOf(odd.getValue()));
 			} catch (Exception e) {
-				logger.error(e.getMessage());
+				logger.error(e.getMessage(), e);
 			}
 			outrightOddEntity.setSpecialBetValue(odd.getSpecialBetValue());
+			outrightOddEntity.setOutCome(odd.getOutCome());
+			outrightOddEntity.setOutcomeId(odd.getOutcomeId());
+
+			odds.add(outrightOddEntity);
 
 		}
 
@@ -118,6 +125,27 @@ public class PrivateOutrightService {
 
 		glOutrightEntity.setEventInfo(outright.getFixture().getEventInfo()
 				.getEventName().toString());
+
+		List<GlOutrightResultEntity> results = new ArrayList<GlOutrightResultEntity>();
+		if (outright.getResult() != null)
+			for (OutrightResultEntity item : outright.getResult()) {
+				GlOutrightResultEntity resultEntity = new GlOutrightResultEntity();
+				resultEntity.setOutright(glOutrightEntity);
+				try {
+					resultEntity.setResult(Integer.valueOf(item.getValue()));
+				} catch (Exception e) {
+					logger.error(e.getMessage(), e);
+				}
+				try {
+					resultEntity.setTeamId(Integer.valueOf(item.getId()));
+				} catch (Exception e) {
+					logger.error(e.getMessage(), e);
+				}
+				resultEntity.setDeadHeatFactor(item.getDeadHeatFactor());
+
+				results.add(resultEntity);
+			}
+		glOutrightEntity.setResults(results);
 
 		return glOutrightEntity;
 
@@ -151,12 +179,12 @@ public class PrivateOutrightService {
 
 		GlCompetitorEntity competitor = new GlCompetitorEntity();
 		if (superTeamId != null) {
-			competitor.setSuperId(superTeamId.longValue());
+			competitor.setSuperId(superTeamId.intValue());
 			GlTeamEntity team = teamService.find(competitor.getSuperId());
 			competitor.setTeam(team);
 		}
 		if (teamId != null) {
-			competitor.setTeamId(teamId.longValue());
+			competitor.setTeamId(teamId.intValue());
 		}
 
 		competitor.setTitle(text.getValue());

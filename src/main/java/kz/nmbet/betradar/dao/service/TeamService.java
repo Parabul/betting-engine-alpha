@@ -48,7 +48,7 @@ public class TeamService {
 	}
 
 	@Transactional
-	public GlTeamEntity find(long id) {
+	public GlTeamEntity find(Integer id) {
 		GlTeamEntity teamEntity = teamEntityRepository.findBySuperTeamId(id);
 		return teamEntity;
 	}
@@ -63,7 +63,7 @@ public class TeamService {
 		teamEntity = new GlTeamEntity();
 
 		teamEntity.setNameRu(playerEntity.getName().getInternational());
-		teamEntity.setSuperTeamId(playerEntity.getSuperId().longValue());
+		teamEntity.setSuperTeamId(playerEntity.getSuperId());
 
 		teamEntity = teamEntityRepository.save(teamEntity);
 		return teamEntity;
