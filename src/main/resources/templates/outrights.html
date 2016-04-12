@@ -3,14 +3,14 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <title>Outrights</title>
 
 <!-- Bootstrap -->
-<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,23 +21,22 @@
 </head>
 <body>
 	<H1>Outrights</H1>
-	<table class="table">
-		<tr th:each="outright : ${outrights}">
-			<td th:text="${outright.outrightId}">1</td>
-			<td th:text="${outright.eventDate}">Text ...</td>
-			<td th:text="${outright.eventInfo}">Text ...</td>
-			<td>
-				<table class="table">
-					<tr th:each="competitor : ${outright.competitors}">
-						<td th:text="${competitor.superId}">1</td>
-						<td th:text="${competitor.teamId}">1</td>
-						<td th:text="${competitor.teamType}">1</td>
-						<td th:text="${competitor.team != null} ? ${competitor.team.nameRu} ">Text ...</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-	</table>
+	<div th:each="outright : ${outrights}">
+		<h3 th:text="${outright.id}">1</h3>
+		<h4 th:text="${outright.title}">Text ...</h4>
+		<h4 th:text="${outright.sport}">Text ...</h4>
+		<h4 th:text="${outright.category}">Text ...</h4>
+		<table class="table">
+			<tr th:each="competitor : ${outright.teams}">
+				<td th:text="${competitor.title}">1</td>
+				<td th:text="${competitor.teamId}">1</td>
+				<td th:text="${competitor.odd}">1</td>
+				<td th:text="${competitor.outrightOddsType}">1</td>
+			</tr>
+		</table>
+		<hr />
+	</div>
+
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script

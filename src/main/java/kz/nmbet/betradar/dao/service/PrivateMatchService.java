@@ -9,10 +9,12 @@ import javax.transaction.Transactional;
 import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlSportEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlTeamEntity;
 import kz.nmbet.betradar.dao.domain.types.TeamType;
 import kz.nmbet.betradar.dao.repository.GlCategoryEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
+import kz.nmbet.betradar.dao.repository.GlSportEntityRepository;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 
 import org.slf4j.Logger;
@@ -22,14 +24,14 @@ import org.springframework.stereotype.Service;
 
 import com.sportradar.sdk.feed.lcoo.entities.CategoryEntity;
 import com.sportradar.sdk.feed.lcoo.entities.MatchEntity;
+import com.sportradar.sdk.feed.lcoo.entities.SportEntity;
 import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
 import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 
 @Service
 public class PrivateMatchService {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(PrivateMatchService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PrivateMatchService.class);
 
 	@Autowired
 	private GlMatchEntityRepository matchEntityRepository;
@@ -38,67 +40,76 @@ public class PrivateMatchService {
 	private GlCategoryEntityRepository categoryEntityRepository;
 
 	@Autowired
+	private GlSportEntityRepository sportEntityRepository;
+
+	@Autowired
 	private TeamService teamService;
 
 	@Autowired
 	private TextsEntityUtils textsEntityUtils;
 
 	@Transactional
-	public GlMatchEntity create(MatchEntity entity) {
-		GlMatchEntity glMatchEntity = matchEntityRepository
-				.findByMatchId(entity.getMatchId());
-		if (glMatchEntity != null) {
-			logger.info("Already saved " + entity.getMatchId());
-			return glMatchEntity;
+	public GlMatchEntity save(MatchEntity entity) {
+		logger.info(entity.toString());
+
+		GlMatchEntity glMatchEntity = matchEntityRepository.findByMatchId(entity.getMatchId());
+		if (glMatchEntity == null) {
+			glMatchEntity = new GlMatchEntity();
+			glMatchEntity.setMatchId(entity.getMatchId());
+			glMatchEntity.setCategory(find(entity.getCategory(), find(entity.getSport())));
+
+			List<TextsEntity> competitorsTexts = entity.getFixture().getCompetitors().getTexts();
+
+			List<GlCompetitorEntity> competitors = new ArrayList<GlCompetitorEntity>();
+
+			for (TextsEntity competitorsText : competitorsTexts) {
+				competitors.add(create(competitorsText, glMatchEntity));
+			}
+
+			glMatchEntity.setCompetitors(competitors);
 		}
-		logger.info("Save new " + entity.getMatchId());
-		glMatchEntity = new GlMatchEntity();
-
-		glMatchEntity.setMatchId(entity.getMatchId());
-
-		glMatchEntity.setCategory(find(entity.getCategory()));
-
-		List<TextsEntity> competitorsTexts = entity.getFixture()
-				.getCompetitors().getTexts();
-
-		List<GlCompetitorEntity> competitors = new ArrayList<GlCompetitorEntity>();
-
-		for (TextsEntity competitorsText : competitorsTexts) {
-			competitors.add(create(competitorsText, glMatchEntity));
-		}
-
-		glMatchEntity.setCompetitors(competitors);
 
 		glMatchEntity = matchEntityRepository.save(glMatchEntity);
+
 		return glMatchEntity;
 
 	}
 
 	@Transactional
-	public GlCategoryEntity find(CategoryEntity category) {
-		GlCategoryEntity categoryEntity = categoryEntityRepository
-				.findByCategoryId(category.getId());
-		if (categoryEntity == null) {
-			categoryEntity = new GlCategoryEntity();
-			categoryEntity.setCategoryId(category.getId());
-			categoryEntity
-					.setNameEn(textsEntityUtils.getDefaultValue(category));
-			categoryEntity = categoryEntityRepository.save(categoryEntity);
+	public GlSportEntity find(SportEntity sport) {
+		GlSportEntity sportEntity = sportEntityRepository.findBySportId(sport.getId());
+		if (sportEntity == null) {
+			sportEntity = new GlSportEntity();
+			sportEntity.setSportId(sport.getId());
+			sportEntity.setNameEn(textsEntityUtils.getDefaultValue(sport));
+			sportEntity = sportEntityRepository.save(sportEntity);
 		}
-		return categoryEntity;
+		return sportEntity;
 
 	}
 
 	@Transactional
-	public GlCompetitorEntity create(TextsEntity entity,
-			GlMatchEntity matchEntity) {
+	public GlCategoryEntity find(CategoryEntity category, GlSportEntity sportEntity) {
+		GlCategoryEntity categoryEntity = categoryEntityRepository.findByCategoryId(category.getId());
+		if (categoryEntity == null) {
+			categoryEntity = new GlCategoryEntity();
+			categoryEntity.setCategoryId(category.getId());
+			categoryEntity.setNameEn(textsEntityUtils.getDefaultValue(category));
+			categoryEntity.setSport(sportEntity);
+			categoryEntity = categoryEntityRepository.save(categoryEntity);
+		}
+		return categoryEntity;
+	}
+
+	@Transactional
+	public GlCompetitorEntity create(TextsEntity entity, GlMatchEntity matchEntity) {
 		TextEntity text = entity.getTexts().get(0);
 
 		Integer superTeamId = text.getSuperid();
 		Integer teamId = text.getTeamId();
+		Integer id = text.getId();
 
-		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}",
-				superTeamId, teamId));
+		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1} , id = {2}", superTeamId, teamId, id));
 
 		GlCompetitorEntity competitor = new GlCompetitorEntity();
 		if (superTeamId != null) {

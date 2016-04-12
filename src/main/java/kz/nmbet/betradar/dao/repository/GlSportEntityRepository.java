@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GlSportEntityRepository extends JpaRepository<GlSportEntity, Integer> {
 
+	GlSportEntity findBySportId(int id);
+
 	
 }

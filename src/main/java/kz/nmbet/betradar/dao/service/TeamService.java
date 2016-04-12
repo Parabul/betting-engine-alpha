@@ -19,8 +19,7 @@ import com.sportradar.sdk.feed.lcoo.entities.PlayerEntity;
 @Service
 public class TeamService {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(TeamService.class);
+	private static final Logger logger = LoggerFactory.getLogger(TeamService.class);
 
 	@Autowired
 	private GlTeamEntityRepository teamEntityRepository;
@@ -30,8 +29,7 @@ public class TeamService {
 
 	@Transactional
 	public GlTeamEntity create(TournamentCsvBean csvBean) {
-		GlTeamEntity teamEntity = teamEntityRepository
-				.findBySuperTeamId(csvBean.getSuperTeamId());
+		GlTeamEntity teamEntity = teamEntityRepository.findBySuperTeamId(csvBean.getSuperTeamId());
 		if (teamEntity != null) {
 			logger.info("Already saved teamEntity " + csvBean.getSuperTeamId());
 			return teamEntity;
@@ -55,8 +53,7 @@ public class TeamService {
 
 	@Transactional
 	public GlTeamEntity find(PlayerEntity playerEntity) {
-		GlTeamEntity teamEntity = teamEntityRepository
-				.findBySuperTeamId(playerEntity.getSuperId());
+		GlTeamEntity teamEntity = teamEntityRepository.findBySuperTeamId(playerEntity.getSuperId());
 		if (teamEntity != null) {
 			return teamEntity;
 		}
@@ -74,5 +71,10 @@ public class TeamService {
 	public void save(List<GlTeamEntity> entities) {
 		teamEntityRepository.save(entities);
 
+	}
+
+	@Transactional
+	public GlTeamEntity save(GlTeamEntity entity) {
+		return teamEntityRepository.save(entity);
 	}
 }

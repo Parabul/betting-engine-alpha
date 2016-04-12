@@ -2,6 +2,7 @@ package kz.nmbet.betradar.dao.domain.entity;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -37,10 +38,9 @@ public class GlOutrightEntity {
 	@ManyToOne
 	@JoinColumn(name = "gl_category_id")
 	private GlCategoryEntity category;
-	
 
 	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
-	private List<GlCompetitorEntity> competitors;
+	private Set<GlCompetitorEntity> competitors;
 
 	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
 	private List<GlOutrightOddEntity> odds;
@@ -64,11 +64,11 @@ public class GlOutrightEntity {
 		this.outrightId = outrightId;
 	}
 
-	public List<GlCompetitorEntity> getCompetitors() {
+	public Set<GlCompetitorEntity> getCompetitors() {
 		return competitors;
 	}
 
-	public void setCompetitors(List<GlCompetitorEntity> competitors) {
+	public void setCompetitors(Set<GlCompetitorEntity> competitors) {
 		this.competitors = competitors;
 	}
 

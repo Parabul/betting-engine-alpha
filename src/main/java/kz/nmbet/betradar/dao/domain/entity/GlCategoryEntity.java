@@ -2,6 +2,7 @@ package kz.nmbet.betradar.dao.domain.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class GlCategoryEntity implements LocalizedEntity {
 	@OneToMany(mappedBy = "category")
 	private List<GlMatchEntity> matches;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_sport_id")
 	private GlSportEntity sport;
 
