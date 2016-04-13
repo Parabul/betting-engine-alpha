@@ -16,7 +16,7 @@ import kz.nmbet.betradar.dao.domain.types.TeamType;
 public class GlCompetitorEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 
 	private String title;
@@ -103,7 +103,8 @@ public class GlCompetitorEntity {
 	public void setOutright(GlOutrightEntity outright) {
 		this.outright = outright;
 	}
-
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

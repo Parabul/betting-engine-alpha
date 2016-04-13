@@ -16,17 +16,19 @@ import kz.nmbet.betradar.dao.domain.types.OutrightOddsType;
 public class GlOutrightOddEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 
 	private Integer teamId;
 
 	private Double value;
 
+	private Double oldValue;
+
 	private String specialBetValue;
 
 	private String outCome;
-	
+
 	private String outcomeId;
 
 	@Enumerated(EnumType.STRING)
@@ -98,6 +100,42 @@ public class GlOutrightOddEntity {
 
 	public void setOutcomeId(String outcomeId) {
 		this.outcomeId = outcomeId;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((oddsType == null) ? 0 : oddsType.hashCode());
+		result = prime * result + ((teamId == null) ? 0 : teamId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GlOutrightOddEntity other = (GlOutrightOddEntity) obj;
+		if (oddsType != other.oddsType)
+			return false;
+		if (teamId == null) {
+			if (other.teamId != null)
+				return false;
+		} else if (!teamId.equals(other.teamId))
+			return false;
+		return true;
+	}
+
+	public Double getOldValue() {
+		return oldValue;
+	}
+
+	public void setOldValue(Double oldValue) {
+		this.oldValue = oldValue;
 	}
 
 }

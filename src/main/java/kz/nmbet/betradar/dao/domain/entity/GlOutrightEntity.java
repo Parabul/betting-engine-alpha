@@ -1,7 +1,6 @@
 package kz.nmbet.betradar.dao.domain.entity;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,7 +19,7 @@ import javax.persistence.TemporalType;
 public class GlOutrightEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 
 	private Integer outrightId;
@@ -39,14 +38,14 @@ public class GlOutrightEntity {
 	@JoinColumn(name = "gl_category_id")
 	private GlCategoryEntity category;
 
-	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlCompetitorEntity> competitors;
 
-	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
-	private List<GlOutrightOddEntity> odds;
+	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlOutrightOddEntity> odds;
 
-	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL)
-	private List<GlOutrightResultEntity> results;
+	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlOutrightResultEntity> results;
 
 	public Integer getId() {
 		return id;
@@ -104,19 +103,19 @@ public class GlOutrightEntity {
 		this.category = category;
 	}
 
-	public List<GlOutrightOddEntity> getOdds() {
+	public Set<GlOutrightOddEntity> getOdds() {
 		return odds;
 	}
 
-	public void setOdds(List<GlOutrightOddEntity> odds) {
+	public void setOdds(Set<GlOutrightOddEntity> odds) {
 		this.odds = odds;
 	}
 
-	public List<GlOutrightResultEntity> getResults() {
+	public Set<GlOutrightResultEntity> getResults() {
 		return results;
 	}
 
-	public void setResults(List<GlOutrightResultEntity> results) {
+	public void setResults(Set<GlOutrightResultEntity> results) {
 		this.results = results;
 	}
 

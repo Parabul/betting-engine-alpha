@@ -18,7 +18,7 @@ import kz.nmbet.betradar.dao.domain.types.LocalizedEntity;
 public class GlCategoryEntity implements LocalizedEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer id;
 
 	private Long categoryId;

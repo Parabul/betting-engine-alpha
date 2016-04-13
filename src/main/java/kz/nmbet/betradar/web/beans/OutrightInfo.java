@@ -7,6 +7,7 @@ import java.util.List;
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightOddEntity;
+import kz.nmbet.betradar.utils.TextsEntityUtils;
 
 public class OutrightInfo {
 	private Integer id;
@@ -34,7 +35,7 @@ public class OutrightInfo {
 		for (GlCompetitorEntity competitor : outrightEntity.getCompetitors()) {
 			Team team = new Team();
 			team.setTeamId(competitor.getTeamId());
-			team.setTitle(competitor.getTeam().getNameRu());
+			team.setTitle(TextsEntityUtils.getName(competitor.getTeam()));
 			teams.add(team);
 		}
 

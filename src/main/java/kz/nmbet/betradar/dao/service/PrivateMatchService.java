@@ -37,12 +37,6 @@ public class PrivateMatchService {
 	private GlMatchEntityRepository matchEntityRepository;
 
 	@Autowired
-	private GlCategoryEntityRepository categoryEntityRepository;
-
-	@Autowired
-	private GlSportEntityRepository sportEntityRepository;
-
-	@Autowired
 	private TeamService teamService;
 
 	@Autowired
@@ -53,10 +47,11 @@ public class PrivateMatchService {
 		logger.info(entity.toString());
 
 		GlMatchEntity glMatchEntity = matchEntityRepository.findByMatchId(entity.getMatchId());
+
 		if (glMatchEntity == null) {
 			glMatchEntity = new GlMatchEntity();
-			glMatchEntity.setMatchId(entity.getMatchId());
-			glMatchEntity.setCategory(find(entity.getCategory(), find(entity.getSport())));
+			glMatchEntity.setMatchId(entity.getMatchId());			
+			glMatchEntity.setCategory(teamService.find(entity.getCategory(), entity.getSport()));
 
 			List<TextsEntity> competitorsTexts = entity.getFixture().getCompetitors().getTexts();
 
@@ -73,32 +68,6 @@ public class PrivateMatchService {
 
 		return glMatchEntity;
 
-	}
-
-	@Transactional
-	public GlSportEntity find(SportEntity sport) {
-		GlSportEntity sportEntity = sportEntityRepository.findBySportId(sport.getId());
-		if (sportEntity == null) {
-			sportEntity = new GlSportEntity();
-			sportEntity.setSportId(sport.getId());
-			sportEntity.setNameEn(textsEntityUtils.getDefaultValue(sport));
-			sportEntity = sportEntityRepository.save(sportEntity);
-		}
-		return sportEntity;
-
-	}
-
-	@Transactional
-	public GlCategoryEntity find(CategoryEntity category, GlSportEntity sportEntity) {
-		GlCategoryEntity categoryEntity = categoryEntityRepository.findByCategoryId(category.getId());
-		if (categoryEntity == null) {
-			categoryEntity = new GlCategoryEntity();
-			categoryEntity.setCategoryId(category.getId());
-			categoryEntity.setNameEn(textsEntityUtils.getDefaultValue(category));
-			categoryEntity.setSport(sportEntity);
-			categoryEntity = categoryEntityRepository.save(categoryEntity);
-		}
-		return categoryEntity;
 	}
 
 	@Transactional

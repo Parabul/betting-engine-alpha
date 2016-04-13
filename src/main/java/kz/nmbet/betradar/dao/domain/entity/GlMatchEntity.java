@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 public class GlMatchEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private Integer id;
 
 	private Long matchId;
