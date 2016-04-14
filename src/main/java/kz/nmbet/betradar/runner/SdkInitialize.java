@@ -38,7 +38,7 @@ public class SdkInitialize implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 
-		logger.info("DataInitialize start ");
+		logger.info("SdkInitialize start ");
 		logger.info("-------------------------------");
 
 		final Sdk sdk = Sdk.getInstance();
@@ -46,8 +46,10 @@ public class SdkInitialize implements CommandLineRunner {
 		final LcooFeed lcooFeed = sdk.getLcoo();
 		final OddsCreatorFeed oddsCreatorFeed = sdk.getOddsCreator();
 
-		if (lcooFeed != null) {
+		if (lcooFeed != null) {			
 			lcooFeed.open(lcooFeedListener);
+			lcooFeed.clearQueue();
+			
 		}
 
 		if (oddsCreatorFeed != null) {
@@ -74,7 +76,7 @@ public class SdkInitialize implements CommandLineRunner {
 		sdk.close();
 		logger.info("Sdk successfully closed. Main thread will now exit");
 
-		logger.info("DataInitialize finish ");
+		logger.info("SdkInitialize finish ");
 
 	}
 }

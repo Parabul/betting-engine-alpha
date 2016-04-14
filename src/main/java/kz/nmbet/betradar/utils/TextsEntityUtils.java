@@ -17,9 +17,9 @@ public class TextsEntityUtils {
 	public static final String EMPTY = "EMPTY";
 
 	public static String getName(LocalizedEntity entity) {
-		if (StringUtils.isNotEmpty(entity.getNameRu())) {
+		if (entity != null && StringUtils.isNotEmpty(entity.getNameRu())) {
 			return entity.getNameRu();
-		} else if (StringUtils.isNotEmpty(entity.getNameEn())) {
+		} else if (entity != null && StringUtils.isNotEmpty(entity.getNameEn())) {
 			return entity.getNameEn();
 		} else
 			return EMPTY;

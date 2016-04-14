@@ -44,6 +44,7 @@ public class OutrightInfo {
 			if (team != null) {
 				team.setOdd(odd.getValue());
 				team.setOutrightOddsType(odd.getOddsType());
+				team.setOddId(odd.getId());
 			}
 		}
 	}

@@ -36,7 +36,8 @@ import kz.nmbet.betradar.utils.TextsEntityUtils;
 @Service
 public class PrivateOutrightService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PrivateOutrightService.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(PrivateOutrightService.class);
 
 	@Autowired
 	private GlOutrightEntityRepository outrightEntityRepository;
@@ -59,18 +60,21 @@ public class PrivateOutrightService {
 
 	@Transactional
 	public GlOutrightEntity save(OutrightEntity outright) {
-		GlOutrightEntity glOutrightEntity = outrightEntityRepository.findByOutrightId(outright.getId());
+		GlOutrightEntity glOutrightEntity = outrightEntityRepository
+				.findByOutrightId(outright.getId());
 		if (glOutrightEntity == null) {
 			glOutrightEntity = new GlOutrightEntity();
 			glOutrightEntity.setOutrightId(outright.getId());
-			glOutrightEntity.setCategory(teamService.find(outright.getCategory(), outright.getSport()));
+			glOutrightEntity.setCategory(teamService.find(
+					outright.getCategory(), outright.getSport()));
 		}
 
 		return update(outright, glOutrightEntity);
 
 	}
 
-	private void updateCompetitors(OutrightEntity outright, GlOutrightEntity glOutrightEntity) {
+	private void updateCompetitors(OutrightEntity outright,
+			GlOutrightEntity glOutrightEntity) {
 		if (glOutrightEntity.getCompetitors() == null) {
 			glOutrightEntity.setCompetitors(new HashSet<GlCompetitorEntity>());
 
@@ -78,19 +82,24 @@ public class PrivateOutrightService {
 
 		Set<GlCompetitorEntity> newCompetitors = new HashSet<GlCompetitorEntity>();
 
-		for (TextsEntity competitorsText : outright.getFixture().getCompetitors().getTexts()) {
-			GlCompetitorEntity competitor = create(competitorsText, glOutrightEntity);
+		for (TextsEntity competitorsText : outright.getFixture()
+				.getCompetitors().getTexts()) {
+			GlCompetitorEntity competitor = create(competitorsText,
+					glOutrightEntity);
 			newCompetitors.add(competitor);
 		}
 
-		SetView<GlCompetitorEntity> toDelete = Sets.difference(glOutrightEntity.getCompetitors(), newCompetitors);
-		SetView<GlCompetitorEntity> toAdd = Sets.difference(newCompetitors, glOutrightEntity.getCompetitors());
+		SetView<GlCompetitorEntity> toDelete = Sets.difference(
+				glOutrightEntity.getCompetitors(), newCompetitors);
+		SetView<GlCompetitorEntity> toAdd = Sets.difference(newCompetitors,
+				glOutrightEntity.getCompetitors());
 
 		glOutrightEntity.getCompetitors().removeAll(toDelete);
 		glOutrightEntity.getCompetitors().addAll(toAdd);
 	}
 
-	private void updateOdds(OutrightEntity outright, GlOutrightEntity glOutrightEntity) {
+	private void updateOdds(OutrightEntity outright,
+			GlOutrightEntity glOutrightEntity) {
 		if (glOutrightEntity.getOdds() == null) {
 			glOutrightEntity.setOdds(new HashSet<GlOutrightOddEntity>());
 		}
@@ -123,8 +132,10 @@ public class PrivateOutrightService {
 
 		}
 
-		SetView<GlOutrightOddEntity> toDelete = Sets.difference(glOutrightEntity.getOdds(), newOdds);
-		SetView<GlOutrightOddEntity> toAdd = Sets.difference(newOdds, glOutrightEntity.getOdds());
+		SetView<GlOutrightOddEntity> toDelete = Sets.difference(
+				glOutrightEntity.getOdds(), newOdds);
+		SetView<GlOutrightOddEntity> toAdd = Sets.difference(newOdds,
+				glOutrightEntity.getOdds());
 
 		glOutrightEntity.getOdds().removeAll(toDelete);
 		glOutrightEntity.getOdds().addAll(toAdd);
@@ -132,7 +143,8 @@ public class PrivateOutrightService {
 
 		for (GlOutrightOddEntity newValue : newOdds) {
 			for (GlOutrightOddEntity oldValue : glOutrightEntity.getOdds()) {
-				if (newValue.equals(oldValue) && !oldValue.getValue().equals(newValue.getValue())) {
+				if (newValue.equals(oldValue)
+						&& !oldValue.getValue().equals(newValue.getValue())) {
 					oldValue.setOldValue(oldValue.getValue());
 					oldValue.setValue(newValue.getValue());
 				}
@@ -141,21 +153,14 @@ public class PrivateOutrightService {
 
 	}
 
-	@Transactional
-	public GlOutrightEntity update(OutrightEntity outright, GlOutrightEntity glOutrightEntity) {
+	private void updateResult(OutrightEntity outright,
+			GlOutrightEntity glOutrightEntity) {
 
-		updateCompetitors(outright, glOutrightEntity);
+		if (glOutrightEntity.getResults() == null) {
+			glOutrightEntity.setResults(new HashSet<GlOutrightResultEntity>());
+		}
 
-		DateTime dt = outright.getFixture().getEventInfo().getEventDate();
-		glOutrightEntity.setEventDate(dt.toDate());
-
-		updateOdds(outright, glOutrightEntity);
-
-		glOutrightEntity
-				.setEventInfo(textsEntityUtils.getDefaultValue(outright.getFixture().getEventInfo().getEventName()));
-
-		Set<GlOutrightResultEntity> results = new HashSet<GlOutrightResultEntity>();
-		if (outright.getResult() != null)
+		if (outright.getResult() != null) {
 			for (OutrightResultEntity item : outright.getResult()) {
 				GlOutrightResultEntity resultEntity = new GlOutrightResultEntity();
 				resultEntity.setOutright(glOutrightEntity);
@@ -171,22 +176,41 @@ public class PrivateOutrightService {
 				}
 				resultEntity.setDeadHeatFactor(item.getDeadHeatFactor());
 
-				results.add(resultEntity);
+				glOutrightEntity.getResults().add(resultEntity);
 			}
-		glOutrightEntity.setResults(results);
+		}
+	}
+
+	@Transactional
+	public GlOutrightEntity update(OutrightEntity outright,
+			GlOutrightEntity glOutrightEntity) {
+
+		updateCompetitors(outright, glOutrightEntity);
+
+		DateTime dt = outright.getFixture().getEventInfo().getEventDate();
+		glOutrightEntity.setEventDate(dt.toDate());
+
+		updateOdds(outright, glOutrightEntity);
+
+		glOutrightEntity.setEventInfo(textsEntityUtils.getDefaultValue(outright
+				.getFixture().getEventInfo().getEventName()));
+
+		updateResult(outright, glOutrightEntity);
 
 		glOutrightEntity = outrightEntityRepository.save(glOutrightEntity);
 		return glOutrightEntity;
 	}
 
 	@Transactional
-	public GlCompetitorEntity create(TextsEntity entity, GlOutrightEntity OutrightEntity) {
+	public GlCompetitorEntity create(TextsEntity entity,
+			GlOutrightEntity OutrightEntity) {
 		TextEntity text = entity.getTexts().get(0);
 
 		Integer superTeamId = text.getSuperid();
 		Integer teamId = text.getId();
 
-		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}", superTeamId, teamId));
+		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}",
+				superTeamId, teamId));
 
 		GlCompetitorEntity competitor = new GlCompetitorEntity();
 		if (superTeamId != null) {
@@ -195,7 +219,8 @@ public class PrivateOutrightService {
 			if (team == null) {
 				team = new GlTeamEntity();
 				team.setSuperTeamId(superTeamId);
-				team.setNameEn(textsEntityUtils.getCDefaultValue(entity.getTexts()));
+				team.setNameEn(textsEntityUtils.getCDefaultValue(entity
+						.getTexts()));
 
 				team = teamService.save(team);
 			}

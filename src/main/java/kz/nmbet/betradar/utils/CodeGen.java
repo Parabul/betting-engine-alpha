@@ -15,10 +15,10 @@ public class CodeGen {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		Collection<File> entities = FileUtils.listFiles(new File(
-				"C:\\nmbet\\project\\betting-engine\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\domain\\entity"),
+				"D:\\project\\nm\\betting-engine-alpha\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\domain\\entity"),
 				new String[]{"java"}, false);
 		Collection<File> repositoryFiles = FileUtils.listFiles(new File(
-				"C:\\nmbet\\project\\betting-engine\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\repository"),
+				"D:\\project\\nm\\betting-engine-alpha\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\repository"),
 				new String[]{"java"}, false);
 		List<String> repositories = new ArrayList<String>();
 		for (File repositoryFile : repositoryFiles) {
@@ -34,10 +34,10 @@ public class CodeGen {
 				continue;
 			String template = IOUtils
 					.toString(new FileInputStream(
-							"C:\\nmbet\\project\\betting-engine\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\repository\\GlMatchEntityRepository.java"));
+							"D:\\project\\nm\\betting-engine-alpha\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\repository\\GlMatchEntityRepository.java"));
 			String content = template.replace("GlMatchEntity", name);
 			FileUtils.write(new File(
-					"C:\\nmbet\\project\\betting-engine\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\repository\\"
+					"D:\\project\\nm\\betting-engine-alpha\\src\\main\\java\\kz\\nmbet\\betradar\\dao\\repository\\"
 							+ className + ".java"), content);
 		}
 

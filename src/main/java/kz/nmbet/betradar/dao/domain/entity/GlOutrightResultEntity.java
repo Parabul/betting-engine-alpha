@@ -65,4 +65,12 @@ public class GlOutrightResultEntity {
 		this.deadHeatFactor = deadHeatFactor;
 	}
 
+	@Override
+	public String toString() {
+		return "GlOutrightResultEntity [teamId=" + teamId + ", result="
+				+ result + "]";
+	}
+	
+	
+
 }
