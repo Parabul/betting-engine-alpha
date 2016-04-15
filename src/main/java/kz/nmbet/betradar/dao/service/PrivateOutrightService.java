@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 import com.sportradar.sdk.feed.lcoo.entities.OddsEntity;
@@ -93,9 +94,11 @@ public class PrivateOutrightService {
 				glOutrightEntity.getCompetitors(), newCompetitors);
 		SetView<GlCompetitorEntity> toAdd = Sets.difference(newCompetitors,
 				glOutrightEntity.getCompetitors());
-
-		glOutrightEntity.getCompetitors().removeAll(toDelete);
-		glOutrightEntity.getCompetitors().addAll(toAdd);
+		ImmutableSet<GlCompetitorEntity> toDeleteCopy = toDelete
+				.immutableCopy();
+		ImmutableSet<GlCompetitorEntity> toAddCopy = toAdd.immutableCopy();
+		glOutrightEntity.getCompetitors().removeAll(toDeleteCopy);
+		glOutrightEntity.getCompetitors().addAll(toAddCopy);
 	}
 
 	private void updateOdds(OutrightEntity outright,
@@ -137,8 +140,12 @@ public class PrivateOutrightService {
 		SetView<GlOutrightOddEntity> toAdd = Sets.difference(newOdds,
 				glOutrightEntity.getOdds());
 
-		glOutrightEntity.getOdds().removeAll(toDelete);
-		glOutrightEntity.getOdds().addAll(toAdd);
+		ImmutableSet<GlOutrightOddEntity> toDeleteCopy = toDelete
+				.immutableCopy();
+		ImmutableSet<GlOutrightOddEntity> toAddCopy = toAdd.immutableCopy();
+
+		glOutrightEntity.getOdds().removeAll(toDeleteCopy);
+		glOutrightEntity.getOdds().addAll(toAddCopy);
 		newOdds.removeAll(toAdd);
 
 		for (GlOutrightOddEntity newValue : newOdds) {
