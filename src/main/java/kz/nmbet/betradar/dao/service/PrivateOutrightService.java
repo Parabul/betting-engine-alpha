@@ -68,6 +68,8 @@ public class PrivateOutrightService {
 			glOutrightEntity.setOutrightId(outright.getId());
 			glOutrightEntity.setCategory(teamService.find(
 					outright.getCategory(), outright.getSport()));
+			glOutrightEntity.setEventInfo(textsEntityUtils.getDefaultValue(outright
+					.getFixture().getEventInfo().getEventName()));
 		}
 
 		return update(outright, glOutrightEntity);
@@ -198,12 +200,10 @@ public class PrivateOutrightService {
 		glOutrightEntity.setEventDate(dt.toDate());
 
 		updateOdds(outright, glOutrightEntity);
-
-		glOutrightEntity.setEventInfo(textsEntityUtils.getDefaultValue(outright
-				.getFixture().getEventInfo().getEventName()));
-
 		updateResult(outright, glOutrightEntity);
+		
 
+		
 		glOutrightEntity = outrightEntityRepository.save(glOutrightEntity);
 		return glOutrightEntity;
 	}

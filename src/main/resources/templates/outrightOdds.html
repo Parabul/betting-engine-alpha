@@ -18,25 +18,42 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+<link rel="stylesheet" type="text/css"
+	href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css" />
 </head>
 <body>
-	<H1>Outrights</H1>
-	<div th:each="outright : ${outrights}">
-		<h3 th:text="${outright.id}">1</h3>
-		<h4 th:text="${outright.title}">Text ...</h4>
-		<h4 th:text="${outright.sport}">Text ...</h4>
-		<h4 th:text="${outright.category}">Text ...</h4>
-		<table class="table">
-			<tr th:each="competitor : ${outright.teams}">
-				<td th:text="${competitor.title}">1</td>
-				<td th:text="${competitor.teamId}">1</td>
-				<td th:text="${competitor.odd}">1</td>
-				<td th:text="${competitor.oddId}">1</td>				
-				<td th:text="${competitor.outrightOddsType}">1</td>
-			</tr>
+	<H1>Outright odds</H1>
+	<div>
+		<table id="outright-odds" class="table">
+			<thead>
+				<tr>
+					<th>№</th>
+					<th>Вид спорта</th>
+					<th>Категория</th>
+					<th>Событие</th>
+					<th>Дата</th>
+					<th>Тип ставки</th>
+					<th>Название команды</th>
+					<th>Коэффициент</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="odd : ${outrightOdds}">
+					<td th:text="${odd.id}">1</td>
+					<td th:text="${odd.sport_name}">1</td>
+					<td th:text="${odd.category_name}">1</td>
+					<td th:text="${odd.event_info}">1</td>
+					<td th:text="${odd.event_date}">1</td>
+					<td th:text="${odd.odds_type}">1</td>
+					<td th:text="${odd.team_name}">1</td>
+					<td th:text="${odd.value}">1</td>
+				</tr>
+			</tbody>
 		</table>
 		<hr />
 	</div>
+
 
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -44,5 +61,20 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="/js/bootstrap.min.js"></script>
+
+
+	<script type="text/javascript" charset="utf8"
+		src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+
+
+	<script type="text/javascript" charset="utf8">
+		$(function() {
+			$('#outright-odds').DataTable( {
+			    language: {
+			        url: '//cdn.datatables.net/plug-ins/1.10.11/i18n/Russian.json'
+			    }
+			});
+		});
+	</script>
 </body>
 </html>

@@ -1,5 +1,8 @@
 package kz.nmbet.betradar.dao.service;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -10,14 +13,18 @@ import javax.transaction.Transactional;
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightResultEntity;
+import kz.nmbet.betradar.dao.domain.views.OutrightOdd;
 import kz.nmbet.betradar.dao.repository.GlBetRepository;
 import kz.nmbet.betradar.dao.repository.GlOutrightEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlOutrightOddEntityRepository;
 import kz.nmbet.betradar.web.beans.OutrightInfo;
 
+import org.jooq.DSLContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,12 +42,28 @@ public class PublicOutrightService {
 	@Autowired
 	private GlBetRepository betRepository;
 
+	@Autowired
+	private DSLContext dslContext;
+
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
 	@Transactional
 	public List<OutrightInfo> findAll() {
 		logger.debug("PublicOutrightService findAll");
 		return outrightEntityRepository.findAll().stream()
 				.map(elt -> new OutrightInfo(elt)).collect(Collectors.toList());
 
+	}
+
+	@Transactional
+	public List<OutrightOdd> findAllOutrightOdds() {
+		logger.debug("PublicOutrightService findAllOutrightOdds");
+		List<OutrightOdd> result = new ArrayList<OutrightOdd>();
+		jdbcTemplate.query(OutrightOdd.query, (resultSet, rowNum) -> result
+				.add(new OutrightOdd(resultSet, rowNum)));
+
+		return result;
 	}
 
 	@Transactional

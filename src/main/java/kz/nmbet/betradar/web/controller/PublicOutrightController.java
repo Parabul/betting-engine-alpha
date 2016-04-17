@@ -21,6 +21,12 @@ public class PublicOutrightController {
 		model.addAttribute("outrights", outrightService.findAll());
 		return "outrights";
 	}
+	
+	@RequestMapping("/outrights/odds")
+	public String table(Model model) {
+		model.addAttribute("outrightOdds", outrightService.findAllOutrightOdds());
+		return "outrightOdds";
+	}
 
 	@RequestMapping("/bet/create")
 	@ResponseBody

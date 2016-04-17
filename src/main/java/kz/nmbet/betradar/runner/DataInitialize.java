@@ -39,21 +39,21 @@ public class DataInitialize implements CommandLineRunner {
 
 		logger.info("DataInitialize start ");
 		logger.info("-------------------------------");
-		
-		GlUser user= new GlUser();
-		user.setEmail("anarbek");
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		user.setPassword(passwordEncoder.encode("123456"));
-		user.setAccountNonExpired(true);
-		user.setAccountNonLocked(true);
-		user.setCredentialsNonExpired(true);
-		user.setEnabled(true);
-		user.setRoles(Arrays.asList("USER, ADMIN"));
-		
-		
-		userRepository.save(user);
-		
-		//initTeams();
+		GlUser user = userRepository.findByEmail("anarbek");
+		if (user == null) {
+			user = new GlUser();
+			user.setEmail("anarbek");
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			user.setPassword(passwordEncoder.encode("123456"));
+			user.setAccountNonExpired(true);
+			user.setAccountNonLocked(true);
+			user.setCredentialsNonExpired(true);
+			user.setEnabled(true);
+			user.setRoles(Arrays.asList("USER, ADMIN"));
+			userRepository.save(user);
+		}
+
+		// initTeams();
 
 		logger.info("DataInitialize finish ");
 
