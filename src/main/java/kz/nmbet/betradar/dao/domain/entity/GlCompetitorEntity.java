@@ -21,7 +21,7 @@ public class GlCompetitorEntity {
 
 	private String title;
 
-	private Integer teamId;
+	private Long teamId;
 
 	private Integer superId;
 
@@ -56,11 +56,11 @@ public class GlCompetitorEntity {
 		this.title = title;
 	}
 
-	public Integer getTeamId() {
+	public Long getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(Integer teamId) {
+	public void setTeamId(Long teamId) {
 		this.teamId = teamId;
 	}
 

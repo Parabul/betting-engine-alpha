@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GlCompetitorEntityRepository extends JpaRepository<GlCompetitorEntity, Integer> {
 
+	GlCompetitorEntity findByOutrightIdAndSuperIdAndTeamId(Integer id, Integer superId, Long teamId);
+
+	GlCompetitorEntity findByMatchIdAndSuperIdAndTeamId(Integer id, Integer superTeamId, Long teamId);
 }

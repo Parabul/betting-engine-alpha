@@ -21,6 +21,7 @@ import com.sportradar.sdk.feed.lcoo.entities.OddsEntity;
 import com.sportradar.sdk.feed.lcoo.entities.OutrightEntity;
 import com.sportradar.sdk.feed.lcoo.entities.OutrightResultEntity;
 import com.sportradar.sdk.feed.lcoo.entities.OutrightsEntity;
+import com.sportradar.sdk.feed.lcoo.entities.PlayerEntity;
 import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
 import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 
@@ -31,17 +32,20 @@ import kz.nmbet.betradar.dao.domain.entity.GlOutrightResultEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlTeamEntity;
 import kz.nmbet.betradar.dao.domain.types.OutrightOddsType;
 import kz.nmbet.betradar.dao.domain.types.TeamType;
+import kz.nmbet.betradar.dao.repository.GlCompetitorEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlOutrightEntityRepository;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 
 @Service
 public class PrivateOutrightService {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(PrivateOutrightService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PrivateOutrightService.class);
 
 	@Autowired
 	private GlOutrightEntityRepository outrightEntityRepository;
+
+	@Autowired
+	private GlCompetitorEntityRepository competitorEntityRepository;
 
 	@Autowired
 	private TeamService teamService;
@@ -61,23 +65,20 @@ public class PrivateOutrightService {
 
 	@Transactional
 	public GlOutrightEntity save(OutrightEntity outright) {
-		GlOutrightEntity glOutrightEntity = outrightEntityRepository
-				.findByOutrightId(outright.getId());
+		GlOutrightEntity glOutrightEntity = outrightEntityRepository.findByOutrightId(outright.getId());
 		if (glOutrightEntity == null) {
 			glOutrightEntity = new GlOutrightEntity();
 			glOutrightEntity.setOutrightId(outright.getId());
-			glOutrightEntity.setCategory(teamService.find(
-					outright.getCategory(), outright.getSport()));
-			glOutrightEntity.setEventInfo(textsEntityUtils.getDefaultValue(outright
-					.getFixture().getEventInfo().getEventName()));
+			glOutrightEntity.setCategory(teamService.find(outright.getCategory(), outright.getSport()));
+			glOutrightEntity.setEventInfo(
+					textsEntityUtils.getDefaultValue(outright.getFixture().getEventInfo().getEventName()));
 		}
 
 		return update(outright, glOutrightEntity);
 
 	}
 
-	private void updateCompetitors(OutrightEntity outright,
-			GlOutrightEntity glOutrightEntity) {
+	private void updateCompetitors(OutrightEntity outright, GlOutrightEntity glOutrightEntity) {
 		if (glOutrightEntity.getCompetitors() == null) {
 			glOutrightEntity.setCompetitors(new HashSet<GlCompetitorEntity>());
 
@@ -85,26 +86,21 @@ public class PrivateOutrightService {
 
 		Set<GlCompetitorEntity> newCompetitors = new HashSet<GlCompetitorEntity>();
 
-		for (TextsEntity competitorsText : outright.getFixture()
-				.getCompetitors().getTexts()) {
-			GlCompetitorEntity competitor = create(competitorsText,
-					glOutrightEntity);
-			newCompetitors.add(competitor);
+		for (PlayerEntity player : outright.getFixture().getCompetitors().getPlayers()) {
+			if (player != null) {
+				newCompetitors.add(create(player, glOutrightEntity));
+			}
 		}
 
-		SetView<GlCompetitorEntity> toDelete = Sets.difference(
-				glOutrightEntity.getCompetitors(), newCompetitors);
-		SetView<GlCompetitorEntity> toAdd = Sets.difference(newCompetitors,
-				glOutrightEntity.getCompetitors());
-		ImmutableSet<GlCompetitorEntity> toDeleteCopy = toDelete
-				.immutableCopy();
+		SetView<GlCompetitorEntity> toDelete = Sets.difference(glOutrightEntity.getCompetitors(), newCompetitors);
+		SetView<GlCompetitorEntity> toAdd = Sets.difference(newCompetitors, glOutrightEntity.getCompetitors());
+		ImmutableSet<GlCompetitorEntity> toDeleteCopy = toDelete.immutableCopy();
 		ImmutableSet<GlCompetitorEntity> toAddCopy = toAdd.immutableCopy();
 		glOutrightEntity.getCompetitors().removeAll(toDeleteCopy);
 		glOutrightEntity.getCompetitors().addAll(toAddCopy);
 	}
 
-	private void updateOdds(OutrightEntity outright,
-			GlOutrightEntity glOutrightEntity) {
+	private void updateOdds(OutrightEntity outright, GlOutrightEntity glOutrightEntity) {
 		if (glOutrightEntity.getOdds() == null) {
 			glOutrightEntity.setOdds(new HashSet<GlOutrightOddEntity>());
 		}
@@ -137,13 +133,10 @@ public class PrivateOutrightService {
 
 		}
 
-		SetView<GlOutrightOddEntity> toDelete = Sets.difference(
-				glOutrightEntity.getOdds(), newOdds);
-		SetView<GlOutrightOddEntity> toAdd = Sets.difference(newOdds,
-				glOutrightEntity.getOdds());
+		SetView<GlOutrightOddEntity> toDelete = Sets.difference(glOutrightEntity.getOdds(), newOdds);
+		SetView<GlOutrightOddEntity> toAdd = Sets.difference(newOdds, glOutrightEntity.getOdds());
 
-		ImmutableSet<GlOutrightOddEntity> toDeleteCopy = toDelete
-				.immutableCopy();
+		ImmutableSet<GlOutrightOddEntity> toDeleteCopy = toDelete.immutableCopy();
 		ImmutableSet<GlOutrightOddEntity> toAddCopy = toAdd.immutableCopy();
 
 		glOutrightEntity.getOdds().removeAll(toDeleteCopy);
@@ -152,8 +145,7 @@ public class PrivateOutrightService {
 
 		for (GlOutrightOddEntity newValue : newOdds) {
 			for (GlOutrightOddEntity oldValue : glOutrightEntity.getOdds()) {
-				if (newValue.equals(oldValue)
-						&& !oldValue.getValue().equals(newValue.getValue())) {
+				if (newValue.equals(oldValue) && !oldValue.getValue().equals(newValue.getValue())) {
 					oldValue.setOldValue(oldValue.getValue());
 					oldValue.setValue(newValue.getValue());
 				}
@@ -162,8 +154,7 @@ public class PrivateOutrightService {
 
 	}
 
-	private void updateResult(OutrightEntity outright,
-			GlOutrightEntity glOutrightEntity) {
+	private void updateResult(OutrightEntity outright, GlOutrightEntity glOutrightEntity) {
 
 		if (glOutrightEntity.getResults() == null) {
 			glOutrightEntity.setResults(new HashSet<GlOutrightResultEntity>());
@@ -191,8 +182,7 @@ public class PrivateOutrightService {
 	}
 
 	@Transactional
-	public GlOutrightEntity update(OutrightEntity outright,
-			GlOutrightEntity glOutrightEntity) {
+	public GlOutrightEntity update(OutrightEntity outright, GlOutrightEntity glOutrightEntity) {
 
 		updateCompetitors(outright, glOutrightEntity);
 
@@ -201,33 +191,32 @@ public class PrivateOutrightService {
 
 		updateOdds(outright, glOutrightEntity);
 		updateResult(outright, glOutrightEntity);
-		
 
-		
 		glOutrightEntity = outrightEntityRepository.save(glOutrightEntity);
 		return glOutrightEntity;
 	}
 
 	@Transactional
-	public GlCompetitorEntity create(TextsEntity entity,
-			GlOutrightEntity OutrightEntity) {
-		TextEntity text = entity.getTexts().get(0);
+	public GlCompetitorEntity create(PlayerEntity playerEntity, GlOutrightEntity outrightEntity) {
 
-		Integer superTeamId = text.getSuperid();
-		Integer teamId = text.getId();
+		Integer superTeamId = playerEntity.getSuperId();
+		Long teamId = playerEntity.getTeamId();
+		Long id = playerEntity.getId();
 
-		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}",
-				superTeamId, teamId));
-
+		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}, teamId = {1}", superTeamId, teamId, id));
+		if (outrightEntity != null && outrightEntity.getId() != null) {
+			GlCompetitorEntity competitor = competitorEntityRepository
+					.findByOutrightIdAndSuperIdAndTeamId(outrightEntity.getId(), superTeamId, teamId);
+			return competitor;
+		}
 		GlCompetitorEntity competitor = new GlCompetitorEntity();
 		if (superTeamId != null) {
-			competitor.setSuperId(superTeamId.intValue());
+			competitor.setSuperId(superTeamId);
 			GlTeamEntity team = teamService.find(competitor.getSuperId());
 			if (team == null) {
 				team = new GlTeamEntity();
 				team.setSuperTeamId(superTeamId);
-				team.setNameEn(textsEntityUtils.getCDefaultValue(entity
-						.getTexts()));
+				team.setNameEn(playerEntity.getName().getInternational());
 
 				team = teamService.save(team);
 			}
@@ -235,12 +224,12 @@ public class PrivateOutrightService {
 
 		}
 		if (teamId != null) {
-			competitor.setTeamId(teamId.intValue());
+			competitor.setTeamId(teamId);
 		}
 
-		competitor.setTitle(text.getValue());
-		competitor.setOutright(OutrightEntity);
-		competitor.setTeamType(TeamType.find(text.getType()));
+		competitor.setTitle(playerEntity.getName().getInternational());
+		competitor.setOutright(outrightEntity);
+		competitor.setTeamType(TeamType.find(playerEntity.getOrder()));
 
 		return competitor;
 

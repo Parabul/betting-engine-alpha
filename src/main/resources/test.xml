@@ -1,0 +1,1560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BetradarBetData>
+	<Result>
+		<ScoreInfo>
+			<Score Type="FT">0:0</Score>
+		</ScoreInfo>
+	</Result>
+	<BetResult>
+		<W OddsType="01" OutCome="2" SpecialBetValue="0:1" />
+		<W OddsType="02" OutCome="0:0" />
+		<W OddsType="10" OutCome="X" />
+		<W OddsType="60" OutCome="Under" SpecialBetValue="2.5" />
+	</BetResult>
+
+	<Timestamp CreatedTime="2016-04-17T14:42:36" TimeZone="Europe/Oslo" />
+	<Sports>
+		<Sport BetradarSportID="1">
+			<Texts>
+				<Text Language="BET">
+					<Value>Soccer</Value>
+				</Text>
+				<Text Language="en">
+					<Value>Soccer</Value>
+				</Text>
+			</Texts>
+			<Category BetradarCategoryID="1">
+				<Texts>
+					<Text Language="BET">
+						<Value>England</Value>
+					</Text>
+					<Text Language="en">
+						<Value>England</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="84">
+					<Texts>
+						<Text Language="BET">
+							<Value>League Two</Value>
+						</Text>
+						<Text Language="en">
+							<Value>League Two</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="7469392">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="6104" SUPERID="78" Type="1">
+										<Text Language="BET">
+											<Value>Carlisle United</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Carlisle United</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="7538" SUPERID="72" Type="2">
+										<Text Language="BET">
+											<Value>Luton Town</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Luton Town</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-19T20:45:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>43</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="10">
+								<Odds OutCome="1">2.19</Odds>
+								<Odds OutCome="X">3.15</Odds>
+								<Odds OutCome="2">2.82</Odds>
+							</Bet>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="2.5">1.74</Odds>
+								<Odds OutCome="Under" SpecialBetValue="2.5">1.8</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+					<Match BetradarMatchID="7469426">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="13683" SUPERID="76" Type="1">
+										<Text Language="BET">
+											<Value>Bristol Rovers</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Bristol Rovers</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="6102" SUPERID="86" Type="2">
+										<Text Language="BET">
+											<Value>Exeter City</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Exeter City</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-23T16:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>44</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="10">
+								<Odds OutCome="1">1.77</Odds>
+								<Odds OutCome="X">3.41</Odds>
+								<Odds OutCome="2">3.68</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+					<Match BetradarMatchID="7469430">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="7538" SUPERID="72" Type="1">
+										<Text Language="BET">
+											<Value>Luton Town</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Luton Town</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="6654344" SUPERID="79" Type="2">
+										<Text Language="BET">
+											<Value>Newport County AFC</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Newport County</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-23T16:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>44</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="10">
+								<Odds OutCome="1">1.93</Odds>
+								<Odds OutCome="X">3.33</Odds>
+								<Odds OutCome="2">3.22</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+					<Match BetradarMatchID="7469424">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="799735" SUPERID="187" Type="1">
+										<Text Language="BET">
+											<Value>Accrington Stanley</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Accrington Stanley</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="6564" SUPERID="73" Type="2">
+										<Text Language="BET">
+											<Value>York City</Value>
+										</Text>
+										<Text Language="en">
+											<Value>York City</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-23T16:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>44</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="10">
+								<Odds OutCome="1">1.46</Odds>
+								<Odds OutCome="X">3.97</Odds>
+								<Odds OutCome="2">5.21</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+					<Match BetradarMatchID="7469428">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="5702498" SUPERID="4875" Type="1">
+										<Text Language="BET">
+											<Value>Crawley Town</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Crawley Town</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="6104" SUPERID="78" Type="2">
+										<Text Language="BET">
+											<Value>Carlisle United</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Carlisle United</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-23T16:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>44</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="10">
+								<Odds OutCome="1">2.55</Odds>
+								<Odds OutCome="X">3.33</Odds>
+								<Odds OutCome="2">2.28</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+					<Match BetradarMatchID="7469390">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="120574" SUPERID="63" Type="1">
+										<Text Language="BET">
+											<Value>Cambridge United</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Cambridge United FC</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="1022531" SUPERID="81" Type="2">
+										<Text Language="BET">
+											<Value>Morecambe FC</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Morecambe FC</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-19T20:45:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>43</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="2.5">1.62</Odds>
+								<Odds OutCome="Under" SpecialBetValue="2.5">1.95</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="5">
+				<Texts>
+					<Text Language="BET">
+						<Value>Norway</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Norway</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="397">
+					<Texts>
+						<Text Language="BET">
+							<Value>2nd Division, Group 3</Value>
+						</Text>
+						<Text Language="en">
+							<Value>2nd Division, avd 3</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="9041361">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="512880" SUPERID="920" Type="1">
+										<Text Language="BET">
+											<Value>Egersund</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Egersund IK</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="26034" SUPERID="690" Type="2">
+										<Text Language="BET">
+											<Value>Nest-Sotra</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Nest-Sotra</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T16:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>2</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="01">
+								<Odds OutCome="1" SpecialBetValue="0:1">3.17</Odds>
+								<Odds OutCome="X" SpecialBetValue="0:1">3.88</Odds>
+								<Odds OutCome="2" SpecialBetValue="0:1">1.8</Odds>
+							</Bet>
+							<Bet OddsType="02">
+								<Odds OutCome="0:0">13.18</Odds>
+								<Odds OutCome="1:0">7.86</Odds>
+								<Odds OutCome="0:1">11.04</Odds>
+								<Odds OutCome="2:0">8.67</Odds>
+								<Odds OutCome="1:1">5.99</Odds>
+								<Odds OutCome="0:2">17.22</Odds>
+								<Odds OutCome="2:1">6.93</Odds>
+								<Odds OutCome="3:0">14.18</Odds>
+								<Odds OutCome="0:3">40.3</Odds>
+								<Odds OutCome="1:2">9.72</Odds>
+								<Odds OutCome="3:1">11.28</Odds>
+								<Odds OutCome="4:0">30.98</Odds>
+								<Odds OutCome="2:2">10.21</Odds>
+								<Odds OutCome="0:4">100.0</Odds>
+								<Odds OutCome="1:3">22.52</Odds>
+								<Odds OutCome="3:2">17.61</Odds>
+								<Odds OutCome="4:1">24.56</Odds>
+								<Odds OutCome="5:0">85.21</Odds>
+								<Odds OutCome="0:5">100.0</Odds>
+								<Odds OutCome="1:4">70.34</Odds>
+								<Odds OutCome="2:3">24.93</Odds>
+								<Odds OutCome="4:2">38.59</Odds>
+								<Odds OutCome="5:1">67.41</Odds>
+								<Odds OutCome="6:0">100.0</Odds>
+								<Odds OutCome="3:3">39.13</Odds>
+								<Odds OutCome="0:6">100.0</Odds>
+								<Odds OutCome="1:5">100.0</Odds>
+								<Odds OutCome="2:4">77.96</Odds>
+							</Bet>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="2.5">1.56</Odds>
+								<Odds OutCome="Under" SpecialBetValue="2.5">2.05</Odds>
+							</Bet>
+							<Bet OddsType="10">
+								<Odds OutCome="1">1.84</Odds>
+								<Odds OutCome="X">3.59</Odds>
+								<Odds OutCome="2">3.26</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="9">
+				<Texts>
+					<Text Language="BET">
+						<Value>Sweden</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Sweden</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="24">
+					<Texts>
+						<Text Language="BET">
+							<Value>Allsvenskan</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Allsvenskan</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="8629932">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="5368" SUPERID="1769" Type="1">
+										<Text Language="BET">
+											<Value>IFK Norrkoeping</Value>
+										</Text>
+										<Text Language="en">
+											<Value>IFK Norrkoping</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="4783" SUPERID="1764" Type="2">
+										<Text Language="BET">
+											<Value>AIK</Value>
+										</Text>
+										<Text Language="en">
+											<Value>AIK</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T15:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>4</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="10">
+								<Odds OutCome="1">2.21</Odds>
+								<Odds OutCome="X">3.17</Odds>
+								<Odds OutCome="2">2.76</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+				<Tournament BetradarTournamentID="426">
+					<Texts>
+						<Text Language="BET">
+							<Value>Damallsvenskan, Women</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Damallsvenskan</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="8631594">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="6950853" SUPERID="112689" Type="1">
+										<Text Language="BET">
+											<Value>Eskilstuna United</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Eskilstuna Uniteddff</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="101173" SUPERID="1878" Type="2">
+										<Text Language="BET">
+											<Value>DjurgÃ¥rdens IF Dff</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Djurgaardens IF</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T17:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>1</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="10">
+								<Odds OutCome="1">1.48</Odds>
+								<Odds OutCome="X">3.87</Odds>
+								<Odds OutCome="2">5.06</Odds>
+							</Bet>
+							<Bet OddsType="01">
+								<Odds OutCome="1" SpecialBetValue="0:1">2.34</Odds>
+								<Odds OutCome="X" SpecialBetValue="0:1">3.6</Odds>
+								<Odds OutCome="2" SpecialBetValue="0:1">2.35</Odds>
+							</Bet>
+							<Bet OddsType="02">
+								<Odds OutCome="0:0">11.56</Odds>
+								<Odds OutCome="1:0">6.2</Odds>
+								<Odds OutCome="0:1">13.1</Odds>
+								<Odds OutCome="2:0">6.18</Odds>
+								<Odds OutCome="1:1">6.45</Odds>
+								<Odds OutCome="0:2">28.08</Odds>
+								<Odds OutCome="2:1">6.7</Odds>
+								<Odds OutCome="3:0">9.05</Odds>
+								<Odds OutCome="0:3">90.86</Odds>
+								<Odds OutCome="1:2">14.18</Odds>
+								<Odds OutCome="3:1">9.82</Odds>
+								<Odds OutCome="4:0">17.66</Odds>
+								<Odds OutCome="2:2">13.54</Odds>
+								<Odds OutCome="0:4">100.0</Odds>
+								<Odds OutCome="1:3">45.46</Odds>
+								<Odds OutCome="3:2">20.94</Odds>
+								<Odds OutCome="4:1">19.19</Odds>
+								<Odds OutCome="5:0">43.43</Odds>
+								<Odds OutCome="0:5">100.0</Odds>
+								<Odds OutCome="1:4">100.0</Odds>
+								<Odds OutCome="2:3">45.3</Odds>
+								<Odds OutCome="4:2">41.35</Odds>
+								<Odds OutCome="5:1">47.25</Odds>
+								<Odds OutCome="6:0">100.0</Odds>
+								<Odds OutCome="3:3">64.65</Odds>
+								<Odds OutCome="0:6">100.0</Odds>
+								<Odds OutCome="1:5">100.0</Odds>
+								<Odds OutCome="2:4">100.0</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="31">
+				<Texts>
+					<Text Language="BET">
+						<Value>Italy</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Italy</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="33">
+					<Texts>
+						<Text Language="BET">
+							<Value>Serie A</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Serie A</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="7689412">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="9252" SUPERID="2686" Type="1">
+										<Text Language="BET">
+											<Value>Atalanta Bergamasca Calcio</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Atalanta Bergamasca</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="9265" SUPERID="2702" Type="2">
+										<Text Language="BET">
+											<Value>AS Roma</Value>
+										</Text>
+										<Text Language="en">
+											<Value>AS Roma</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T12:30:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>33</Round>
+							</RoundInfo>
+						</Fixture>
+						<Result>
+							<ScoreInfo>
+								<Score Type="FT">3:3</Score>
+								<Score Type="HT">2:2</Score>
+							</ScoreInfo>
+							<Comment>
+								<Texts>
+									<Text>
+										<Value>0:1 (23.) L.Digne, 0:2 (27.) R.Nainggolan, 1:2 (33.)
+											M.D'Alessandro, 2:2 (37.) M.Borriello, 3:2 (50.) M.Borriello,
+											3:3 (85.) F.Totti
+										</Value>
+									</Text>
+								</Texts>
+							</Comment>
+						</Result>
+						<Goals>
+							<Goal Id="214814533" ScoringTeam="2" Team1="0" Team2="1"
+								Time="23:00">
+								<Player Id="96538" Name="Digne, Lucas" />
+							</Goal>
+							<Goal Id="214815643" ScoringTeam="2" Team1="0" Team2="2"
+								Time="27:00">
+								<Player Id="44001" Name="Nainggolan, Radja" />
+							</Goal>
+							<Goal Id="214817733" ScoringTeam="1" Team1="1" Team2="2"
+								Time="33:00">
+								<Player Id="55119" Name="D'Alessandro, Marco" />
+							</Goal>
+							<Goal Id="214819243" ScoringTeam="1" Team1="2" Team2="2"
+								Time="37:00">
+								<Player Id="2896" Name="Borriello, Marco" />
+							</Goal>
+							<Goal Id="214827399" ScoringTeam="1" Team1="3" Team2="2"
+								Time="50:00">
+								<Player Id="2896" Name="Borriello, Marco" />
+							</Goal>
+							<Goal Id="214839459" ScoringTeam="2" Team1="3" Team2="3"
+								Time="85:00">
+								<Player Id="1775" Name="Totti, Francesco" />
+							</Goal>
+						</Goals>
+						<Cards>
+							<Card Id="214818439" Time="35:00" Type="Yellow">
+								<Player Id="48543" Name="Zukanovic, Ervin" />
+							</Card>
+							<Card Id="214827737" Time="51:00" Type="Yellow">
+								<Player Id="2896" Name="Borriello, Marco" />
+							</Card>
+							<Card Id="214828783" Time="55:00" Type="Yellow">
+								<Player Id="17814" Name="Masiello, Andrea" />
+							</Card>
+							<Card Id="214832431" Time="67:00" Type="Yellow">
+								<Player Id="1780" Name="De Rossi, Daniele" />
+							</Card>
+							<Card Id="214840641" Time="90:00" Type="Yellow">
+								<Player Id="2869" Name="Raimondi, Cristian" />
+							</Card>
+							<Card Id="214840973" Time="90:00" Type="Yellow">
+								<Player Id="16813" Name="Paletta, Gabriel" />
+							</Card>
+							<Card Id="214841647" Time="90:00" Type="Yellow">
+								<Player Id="61445" Name="Kurtic, Jasmin" />
+							</Card>
+							<Card Id="214842417" Time="90:00" Type="Yellow">
+								<Player Id="41234" Name="Manolas, Kostas" />
+							</Card>
+						</Cards>
+						<BetResult>
+							<W OddsType="01" OutCome="1" SpecialBetValue="1:0" />
+							<W OddsType="02" OutCome="3:3" />
+							<W OddsType="10" OutCome="X" />
+							<W OddsType="60" OutCome="Over" SpecialBetValue="2.5" />
+						</BetResult>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="78">
+				<Texts>
+					<Text Language="BET">
+						<Value>Bulgaria</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Bulgaria</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="232">
+					<Texts>
+						<Text Language="BET">
+							<Value>A PFG</Value>
+						</Text>
+						<Text Language="en">
+							<Value>A PFG</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="7652188">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="76001" SUPERID="3274" Type="1">
+										<Text Language="BET">
+											<Value>Slavia Sofia</Value>
+										</Text>
+										<Text Language="en">
+											<Value>PFC Slavia Sofia</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="386304" SUPERID="5245" Type="2">
+										<Text Language="BET">
+											<Value>Pirin Blagoevgrad</Value>
+										</Text>
+										<Text Language="en">
+											<Value>FC Pirin Blagoevgrad</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T16:15:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>29</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="02">
+								<Odds OutCome="0:0">5.53</Odds>
+								<Odds OutCome="1:0">4.2</Odds>
+								<Odds OutCome="0:1">8.53</Odds>
+								<Odds OutCome="2:0">5.54</Odds>
+								<Odds OutCome="1:1">5.38</Odds>
+								<Odds OutCome="0:2">23.87</Odds>
+								<Odds OutCome="2:1">7.81</Odds>
+								<Odds OutCome="3:0">10.84</Odds>
+								<Odds OutCome="0:3">100.0</Odds>
+								<Odds OutCome="1:2">16.23</Odds>
+								<Odds OutCome="3:1">15.44</Odds>
+								<Odds OutCome="4:0">28.63</Odds>
+								<Odds OutCome="2:2">19.85</Odds>
+								<Odds OutCome="0:4">100.0</Odds>
+								<Odds OutCome="1:3">68.86</Odds>
+								<Odds OutCome="3:2">43.74</Odds>
+								<Odds OutCome="4:1">41.05</Odds>
+								<Odds OutCome="5:0">95.76</Odds>
+								<Odds OutCome="0:5">100.0</Odds>
+								<Odds OutCome="1:4">100.0</Odds>
+								<Odds OutCome="2:3">92.85</Odds>
+								<Odds OutCome="4:2">100.0</Odds>
+								<Odds OutCome="5:1">100.0</Odds>
+								<Odds OutCome="6:0">100.0</Odds>
+								<Odds OutCome="3:3">100.0</Odds>
+								<Odds OutCome="0:6">100.0</Odds>
+								<Odds OutCome="1:5">100.0</Odds>
+								<Odds OutCome="2:4">100.0</Odds>
+							</Bet>
+							<Bet OddsType="10">
+								<Odds OutCome="1">1.68</Odds>
+								<Odds OutCome="X">3.11</Odds>
+								<Odds OutCome="2">4.72</Odds>
+							</Bet>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="2.5">2.31</Odds>
+								<Odds OutCome="Under" SpecialBetValue="2.5">1.43</Odds>
+							</Bet>
+							<Bet OddsType="01">
+								<Odds OutCome="1" SpecialBetValue="0:1">3.09</Odds>
+								<Odds OutCome="X" SpecialBetValue="0:1">3.29</Odds>
+								<Odds OutCome="2" SpecialBetValue="0:1">1.99</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="102">
+				<Texts>
+					<Text Language="BET">
+						<Value>Cyprus</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Cyprus</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="34364">
+					<Texts>
+						<Text Language="BET">
+							<Value>1st Division, Relegation group</Value>
+						</Text>
+						<Text Language="en">
+							<Value>1st Division, Relegation group</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="9074287">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="241959" SUPERID="6973" Type="1">
+										<Text Language="BET">
+											<Value>Doxa Katokopias</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Doxa Katokopias FC</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="7611094" SUPERID="171626" Type="2">
+										<Text Language="BET">
+											<Value>Pafos FC</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Pafos FC</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T15:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>6</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="01">
+								<Odds OutCome="1" SpecialBetValue="0:1">1.7</Odds>
+								<Odds OutCome="X" SpecialBetValue="0:1">3.99</Odds>
+								<Odds OutCome="2" SpecialBetValue="0:1">3.44</Odds>
+							</Bet>
+							<Bet OddsType="02">
+								<Odds OutCome="0:0">18.11</Odds>
+								<Odds OutCome="1:0">7.49</Odds>
+								<Odds OutCome="0:1">22.86</Odds>
+								<Odds OutCome="2:0">5.86</Odds>
+								<Odds OutCome="1:1">8.72</Odds>
+								<Odds OutCome="0:2">55.19</Odds>
+								<Odds OutCome="2:1">7.07</Odds>
+								<Odds OutCome="3:0">6.72</Odds>
+								<Odds OutCome="0:3">100.0</Odds>
+								<Odds OutCome="1:2">21.51</Odds>
+								<Odds OutCome="3:1">8.1</Odds>
+								<Odds OutCome="4:0">10.13</Odds>
+								<Odds OutCome="2:2">16.05</Odds>
+								<Odds OutCome="0:4">100.0</Odds>
+								<Odds OutCome="1:3">77.66</Odds>
+								<Odds OutCome="3:2">19.2</Odds>
+								<Odds OutCome="4:1">12.27</Odds>
+								<Odds OutCome="5:0">19.15</Odds>
+								<Odds OutCome="0:5">100.0</Odds>
+								<Odds OutCome="1:4">100.0</Odds>
+								<Odds OutCome="2:3">59.93</Odds>
+								<Odds OutCome="4:2">29.37</Odds>
+								<Odds OutCome="5:1">23.28</Odds>
+								<Odds OutCome="6:0">43.75</Odds>
+								<Odds OutCome="3:3">66.59</Odds>
+								<Odds OutCome="0:6">100.0</Odds>
+								<Odds OutCome="1:5">100.0</Odds>
+								<Odds OutCome="2:4">100.0</Odds>
+							</Bet>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="2.5">1.38</Odds>
+								<Odds OutCome="Under" SpecialBetValue="2.5">2.46</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="122">
+				<Texts>
+					<Text Language="BET">
+						<Value>Germany Amateur</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Germany Amateur</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="21682">
+					<Texts>
+						<Text Language="BET">
+							<Value>Oberliga Mittelrhein</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Oberliga Mittelrhein</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="7742718">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="6292189" SUPERID="75769" Type="1">
+										<Text Language="BET">
+											<Value>Viktoria Arnoldsweiler</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Viktoria Arnoldsweiler</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="8023018" SUPERID="218980" Type="2">
+										<Text Language="BET">
+											<Value>TV Herkenrath</Value>
+										</Text>
+										<Text Language="en">
+											<Value>TV Herkenrath</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T15:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>23</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="2.5">1.45</Odds>
+								<Odds OutCome="Under" SpecialBetValue="2.5">2.27</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="303">
+				<Texts>
+					<Text Language="BET">
+						<Value>Morocco</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Morocco</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="3640">
+					<Texts>
+						<Text Language="BET">
+							<Value>Botola</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Botola</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="9281421">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="609029" SUPERID="55037" Type="1">
+										<Text Language="BET">
+											<Value>OCS Olympique De Safi</Value>
+										</Text>
+										<Text Language="en">
+											<Value>OCS Olympique de Safi</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="609024" SUPERID="87180" Type="2">
+										<Text Language="BET">
+											<Value>Ittihad Tanger</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Ittihad Tanger</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T18:15:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>24</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="02">
+								<Odds OutCome="0:0">4.37</Odds>
+								<Odds OutCome="1:0">5.62</Odds>
+								<Odds OutCome="0:1">4.58</Odds>
+								<Odds OutCome="2:0">12.53</Odds>
+								<Odds OutCome="1:1">4.69</Odds>
+								<Odds OutCome="0:2">8.21</Odds>
+								<Odds OutCome="2:1">11.69</Odds>
+								<Odds OutCome="3:0">42.66</Odds>
+								<Odds OutCome="0:3">22.27</Odds>
+								<Odds OutCome="1:2">9.46</Odds>
+								<Odds OutCome="3:1">39.75</Odds>
+								<Odds OutCome="4:0">100.0</Odds>
+								<Odds OutCome="2:2">19.01</Odds>
+								<Odds OutCome="0:4">81.91</Odds>
+								<Odds OutCome="1:3">25.76</Odds>
+								<Odds OutCome="3:2">73.69</Odds>
+								<Odds OutCome="4:1">100.0</Odds>
+								<Odds OutCome="5:0">100.0</Odds>
+								<Odds OutCome="0:5">100.0</Odds>
+								<Odds OutCome="1:4">94.91</Odds>
+								<Odds OutCome="2:3">59.24</Odds>
+								<Odds OutCome="4:2">100.0</Odds>
+								<Odds OutCome="5:1">100.0</Odds>
+								<Odds OutCome="6:0">100.0</Odds>
+								<Odds OutCome="3:3">100.0</Odds>
+								<Odds OutCome="0:6">100.0</Odds>
+								<Odds OutCome="1:5">100.0</Odds>
+								<Odds OutCome="2:4">100.0</Odds>
+							</Bet>
+							<Bet OddsType="10">
+								<Odds OutCome="1">3.16</Odds>
+								<Odds OutCome="X">2.61</Odds>
+								<Odds OutCome="2">2.32</Odds>
+							</Bet>
+							<Bet OddsType="01">
+								<Odds OutCome="1" SpecialBetValue="1:0">1.49</Odds>
+								<Odds OutCome="X" SpecialBetValue="1:0">3.67</Odds>
+								<Odds OutCome="2" SpecialBetValue="1:0">5.32</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+		</Sport>
+		<Sport BetradarSportID="2">
+			<Texts>
+				<Text Language="BET">
+					<Value>Basketball</Value>
+				</Text>
+				<Text Language="en">
+					<Value>Basketball</Value>
+				</Text>
+			</Texts>
+			<Category BetradarCategoryID="107">
+				<Texts>
+					<Text Language="BET">
+						<Value>Italy</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Italy</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="10503">
+					<Texts>
+						<Text Language="BET">
+							<Value>A1 Women, Playoffs</Value>
+						</Text>
+						<Text Language="en">
+							<Value>A1 Women, Playoffs</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="9269501">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="895754" SUPERID="24647" Type="1">
+										<Text Language="BET">
+											<Value>Lavezzini Parma</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Lavezzini Parma</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="7482505" SUPERID="178270" Type="2">
+										<Text Language="BET">
+											<Value>Pallacanestro Vigarano</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Pallacanestro Vigarano</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T18:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Cupround>1/8</Cupround>
+								<ID>4</ID>
+								<Matchnr>2 of 2</Matchnr>
+							</RoundInfo>
+							<AggregateScore>72:77</AggregateScore>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="140.5">1.75</Odds>
+								<Odds OutCome="Under" SpecialBetValue="140.5">1.79</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+		</Sport>
+		<Sport BetradarSportID="3">
+			<Texts>
+				<Text Language="BET">
+					<Value>Baseball</Value>
+				</Text>
+				<Text Language="en">
+					<Value>Baseball</Value>
+				</Text>
+			</Texts>
+			<Category BetradarCategoryID="16">
+				<Texts>
+					<Text Language="BET">
+						<Value>USA</Value>
+					</Text>
+					<Text Language="en">
+						<Value>USA</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="25">
+					<Texts>
+						<Text Language="BET">
+							<Value>MLB</Value>
+						</Text>
+						<Text Language="en">
+							<Value>MLB</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="8818792">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="24445" SUPERID="3632" Type="1">
+										<Text Language="BET">
+											<Value>ST. Louis Cardinals</Value>
+										</Text>
+										<Text Language="en">
+											<Value>St. Louis Cardinals</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="24436" SUPERID="3633" Type="2">
+										<Text Language="BET">
+											<Value>Cincinnati Reds</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Cincinnati Reds</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T20:15:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>1</Round>
+							</RoundInfo>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="60">
+								<Odds OutCome="Over" SpecialBetValue="7.5">1.66</Odds>
+								<Odds OutCome="Under" SpecialBetValue="7.5">1.89</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+		</Sport>
+		<Sport BetradarSportID="5">
+			<Texts>
+				<Text Language="BET">
+					<Value>Tennis</Value>
+				</Text>
+				<Text Language="en">
+					<Value>Tennis</Value>
+				</Text>
+			</Texts>
+			<Category BetradarCategoryID="6">
+				<Texts>
+					<Text Language="BET">
+						<Value>WTA</Value>
+					</Text>
+					<Text Language="en">
+						<Value>WTA</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="48949">
+					<Texts>
+						<Text Language="BET">
+							<Value>Istanbul, Turkey, Qualifying</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Istanbul, Turkey, Qualifying</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="9300111">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="903500" SUPERID="20661" Type="1">
+										<Text Language="BET">
+											<Value>Kucova, Kristina</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Kucova, Kristina</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="5766799" SUPERID="51943" Type="2">
+										<Text Language="BET">
+											<Value>Strakhova, Valeriya</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Strakhova, Valeriya</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-17T13:25:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>1</NeutralGround>
+							<RoundInfo>
+								<Cupround>Qualification</Cupround>
+								<ID>45</ID>
+							</RoundInfo>
+							<NumberOfSets>3</NumberOfSets>
+						</Fixture>
+						<Result>
+							<ScoreInfo>
+								<Score Type="FT">2:0</Score>
+								<Score Type="Set1">6:1</Score>
+								<Score Type="Set2">6:1</Score>
+							</ScoreInfo>
+						</Result>
+						<BetResult>
+							<W OddsType="20" OutCome="1" />
+						</BetResult>
+					</Match>
+				</Tournament>
+			</Category>
+			<Category BetradarCategoryID="72">
+				<Texts>
+					<Text Language="BET">
+						<Value>Challenger</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Challenger</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="50607">
+					<Texts>
+						<Text Language="BET">
+							<Value>Turin, Italy</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Turin, Italy</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="9299371">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="1089985" SUPERID="16833" Type="1">
+										<Text Language="BET">
+											<Value>Giannessi, Alessandro</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Giannessi, Alessandro</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="1041938" SUPERID="17007" Type="2">
+										<Text Language="BET">
+											<Value>Ignatik, Uladzimir</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Ignatik, Uladzimir</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-18T10:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>1</NeutralGround>
+							<RoundInfo>
+								<Cupround>1/16-finals (R32)</Cupround>
+								<ID>25</ID>
+							</RoundInfo>
+							<NumberOfSets>3</NumberOfSets>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="20">
+								<Odds OutCome="1">1.53</Odds>
+								<Odds OutCome="2">2.1</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+					<Match BetradarMatchID="9299391">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="465368" SUPERID="16087" Type="1">
+										<Text Language="BET">
+											<Value>Dutra Silva, Rogerio</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Dutra Silva, Rogerio</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="1297768" SUPERID="25455" Type="2">
+										<Text Language="BET">
+											<Value>Rola, Blaz</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Rola, Blaz</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-18T10:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>1</NeutralGround>
+							<RoundInfo>
+								<Cupround>1/16-finals (R32)</Cupround>
+								<ID>25</ID>
+							</RoundInfo>
+							<NumberOfSets>3</NumberOfSets>
+						</Fixture>
+						<MatchOdds>
+							<Bet OddsType="20">
+								<Odds OutCome="1">1.51</Odds>
+								<Odds OutCome="2">2.14</Odds>
+							</Bet>
+						</MatchOdds>
+					</Match>
+				</Tournament>
+			</Category>
+		</Sport>
+		<Sport BetradarSportID="6">
+			<Texts>
+				<Text Language="BET">
+					<Value>Handball</Value>
+				</Text>
+				<Text Language="en">
+					<Value>Handball</Value>
+				</Text>
+			</Texts>
+			<Category BetradarCategoryID="302">
+				<Texts>
+					<Text Language="BET">
+						<Value>Russia</Value>
+					</Text>
+					<Text Language="en">
+						<Value>Russia</Value>
+					</Text>
+				</Texts>
+				<Tournament BetradarTournamentID="42406">
+					<Texts>
+						<Text Language="BET">
+							<Value>Super League, Group A</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Super League, Group A</Value>
+						</Text>
+					</Texts>
+					<Match BetradarMatchID="9202843">
+						<Fixture>
+							<Competitors>
+								<Texts>
+									<Text ID="606039" SUPERID="78675" Type="1">
+										<Text Language="BET">
+											<Value>Dinamo-Viktor</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Dinamo-Viktor</Value>
+										</Text>
+									</Text>
+								</Texts>
+								<Texts>
+									<Text ID="7048802" SUPERID="172186" Type="2">
+										<Text Language="BET">
+											<Value>Sgau-Saratov</Value>
+										</Text>
+										<Text Language="en">
+											<Value>Sgau-Saratov</Value>
+										</Text>
+									</Text>
+								</Texts>
+							</Competitors>
+							<DateInfo>
+								<MatchDate>2016-04-18T17:00:00</MatchDate>
+							</DateInfo>
+							<StatusInfo>
+								<Off>0</Off>
+							</StatusInfo>
+							<NeutralGround>0</NeutralGround>
+							<RoundInfo>
+								<Round>2</Round>
+							</RoundInfo>
+						</Fixture>
+					</Match>
+				</Tournament>
+			</Category>
+		</Sport>
+	</Sports>
+	<Outright BetradarOutrightID="24806">
+		<Fixture>
+			<EventInfo>
+				<EventDate>2016-04-20T16:30:00</EventDate>
+				<EventName>
+					<Texts>
+						<Text Language="BET">
+							<Value>Greece A1 2015/16 - Winner</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Greece A1 - Winner</Value>
+						</Text>
+					</Texts>
+				</EventName>
+				<Off>0</Off>
+			</EventInfo>
+			<Competitors>
+				<Texts>
+					<Text ID="83317" SUPERID="3501">
+						<Text Language="BET">
+							<Value>Olympiacos Piraeus</Value>
+						</Text>
+						<Text Language="en">
+							<Value>BC Olympiakos Piraeus</Value>
+						</Text>
+					</Text>
+				</Texts>
+				<Texts>
+					<Text ID="86793" SUPERID="3508">
+						<Text Language="BET">
+							<Value>Panathinaikos</Value>
+						</Text>
+						<Text Language="en">
+							<Value>BC Panathinaikos</Value>
+						</Text>
+					</Text>
+				</Texts>
+				<Texts>
+					<Text ID="83376" SUPERID="3505">
+						<Text Language="BET">
+							<Value>Aris Thessaloniki</Value>
+						</Text>
+						<Text Language="en">
+							<Value>BC Aris Thessaloniki</Value>
+						</Text>
+					</Text>
+				</Texts>
+				<Texts>
+					<Text ID="83318" SUPERID="3502">
+						<Text Language="BET">
+							<Value>AEK Athens</Value>
+						</Text>
+						<Text Language="en">
+							<Value>BC Aek Athens</Value>
+						</Text>
+					</Text>
+				</Texts>
+				<Texts>
+					<Text ID="86931" SUPERID="3509">
+						<Text Language="BET">
+							<Value>PAOK Thessaloniki</Value>
+						</Text>
+						<Text Language="en">
+							<Value>PAOK BC</Value>
+						</Text>
+					</Text>
+				</Texts>
+				<Texts>
+					<Text ID="6838526" SUPERID="82013">
+						<Text Language="BET">
+							<Value>Aenk</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Aenk</Value>
+						</Text>
+					</Text>
+				</Texts>
+				<Texts>
+					<Text ID="573742" SUPERID="5618">
+						<Text Language="BET">
+							<Value>Kolossos Rhodes</Value>
+						</Text>
+						<Text Language="en">
+							<Value>BC Kolossos Rhodes</Value>
+						</Text>
+					</Text>
+				</Texts>
+				<Texts>
+					<Text ID="883943" SUPERID="7983">
+						<Text Language="BET">
+							<Value>Rethymno Aegean</Value>
+						</Text>
+						<Text Language="en">
+							<Value>Rethymno Cretan Kings</Value>
+						</Text>
+					</Text>
+				</Texts>
+			</Competitors>
+		</Fixture>
+		<OutrightOdds OddsType="30">
+			<Odds ID="83318">48.0</Odds>
+			<Odds ID="83317">1.7</Odds>
+			<Odds ID="86931">58.0</Odds>
+			<Odds ID="883943">270.0</Odds>
+			<Odds ID="83376">34.0</Odds>
+			<Odds ID="6838526">180.0</Odds>
+			<Odds ID="573742">270.0</Odds>
+			<Odds ID="86793">2.0</Odds>
+		</OutrightOdds>
+	</Outright>
+</BetradarBetData>

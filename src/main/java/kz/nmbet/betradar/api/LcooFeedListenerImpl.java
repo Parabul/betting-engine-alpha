@@ -1,9 +1,5 @@
 package kz.nmbet.betradar.api;
 
-import kz.nmbet.betradar.dao.service.PrivateMatchService;
-import kz.nmbet.betradar.dao.service.PrivateOutrightService;
-import kz.nmbet.betradar.utils.TextsEntityUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,9 @@ import com.sportradar.sdk.feed.lcoo.entities.ThreeBallEntity;
 import com.sportradar.sdk.feed.lcoo.interfaces.LcooFeed;
 import com.sportradar.sdk.feed.lcoo.interfaces.LcooFeedListener;
 
+import kz.nmbet.betradar.dao.service.PrivateMatchService;
+import kz.nmbet.betradar.dao.service.PrivateOutrightService;
+
 @Service
 public class LcooFeedListenerImpl implements LcooFeedListener {
 
@@ -27,8 +26,6 @@ public class LcooFeedListenerImpl implements LcooFeedListener {
 	@Autowired
 	private PrivateOutrightService privateOutrightService;
 
-	@Autowired
-	private TextsEntityUtils textsEntityUtils;
 
 	private final static Logger logger = LoggerFactory
 			.getLogger(LcooFeedListenerImpl.class);

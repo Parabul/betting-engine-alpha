@@ -33,8 +33,7 @@ public class OutrightInfo {
 		date = outrightEntity.getEventDate();
 		teams = new ArrayList<Team>();
 		for (GlCompetitorEntity competitor : outrightEntity.getCompetitors()) {
-			Team team = new Team();
-			team.setTeamId(competitor.getTeamId());
+			Team team = new Team();			
 			team.setTitle(TextsEntityUtils.getName(competitor.getTeam()));
 			teams.add(team);
 		}

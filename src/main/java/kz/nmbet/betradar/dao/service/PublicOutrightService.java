@@ -1,7 +1,5 @@
 package kz.nmbet.betradar.dao.service;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +7,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+
+import org.jooq.DSLContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
 
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightOddEntity;
@@ -18,14 +23,6 @@ import kz.nmbet.betradar.dao.repository.GlBetRepository;
 import kz.nmbet.betradar.dao.repository.GlOutrightEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlOutrightOddEntityRepository;
 import kz.nmbet.betradar.web.beans.OutrightInfo;
-
-import org.jooq.DSLContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PublicOutrightService {

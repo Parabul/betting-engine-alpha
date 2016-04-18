@@ -1,6 +1,7 @@
 package kz.nmbet.betradar.dao.domain.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,13 +17,22 @@ import javax.persistence.OneToMany;
 public class GlMatchEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 
 	private Long matchId;
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
 	private List<GlCompetitorEntity> competitors;
+
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlMatchOddEntity> odds;
+
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlMatchResultEntity> results;
+	
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlMatchBetResultEntity> betResults;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_category_id")
@@ -69,6 +79,30 @@ public class GlMatchEntity {
 
 	public void setCategory(GlCategoryEntity category) {
 		this.category = category;
+	}
+
+	public Set<GlMatchOddEntity> getOdds() {
+		return odds;
+	}
+
+	public void setOdds(Set<GlMatchOddEntity> odds) {
+		this.odds = odds;
+	}
+
+	public Set<GlMatchResultEntity> getResults() {
+		return results;
+	}
+
+	public void setResults(Set<GlMatchResultEntity> results) {
+		this.results = results;
+	}
+
+	public Set<GlMatchBetResultEntity> getBetResults() {
+		return betResults;
+	}
+
+	public void setBetResults(Set<GlMatchBetResultEntity> betResults) {
+		this.betResults = betResults;
 	}
 
 }
