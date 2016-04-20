@@ -34,6 +34,9 @@ public class GlMatchOddEntity {
 	private String outcomeId;
 
 	private Integer matchOddsType;
+	
+	
+	private boolean isDeleted;
 
 	@Enumerated(EnumType.STRING)
 	private MatchOddsType oddsType;
@@ -171,6 +174,14 @@ public class GlMatchOddEntity {
 		} else if (!value.equals(other.value))
 			return false;
 		return true;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 }

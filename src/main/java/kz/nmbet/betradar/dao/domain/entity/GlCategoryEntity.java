@@ -36,7 +36,7 @@ public class GlCategoryEntity implements LocalizedEntity {
 	private List<GlOutrightEntity> outrights;
 
 	@OneToMany(mappedBy = "category")
-	private List<GlMatchEntity> matches;
+	private List<GlTournamentEntity> tournaments;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_sport_id")
@@ -90,20 +90,20 @@ public class GlCategoryEntity implements LocalizedEntity {
 		this.outrights = outrights;
 	}
 
-	public List<GlMatchEntity> getMatches() {
-		return matches;
-	}
-
-	public void setMatches(List<GlMatchEntity> matches) {
-		this.matches = matches;
-	}
-
 	public GlSportEntity getSport() {
 		return sport;
 	}
 
 	public void setSport(GlSportEntity sport) {
 		this.sport = sport;
+	}
+
+	public List<GlTournamentEntity> getTournaments() {
+		return tournaments;
+	}
+
+	public void setTournaments(List<GlTournamentEntity> tournaments) {
+		this.tournaments = tournaments;
 	}
 
 }

@@ -21,9 +21,11 @@ public class GlCompetitorEntity {
 
 	private String title;
 
-	private Long teamId;
+	private Integer teamId;
 
 	private Integer superId;
+	
+	private boolean isDeleted;
 
 	@ManyToOne
 	@JoinColumn(name = "gl_team_id")
@@ -56,11 +58,11 @@ public class GlCompetitorEntity {
 		this.title = title;
 	}
 
-	public Long getTeamId() {
+	public Integer getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(Long teamId) {
+	public void setTeamId(Integer teamId) {
 		this.teamId = teamId;
 	}
 
@@ -134,5 +136,13 @@ public class GlCompetitorEntity {
 		} else if (!teamId.equals(other.teamId))
 			return false;
 		return true;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 }

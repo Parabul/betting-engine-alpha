@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlSportEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlTeamEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlTournamentEntity;
 import kz.nmbet.betradar.dao.repository.GlCategoryEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlSportEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlTeamEntityRepository;
+import kz.nmbet.betradar.dao.repository.GlTournamentEntityRepository;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 import kz.nmbet.betradar.web.beans.TournamentCsvBean;
 
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.sportradar.sdk.feed.lcoo.entities.CategoryEntity;
 import com.sportradar.sdk.feed.lcoo.entities.PlayerEntity;
 import com.sportradar.sdk.feed.lcoo.entities.SportEntity;
+import com.sportradar.sdk.feed.lcoo.entities.TournamentEntity;
 
 @Service
 public class TeamService {
@@ -38,6 +41,9 @@ public class TeamService {
 
 	@Autowired
 	private GlCategoryEntityRepository categoryEntityRepository;
+
+	@Autowired
+	private GlTournamentEntityRepository tournamentEntityRepository;
 
 	@Transactional
 	public GlTeamEntity create(TournamentCsvBean csvBean) {
@@ -122,4 +128,20 @@ public class TeamService {
 		return categoryEntity;
 	}
 
+	@Transactional
+	public GlTournamentEntity find(TournamentEntity tournamentEntity, GlCategoryEntity categoryEntity) {
+		if (tournamentEntity != null) {
+			int id = tournamentEntity.getId();
+			GlTournamentEntity glTournamentEntity = tournamentEntityRepository.findByTournamentId(id);
+			if (glTournamentEntity == null) {
+				glTournamentEntity = new GlTournamentEntity();
+				glTournamentEntity.setTournamentId(id);
+				glTournamentEntity.setNameEn(textsEntityUtils.getCDefaultValue(tournamentEntity.getTexts()));
+				glTournamentEntity.setCategory(categoryEntity);
+				glTournamentEntity = tournamentEntityRepository.save(glTournamentEntity);
+			}
+			return glTournamentEntity;
+		}
+		return null;
+	}
 }

@@ -7,22 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
-import com.sportradar.sdk.feed.common.entities.TypeValueTuple;
-import com.sportradar.sdk.feed.lcoo.entities.BetEntity;
-import com.sportradar.sdk.feed.lcoo.entities.BetResultEntity;
-import com.sportradar.sdk.feed.lcoo.entities.MatchEntity;
-import com.sportradar.sdk.feed.lcoo.entities.OddsEntity;
-import com.sportradar.sdk.feed.lcoo.entities.PlayerEntity;
-import com.sportradar.sdk.feed.lcoo.entities.ResultEntity;
-
+import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchBetResultEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
@@ -34,6 +19,21 @@ import kz.nmbet.betradar.dao.domain.types.TeamType;
 import kz.nmbet.betradar.dao.repository.GlCompetitorEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
+
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sportradar.sdk.feed.common.entities.TypeValueTuple;
+import com.sportradar.sdk.feed.lcoo.entities.BetEntity;
+import com.sportradar.sdk.feed.lcoo.entities.BetResultEntity;
+import com.sportradar.sdk.feed.lcoo.entities.MatchEntity;
+import com.sportradar.sdk.feed.lcoo.entities.OddsEntity;
+import com.sportradar.sdk.feed.lcoo.entities.ResultEntity;
+import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
+import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 
 @Service
 public class PrivateMatchService {
@@ -49,6 +49,9 @@ public class PrivateMatchService {
 	@Autowired
 	private GlCompetitorEntityRepository competitorEntityRepository;
 
+	@Autowired
+	private TextsEntityUtils textsEntityUtils;
+
 	@Transactional
 	public GlMatchEntity save(MatchEntity entity) {
 		logger.info(entity.toString());
@@ -58,17 +61,27 @@ public class PrivateMatchService {
 		if (glMatchEntity == null) {
 			glMatchEntity = new GlMatchEntity();
 			glMatchEntity.setMatchId(entity.getMatchId());
-			glMatchEntity.setCategory(teamService.find(entity.getCategory(), entity.getSport()));
+			GlCategoryEntity category = teamService.find(entity.getCategory(), entity.getSport());
+
+			glMatchEntity.setTournament(teamService.find(entity.getTournament(), category));
 
 			if (glMatchEntity.getCompetitors() == null)
 				glMatchEntity.setCompetitors(new ArrayList<GlCompetitorEntity>());
 
-			for (PlayerEntity player : entity.getFixture().getCompetitors().getPlayers()) {
-				if (player != null)
-					glMatchEntity.getCompetitors().add(create(player, glMatchEntity));
+			for (TextsEntity competitor : entity.getFixture().getCompetitors().getTexts()) {
+
+				if (competitor != null) {
+					logger.info(competitor.toString());
+					glMatchEntity.getCompetitors().add(create(competitor, glMatchEntity));
+				}
 			}
 
 		}
+		DateTime dt = entity.getFixture().getDateInfo().getMatchDate();
+		glMatchEntity.setEventDate(dt.toDate());
+
+		glMatchEntity.setActive(entity.getFixture().getStatusInfo().isActive());
+
 		updateOdds(entity, glMatchEntity);
 		updateResult(entity, glMatchEntity);
 		glMatchEntity = matchEntityRepository.save(glMatchEntity);
@@ -111,69 +124,78 @@ public class PrivateMatchService {
 			}
 	}
 
+	private GlMatchOddEntity findOdd(GlMatchEntity glMatchEntity, MatchOddsType matchOddsType, String outCome, String specialBetValue) {
+		for (GlMatchOddEntity odd : glMatchEntity.getOdds()) {
+			if (specialBetValue != null) {
+				if (matchOddsType.equals(odd.getOddsType()) && specialBetValue.equalsIgnoreCase(odd.getSpecialBetValue())
+						&& outCome.equalsIgnoreCase(odd.getOutCome())) {
+					return odd;
+				}
+			} else {
+				if (odd.getSpecialBetValue() == null && matchOddsType.equals(odd.getOddsType()) && outCome.equalsIgnoreCase(odd.getOutCome())) {
+					return odd;
+				}
+			}
+		}
+		return null;
+	}
+
 	private void updateOdds(MatchEntity match, GlMatchEntity glMatchEntity) {
 		if (glMatchEntity.getOdds() == null) {
 			glMatchEntity.setOdds(new HashSet<GlMatchOddEntity>());
 		}
-
-		HashSet<GlMatchOddEntity> newOdds = new HashSet<GlMatchOddEntity>();
-		if (match.getOdds() != null)
+		// delete existed odds
+		for (GlMatchOddEntity odd : glMatchEntity.getOdds()) {
+			odd.setDeleted(true);
+		}
+		// HashSet<GlMatchOddEntity> newOdds = new HashSet<GlMatchOddEntity>();
+		if (match.getOdds() != null) {
 			for (BetEntity bet : match.getOdds()) {
 				int oddsType = bet.getOddsType();
 				MatchOddsType matchOddsType = MatchOddsType.find(oddsType);
 				for (OddsEntity odd : bet.getOdds()) {
-					GlMatchOddEntity matchOddEntity = new GlMatchOddEntity();
-					matchOddEntity.setOddsType(matchOddsType);
-					matchOddEntity.setMatch(glMatchEntity);
-					matchOddEntity.setMatchOddsType(oddsType);
-					matchOddEntity.setPlayerId(odd.getPlayerId());
-					try {
-						matchOddEntity.setValue(Double.valueOf(odd.getValue()));
-					} catch (Exception e) {
-						logger.error(e.getMessage(), e);
+					GlMatchOddEntity matchOddEntity = findOdd(glMatchEntity, matchOddsType, odd.getOutCome(), odd.getSpecialBetValue());
+					if (matchOddEntity == null) {
+						matchOddEntity = new GlMatchOddEntity();
+						matchOddEntity.setOddsType(matchOddsType);
+						matchOddEntity.setMatch(glMatchEntity);
+						matchOddEntity.setMatchOddsType(oddsType);
+						matchOddEntity.setPlayerId(odd.getPlayerId());
+						matchOddEntity.setSpecialBetValue(odd.getSpecialBetValue());
+						matchOddEntity.setOutCome(odd.getOutCome());
+						matchOddEntity.setOutcomeId(odd.getOutcomeId());
+						matchOddEntity.setDeleted(false);
 					}
-					matchOddEntity.setSpecialBetValue(odd.getSpecialBetValue());
-					matchOddEntity.setOutCome(odd.getOutCome());
-					matchOddEntity.setOutcomeId(odd.getOutcomeId());
+					matchOddEntity.setOldValue(matchOddEntity.getValue());
+					if (odd.getValue().equalsIgnoreCase("OFF")) {
+						matchOddEntity.setDeleted(true);
+					} else {
+						try {
 
-					newOdds.add(matchOddEntity);
-
-				}
-			}
-
-		//SetView<GlMatchOddEntity> toDelete = Sets.difference(glMatchEntity.getOdds(), newOdds);
-		SetView<GlMatchOddEntity> toAdd = Sets.difference(newOdds, glMatchEntity.getOdds());
-
-		// ImmutableSet<GlMatchOddEntity> toDeleteCopy =
-		// toDelete.immutableCopy();
-		ImmutableSet<GlMatchOddEntity> toAddCopy = toAdd.immutableCopy();
-
-		// glMatchEntity.getOdds().removeAll(toDeleteCopy);
-		glMatchEntity.getOdds().addAll(toAddCopy);
-		newOdds.removeAll(toAdd);
-
-		for (GlMatchOddEntity newValue : newOdds) {
-			for (GlMatchOddEntity oldValue : glMatchEntity.getOdds()) {
-				if (newValue.equals(oldValue) && !oldValue.getValue().equals(newValue.getValue())) {
-					oldValue.setOldValue(oldValue.getValue());
-					oldValue.setValue(newValue.getValue());
+							matchOddEntity.setValue(Double.valueOf(odd.getValue()));
+							matchOddEntity.setDeleted(false);
+						} catch (Exception e) {
+							logger.error(e.getMessage(), e);
+						}
+					}
+					if (matchOddEntity.getId() == null) {
+						glMatchEntity.getOdds().add(matchOddEntity);
+					}
 				}
 			}
 		}
-
 	}
 
 	@Transactional
-	public GlCompetitorEntity create(PlayerEntity playerEntity, GlMatchEntity matchEntity) {
+	public GlCompetitorEntity create(TextsEntity competitorTexts, GlMatchEntity matchEntity) {
+		TextEntity teamData = competitorTexts.getTexts().get(0);
+		Integer superTeamId = teamData.getSuperid();
+		Integer teamId = teamData.getId();
+		String name = textsEntityUtils.getCDefaultValue(teamData.getText());
 
-		Integer superTeamId = playerEntity.getSuperId();
-		Long teamId = playerEntity.getTeamId();
-		Long id = playerEntity.getId();
-
-		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}, teamId = {1}", superTeamId, teamId, id));
+		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}", superTeamId, teamId));
 		if (matchEntity != null && matchEntity.getId() != null) {
-			GlCompetitorEntity competitor = competitorEntityRepository
-					.findByMatchIdAndSuperIdAndTeamId(matchEntity.getId(), superTeamId, teamId);
+			GlCompetitorEntity competitor = competitorEntityRepository.findByMatchIdAndSuperIdAndTeamId(matchEntity.getId(), superTeamId, teamId);
 			return competitor;
 		}
 		GlCompetitorEntity competitor = new GlCompetitorEntity();
@@ -183,7 +205,7 @@ public class PrivateMatchService {
 			if (team == null) {
 				team = new GlTeamEntity();
 				team.setSuperTeamId(superTeamId);
-				team.setNameEn(playerEntity.getName().getInternational());
+				team.setNameEn(name);
 
 				team = teamService.save(team);
 			}
@@ -194,9 +216,9 @@ public class PrivateMatchService {
 			competitor.setTeamId(teamId);
 		}
 
-		competitor.setTitle(playerEntity.getName().getInternational());
+		competitor.setTitle(name);
 		competitor.setMatch(matchEntity);
-		competitor.setTeamType(TeamType.find(playerEntity.getOrder()));
+		competitor.setTeamType(TeamType.find(teamData.getType()));
 
 		return competitor;
 

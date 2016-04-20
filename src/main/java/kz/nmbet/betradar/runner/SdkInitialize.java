@@ -1,9 +1,5 @@
 package kz.nmbet.betradar.runner;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import kz.nmbet.betradar.dao.repository.UserRepository;
 
 import org.jooq.DSLContext;
@@ -62,19 +58,6 @@ public class SdkInitialize implements CommandLineRunner {
 				e.printStackTrace();
 			}
 		}
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				System.in));
-
-		logger.info("The sdk is running. Hit any key to exit");
-		try {
-			reader.readLine();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		logger.info("Closing the sdk");
-		sdk.close();
-		logger.info("Sdk successfully closed. Main thread will now exit");
 
 		logger.info("SdkInitialize finish ");
 

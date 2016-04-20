@@ -8,5 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GlTournamentEntityRepository extends JpaRepository<GlTournamentEntity, Integer> {
 
+	GlTournamentEntity findByTournamentId(Integer id);
+
 	
 }

@@ -30,6 +30,8 @@ public class GlOutrightOddEntity {
 	private String outCome;
 
 	private String outcomeId;
+	
+	private boolean isDeleted;
 
 	@Enumerated(EnumType.STRING)
 	private OutrightOddsType oddsType;
@@ -136,6 +138,14 @@ public class GlOutrightOddEntity {
 
 	public void setOldValue(Double oldValue) {
 		this.oldValue = oldValue;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 }

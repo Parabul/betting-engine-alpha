@@ -1,5 +1,6 @@
 package kz.nmbet.betradar.dao.domain.entity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class GlMatchEntity {
@@ -34,12 +37,19 @@ public class GlMatchEntity {
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlMatchBetResultEntity> betResults;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date eventDate;
+	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "gl_category_id")
-	private GlCategoryEntity category;
+	@JoinColumn(name = "gl_tournament_id")
+	private GlTournamentEntity tournament;
 
 	@Column(length = 512)
 	private String title;
+	
+
+	
+	private boolean isActive;
 
 	public Integer getId() {
 		return id;
@@ -73,14 +83,6 @@ public class GlMatchEntity {
 		this.competitors = competitors;
 	}
 
-	public GlCategoryEntity getCategory() {
-		return category;
-	}
-
-	public void setCategory(GlCategoryEntity category) {
-		this.category = category;
-	}
-
 	public Set<GlMatchOddEntity> getOdds() {
 		return odds;
 	}
@@ -103,6 +105,30 @@ public class GlMatchEntity {
 
 	public void setBetResults(Set<GlMatchBetResultEntity> betResults) {
 		this.betResults = betResults;
+	}
+
+	public GlTournamentEntity getTournament() {
+		return tournament;
+	}
+
+	public void setTournament(GlTournamentEntity tournament) {
+		this.tournament = tournament;
+	}
+
+	public Date getEventDate() {
+		return eventDate;
+	}
+
+	public void setEventDate(Date eventDate) {
+		this.eventDate = eventDate;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

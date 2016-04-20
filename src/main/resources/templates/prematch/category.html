@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>Outrights</title>
+
+<!-- Bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<H1 th:text="${category.nameEn}"></H1>
+
+	<div th:each="match : ${matches}">
+		<h3 th:text="${match.matchId}">keyvalue</h3>
+		<h4><span  th:text="${match.homeTeamName}"></span> - <span  th:text="${match.awayTeamName}"></span></h4>
+		<h4 th:text="${match.matchDate}">matchDate</h4>
+		
+		<div id="resultTable"
+        class="table table-bordered"
+        th:if="${match.threeWayOdds != null}">	
+        	<h3>1 <span th:text="${match.threeWayOdds.homeOdd}"></span></h3>
+        	<h3>X <span th:text="${match.threeWayOdds.drawOdd}"></span></h3>
+        	<h3>2 <span th:text="${match.threeWayOdds.awayOdd}"></span></h3>
+        </div>
+		<hr/>
+	</div>
+	
+
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
