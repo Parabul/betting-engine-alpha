@@ -1,15 +1,26 @@
 package kz.nmbet.betradar.web.beans;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.sportradar.sdk.shaded.org.apache.commons.logging.Log;
 
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
+import kz.nmbet.betradar.dao.service.PublicOutrightService;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 
 public class MatchInfoBean {
+	private static final Logger logger = LoggerFactory.getLogger(MatchInfoBean.class);
+
 	private Integer matchId;
 	private String homeTeamName;
 	private String awayTeamName;
@@ -18,6 +29,8 @@ public class MatchInfoBean {
 	private ThreeWayOdds threeWayOdds;
 	private TwoWayOdds twoWayOdds;
 	private Map<String, Double> correctScoreOdds;
+	private List<HandicapOdd> handicapOdds;
+	private Map<String, TotalOdd> totalsOdds;
 
 	public MatchInfoBean(GlMatchEntity matchEntity) {
 		matchId = matchEntity.getId();
@@ -54,11 +67,30 @@ public class MatchInfoBean {
 					correctScoreOdds.put(oddEntity.getOutCome(), oddEntity.getValue());
 					break;
 				case handicap :
+					if (handicapOdds == null)
+						handicapOdds = new ArrayList<HandicapOdd>();
+					handicapOdds.add(new HandicapOdd(oddEntity));
 					break;
 				case totals :
+					logger.info(totalsOdds == null ? "" : totalsOdds.toString());
+					if (totalsOdds == null) {
+						totalsOdds = new HashMap<String, TotalOdd>();
+					}
+					String key = oddEntity.getSpecialBetValue();
+					if (totalsOdds.containsKey(key)) {
+						TotalOdd item = totalsOdds.get(key);
+						item.fill(oddEntity);
+						totalsOdds.put(key, item);
+					} else {
+						totalsOdds.put(key, new TotalOdd(oddEntity));
+					}
 					break;
 			}
 		}
+	}
+
+	public boolean isEmpty() {
+		return threeWayOdds == null && twoWayOdds == null && correctScoreOdds == null && handicapOdds == null && totalsOdds == null;
 	}
 
 	public ThreeWayOdds getThreeWayOdds() {
@@ -115,6 +147,22 @@ public class MatchInfoBean {
 
 	public void setMatchId(Integer matchId) {
 		this.matchId = matchId;
+	}
+
+	public List<HandicapOdd> getHandicapOdds() {
+		return handicapOdds;
+	}
+
+	public void setHandicapOdds(List<HandicapOdd> handicapOdds) {
+		this.handicapOdds = handicapOdds;
+	}
+
+	public Map<String, TotalOdd> getTotalsOdds() {
+		return totalsOdds;
+	}
+
+	public void setTotalsOdds(Map<String, TotalOdd> totalsOdds) {
+		this.totalsOdds = totalsOdds;
 	}
 
 }

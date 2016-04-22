@@ -8,48 +8,54 @@ import kz.nmbet.betradar.dao.domain.types.OutrightOddsType;
 
 public class OutrightOdd {
 
-	public static final String query="SELECT id, old_value, value, odds_type, event_date, event_info, team_name, category_name, sport_name  FROM v_outright_odds";
-	
-	private Integer id;
-	private Double old_value;
+	public static final String query = "SELECT outright_id, odd_id, old_value, value, odds_type, event_date, event_info, team_name FROM v_outright_odds where outright_id = ?";
+
+	private Integer outrightId;
+	private Integer oddId;
+	private Double oldValue;
 	private Double value;
-	private OutrightOddsType odds_type;
-	private Date event_date;
-	private String event_info;
-	private String team_name;
-	private String category_name;
-	private String sport_name;
+	private OutrightOddsType oddsType;
+	private Date eventDate;
+	private String eventInfo;
+	private String teamName;
 
 	public OutrightOdd(ResultSet rs, int rowNum) throws SQLException {
-		this.id = rs.getInt("id");
-		this.old_value = rs.getDouble("old_value");
+		this.outrightId = rs.getInt("outright_id");
+		this.oddId = rs.getInt("odd_id");
+		this.oldValue = rs.getDouble("old_value");
 		this.value = rs.getDouble("value");
-		this.odds_type = OutrightOddsType.valueOf(rs.getString("odds_type"));
-		this.event_date = rs.getDate("event_date");
-		this.event_info = rs.getString("event_info");
-		this.team_name = rs.getString("team_name");
-		this.category_name = rs.getString("category_name");
-		this.sport_name = rs.getString("sport_name");
+		this.oddsType = OutrightOddsType.valueOf(rs.getString("odds_type"));
+		this.eventDate = rs.getDate("event_date");
+		this.eventInfo = rs.getString("event_info");
+		this.teamName = rs.getString("team_name");
 	}
 
 	public OutrightOdd() {
 
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getOutrightId() {
+		return outrightId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setOutrightId(Integer outrightId) {
+		this.outrightId = outrightId;
 	}
 
-	public Double getOld_value() {
-		return old_value;
+	public Integer getOddId() {
+		return oddId;
 	}
 
-	public void setOld_value(Double old_value) {
-		this.old_value = old_value;
+	public void setOddId(Integer oddId) {
+		this.oddId = oddId;
+	}
+
+	public Double getOldValue() {
+		return oldValue;
+	}
+
+	public void setOldValue(Double oldValue) {
+		this.oldValue = oldValue;
 	}
 
 	public Double getValue() {
@@ -60,52 +66,40 @@ public class OutrightOdd {
 		this.value = value;
 	}
 
-	public OutrightOddsType getOdds_type() {
-		return odds_type;
+	public OutrightOddsType getOddsType() {
+		return oddsType;
 	}
 
-	public void setOdds_type(OutrightOddsType odds_type) {
-		this.odds_type = odds_type;
+	public void setOddsType(OutrightOddsType oddsType) {
+		this.oddsType = oddsType;
 	}
 
-	public Date getEvent_date() {
-		return event_date;
+	public Date getEventDate() {
+		return eventDate;
 	}
 
-	public void setEvent_date(Date event_date) {
-		this.event_date = event_date;
+	public void setEventDate(Date eventDate) {
+		this.eventDate = eventDate;
 	}
 
-	public String getEvent_info() {
-		return event_info;
+	public String getEventInfo() {
+		return eventInfo;
 	}
 
-	public void setEvent_info(String event_info) {
-		this.event_info = event_info;
+	public void setEventInfo(String eventInfo) {
+		this.eventInfo = eventInfo;
 	}
 
-	public String getTeam_name() {
-		return team_name;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setTeam_name(String team_name) {
-		this.team_name = team_name;
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
-	public String getCategory_name() {
-		return category_name;
-	}
-
-	public void setCategory_name(String category_name) {
-		this.category_name = category_name;
-	}
-
-	public String getSport_name() {
-		return sport_name;
-	}
-
-	public void setSport_name(String sport_name) {
-		this.sport_name = sport_name;
+	public static String getQuery() {
+		return query;
 	}
 
 }

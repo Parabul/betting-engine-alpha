@@ -193,7 +193,6 @@ public class PrivateMatchService {
 		Integer teamId = teamData.getId();
 		String name = textsEntityUtils.getCDefaultValue(teamData.getText());
 
-		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}", superTeamId, teamId));
 		if (matchEntity != null && matchEntity.getId() != null) {
 			GlCompetitorEntity competitor = competitorEntityRepository.findByMatchIdAndSuperIdAndTeamId(matchEntity.getId(), superTeamId, teamId);
 			return competitor;

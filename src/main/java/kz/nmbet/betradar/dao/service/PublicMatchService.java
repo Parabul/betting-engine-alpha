@@ -57,7 +57,9 @@ public class PublicMatchService {
 		GlCategoryEntity category = categoryEntityRepository.findOne(id);
 		for (GlTournamentEntity tournament : category.getTournaments()) {
 			for (GlMatchEntity match : tournament.getMatches()) {
-				matches.add(new MatchInfoBean(match));
+				MatchInfoBean matchInfoBean = new MatchInfoBean(match);
+				if (!matchInfoBean.isEmpty())
+					matches.add(matchInfoBean);
 			}
 		}
 		return matches;

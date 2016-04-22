@@ -199,7 +199,6 @@ public class PrivateOutrightService {
 		Integer teamId = teamData.getId();
 		String name = textsEntityUtils.getCDefaultValue(teamData.getText());
 
-		logger.info(MessageFormat.format("superTeamId = {0}, teamId = {1}", superTeamId, teamId));
 		if (outrightEntity != null && outrightEntity.getId() != null) {
 			GlCompetitorEntity competitor = competitorEntityRepository.findByOutrightIdAndSuperIdAndTeamId(outrightEntity.getId(), superTeamId, teamId);
 			return competitor;

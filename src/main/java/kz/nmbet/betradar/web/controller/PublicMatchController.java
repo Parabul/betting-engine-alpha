@@ -20,14 +20,15 @@ public class PublicMatchController {
 	@RequestMapping("/prematch")
 	public String index(Model model) {
 		model.addAttribute("sports", matchService.getActiveCategories());
-		return "prematch/index";
+		model.addAttribute("content", "prematch/index");
+		return "template";
 	}
 
-	@RequestMapping("/prematch/{categoryId}/category")
+	@RequestMapping("/prematch/{categoryId}/")
 	public String table(Model model, @PathVariable("categoryId") Integer categoryId) {
 		model.addAttribute("matches", matchService.getMatchesByCategory(categoryId));
 		model.addAttribute("category", matchService.getCategory(categoryId));
-
-		return "prematch/category";
+		model.addAttribute("content", "prematch/category");
+		return "template";
 	}
 }

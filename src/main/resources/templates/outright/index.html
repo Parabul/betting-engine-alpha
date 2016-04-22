@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -20,28 +18,23 @@
     <![endif]-->
 </head>
 <body>
-	<H1>Outrights</H1>
-	<div th:each="outright : ${outrights}">
-		<h3 th:text="${outright.id}">1</h3>
-		<h4 th:text="${outright.title}">Text ...</h4>
-		<h4 th:text="${outright.sport}">Text ...</h4>
-		<h4 th:text="${outright.category}">Text ...</h4>
-		<table class="table">
-			<tr th:each="competitor : ${outright.teams}">
-				<td th:text="${competitor.title}">1</td>
-				<td th:text="${competitor.teamId}">1</td>
-				<td th:text="${competitor.odd}">1</td>
-				<td th:text="${competitor.oddId}">1</td>				
-				<td th:text="${competitor.outrightOddsType}">1</td>
-			</tr>
-		</table>
-		<hr />
+	<div th:fragment="content">
+		<H1>Долгосрочные ставки</H1>
+
+		<div th:each="sport : ${sports}">
+			<h4 th:text="${sport.key}">keyvalue</h4>
+			<table class="table">
+				<tr th:each="outright : ${sport.value}">
+					<td><a th:href="|/outright/${outright.outrightId}/|" th:text="${outright.groupName}"></a></td>
+				</tr>
+			</table>
+			<hr />
+		</div>
 	</div>
 
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="/js/bootstrap.min.js"></script>
 </body>

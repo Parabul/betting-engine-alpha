@@ -19,23 +19,18 @@
 </head>
 <body>
 	<div th:fragment="content">
-		<H1>Линия</H1>
-
-		<div th:each="sport : ${sports}">
-			<h4 th:text="${sport.key}">keyvalue</h4>
-			<table class="table">
-				<tr th:each="category : ${sport.value}">
-					<td><a th:href="|/prematch/${category.categoryId}/|" th:text="${category.groupName}"></a></td>
+		<H1 class="text-center" th:text="${outright.eventInfo}"></H1>
+		<H3 class="text-center"><span th:text="${#dates.format(outright.eventDate, 'dd.MM.yyyy HH:mm')}">matchDate</span></H3>
+		<hr />
+		<table class="table table-bordered">
+			<tbody>
+				<tr th:id="${odd.oddId}" th:each="odd : ${odds}">
+<!-- 					<td><span th:text="${odd.oddsType}"></span></td> -->
+					<td><span th:text="${odd.teamName}"></span></td>
+					<td><span th:text="${odd.value}"></span></td>
 				</tr>
-			</table>
-			<hr />
-		</div>
+			</tbody>
+		</table>
 	</div>
-
-
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

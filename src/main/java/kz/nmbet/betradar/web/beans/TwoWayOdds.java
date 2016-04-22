@@ -14,8 +14,8 @@ public class TwoWayOdds {
 	}
 
 	public void fill(GlMatchOddEntity oddEntity) {
-		if (MatchOddsType.three_way.equals(oddEntity.getOddsType())) {
-			switch (ThreeWaysOutComeType.valueOf(oddEntity.getOutCome())) {
+		if (MatchOddsType.two_way.equals(oddEntity.getOddsType()) && !oddEntity.getOutCome().equals("-1")) {
+			switch (ThreeWaysOutComeType.find(oddEntity.getOutCome())) {
 				case HOME :
 					homeOdd = oddEntity.getValue();
 					break;
