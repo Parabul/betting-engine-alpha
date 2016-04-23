@@ -19,8 +19,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("shopUserDetailsService")
-public class ShopUserDetailsService implements UserDetailsService {
+@Service("bettingUserDetailsService")
+public class BettingUserDetailsService implements UserDetailsService {
 
 	private static final Logger log = LoggerFactory.getLogger(SdkInitialize.class);
 
@@ -35,9 +35,8 @@ public class ShopUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Username not found");
 		}
-		return new User(user.getEmail(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(),
-				user.isCredentialsNonExpired(), user.isAccountNonLocked(), getGrantedAuthorities(user));
-
+		return new User(user.getEmail(), user.getPassword(), user.isEnabled(), user.isAccountNonExpired(), user.isCredentialsNonExpired(),
+				user.isAccountNonLocked(), getGrantedAuthorities(user));
 	}
 
 	private List<GrantedAuthority> getGrantedAuthorities(GlUser user) {

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<GlUser, Integer> {
 
 	GlUser findByEmail(String email);
+	
+	GlUser findByCashierId(Integer cashierId);
 }

@@ -1,6 +1,5 @@
 package kz.nmbet.betradar.dao.service;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -201,7 +200,8 @@ public class PrivateOutrightService {
 
 		if (outrightEntity != null && outrightEntity.getId() != null) {
 			GlCompetitorEntity competitor = competitorEntityRepository.findByOutrightIdAndSuperIdAndTeamId(outrightEntity.getId(), superTeamId, teamId);
-			return competitor;
+			if (competitor != null)
+				return competitor;
 		}
 		GlCompetitorEntity competitor = new GlCompetitorEntity();
 		if (superTeamId != null) {

@@ -21,7 +21,7 @@ public class IndexController {
 
 	@RequestMapping({"/"})
 	public String home(Model model) {
-		model.addAttribute("content", "hello");
+		model.addAttribute("content", "index");
 		return "template";
 	}
 }

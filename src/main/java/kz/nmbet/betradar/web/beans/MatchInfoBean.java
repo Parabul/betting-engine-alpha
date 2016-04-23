@@ -1,5 +1,7 @@
 package kz.nmbet.betradar.web.beans;
 
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -7,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.postgresql.jdbc2.optional.SimpleDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +34,26 @@ public class MatchInfoBean {
 	private Map<String, Double> correctScoreOdds;
 	private List<HandicapOdd> handicapOdds;
 	private Map<String, TotalOdd> totalsOdds;
+
+	public MatchInfoBean(GlMatchEntity matchEntity, boolean key) {
+		matchId = matchEntity.getId();
+		matchDate = matchEntity.getEventDate();
+		for (GlCompetitorEntity competitorEntity : matchEntity.getCompetitors()) {
+			switch (competitorEntity.getTeamType()) {
+				case HOME :
+					homeTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
+					break;
+				case AWAY :
+					awayTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
+					break;
+			}
+		}
+	}
+
+	public String getTitle() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+		return MessageFormat.format("{0} : {1} - {2}", sdf.format(matchDate), homeTeamName, awayTeamName);
+	}
 
 	public MatchInfoBean(GlMatchEntity matchEntity) {
 		matchId = matchEntity.getId();

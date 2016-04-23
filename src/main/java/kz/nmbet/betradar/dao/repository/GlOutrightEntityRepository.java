@@ -1,5 +1,7 @@
 package kz.nmbet.betradar.dao.repository;
 
+import java.util.List;
+
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightEntity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +13,5 @@ public interface GlOutrightEntityRepository extends
 
 	GlOutrightEntity findByOutrightId(Integer id);
 
+	List<GlOutrightEntity> findByCategoryId(Integer categoryId);
 }

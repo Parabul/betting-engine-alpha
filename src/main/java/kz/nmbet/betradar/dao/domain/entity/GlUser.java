@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class GlUser {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 
 	@Column(unique = true)
@@ -27,15 +27,17 @@ public class GlUser {
 	private List<String> roles;
 
 	private boolean enabled;
-	
+
 	@Column(name = "account_non_expired")
 	private boolean accountNonExpired;
-	
+
 	@Column(name = "credentials_non_expired")
 	private boolean credentialsNonExpired;
-	
+
 	@Column(name = "account_mon_locked")
 	private boolean accountNonLocked;
+
+	private Integer cashierId;
 
 	public Integer getId() {
 		return id;
@@ -99,6 +101,14 @@ public class GlUser {
 
 	public void setAccountNonLocked(boolean accountNonLocked) {
 		this.accountNonLocked = accountNonLocked;
+	}
+
+	public Integer getCashierId() {
+		return cashierId;
+	}
+
+	public void setCashierId(Integer cashierId) {
+		this.cashierId = cashierId;
 	}
 
 }
