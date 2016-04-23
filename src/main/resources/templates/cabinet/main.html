@@ -18,16 +18,8 @@
     <![endif]-->
 </head>
 <body>
-	<div th:fragment="content">
-		<H1>Кабинет кассира</H1>
-		<hr/>
-		<ul class="nav nav-tabs">
-			<li role="presentation"><a th:href="@{/cabinet/prematch}">Линия</a></li>
-			<li role="presentation"><a th:href="@{/cabinet/outright}">Долгосрочные ставки</a></li>
-			<li role="presentation"><a href="#">Live</a></li>
-		</ul>
-		
-		<div style="margin-top:20px;" class="row-fluid" th:replace="${subpage} :: subpage">&nbsp;</div>
+	<div th:fragment="subpage">
+		<h4>Тут будет список последних ставок</h4>
 
 	</div>
 </body>

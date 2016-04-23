@@ -33,21 +33,6 @@ public class PublicOutrightController {
 	}
 
 
-	@RequestMapping("/bet/create")
-	@ResponseBody
-	public String createBet(Model model,
-			@RequestParam(name = "amount") double amount,
-			@RequestParam(name = "odd_id") Integer oddId) {
-		GlBet bet = outrightService.createBet(oddId, amount);
-		return bet.toString();
-	}
 
-	@RequestMapping("/bet/check")
-	@ResponseBody
-	public String checkBet(Model model,
-			@RequestParam(name = "odd_id") Integer oddId) {
-		GlBet bet = outrightService.checkBet(oddId);
-		return bet.toString();
-	}
 
 }

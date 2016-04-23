@@ -3,6 +3,7 @@ package kz.nmbet.betradar.web.controller;
 import java.util.List;
 import java.util.Map;
 
+import kz.nmbet.betradar.dao.domain.entity.GlBet;
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
 import kz.nmbet.betradar.dao.domain.views.OutrightOdd;
 import kz.nmbet.betradar.dao.service.CashierService;
@@ -45,51 +46,51 @@ public class CashierController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 
-	@RequestMapping({"/cabinet/sports"})
+	@RequestMapping({ "/cabinet/sports" })
 	@ResponseBody
 	public Map<Integer, String> getSports() {
 		return cashierService.getSportEntities();
 	}
 
-	@RequestMapping({"/cabinet/categories"})
+	@RequestMapping({ "/cabinet/categories" })
 	@ResponseBody
 	public Map<Integer, String> getCategories(@RequestParam(name = "sportId") Integer sportId) {
 		return cashierService.getCategoryEntities(sportId);
 	}
 
-	@RequestMapping({"/cabinet/tournaments"})
+	@RequestMapping({ "/cabinet/tournaments" })
 	@ResponseBody
 	public Map<Integer, String> getTournaments(@RequestParam(name = "categoryId") Integer categoryId) {
 		return cashierService.getTournamentEntities(categoryId);
 	}
 
-	@RequestMapping({"/cabinet/outrights"})
+	@RequestMapping({ "/cabinet/outrights" })
 	@ResponseBody
 	public Map<Integer, String> getOutrights(@RequestParam(name = "categoryId") Integer categoryId) {
 		return cashierService.getOutrightEntities(categoryId);
 	}
 
-	@RequestMapping({"/cabinet/outright/odds"})
+	@RequestMapping({ "/cabinet/outright/odds" })
 	@ResponseBody
 	public List<OutrightOdd> getOutrightOdds(@RequestParam(name = "outrightId") Integer outrightId) {
 		return outrightService.findOutrightOdds(outrightId);
 	}
 
-	@RequestMapping({"/cabinet/matches"})
+	@RequestMapping({ "/cabinet/matches" })
 	@ResponseBody
 	public Map<Integer, String> getMatches(@RequestParam(name = "tournamentId") Integer tournamentId) {
 		return cashierService.getMatchEntities(tournamentId);
 	}
 
-	@RequestMapping({"/cabinet/matches/odds"})
+	@RequestMapping({ "/cabinet/matches/odds" })
 	@ResponseBody
 	public Map<Integer, String> getMatchOdds(@RequestParam(name = "matchId") Integer matchId) {
 		return cashierService.getMatchOddEntities(matchId);
 	}
 
 	@RequestMapping("/autologin")
-	public String index(Model model, @RequestParam(name = "login") String login, @RequestParam(name = "cashierId") Integer cashierId,
-			@RequestParam(name = "hash") String hash) {
+	public String index(Model model, @RequestParam(name = "login") String login,
+			@RequestParam(name = "cashierId") Integer cashierId, @RequestParam(name = "hash") String hash) {
 
 		try {
 			GlUser cashier = cashierService.autologin(login, cashierId, hash);
@@ -108,9 +109,41 @@ public class CashierController {
 		return "redirect:/cabinet";
 	}
 
-	@RequestMapping({"/cabinet"})
+	@RequestMapping({ "/cabinet" })
 	public String cabinet(Model model) {
 		model.addAttribute("content", "cabinet/index");
+		model.addAttribute("subpage", "cabinet/main");
 		return "template";
+	}
+
+	@RequestMapping({ "/cabinet/prematch" })
+	public String prematch(Model model) {
+		model.addAttribute("content", "cabinet/index");
+		model.addAttribute("subpage", "cabinet/prematch");
+		return "template";
+	}
+
+	@RequestMapping({ "/cabinet/outright" })
+	public String outright(Model model) {
+		model.addAttribute("content", "cabinet/index");
+		model.addAttribute("subpage", "cabinet/outright");
+		return "template";
+	}
+	
+	@RequestMapping("/cabinet/outright/bet/create")
+	@ResponseBody
+	public String createBet(Model model,
+			@RequestParam(name = "amount") double amount,
+			@RequestParam(name = "oddId") Integer oddId) {
+		GlBet bet = outrightService.createBet(oddId, amount);
+		return bet.toString();
+	}
+
+	@RequestMapping("/cabinet/outright/bet/check")
+	@ResponseBody
+	public String checkBet(Model model,
+			@RequestParam(name = "odd_id") Integer oddId) {
+		GlBet bet = outrightService.checkBet(oddId);
+		return bet.toString();
 	}
 }
