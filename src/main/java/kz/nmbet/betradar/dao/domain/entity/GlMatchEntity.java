@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,30 +26,28 @@ public class GlMatchEntity {
 
 	private Long matchId;
 
-	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<GlCompetitorEntity> competitors;
 
-	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<GlMatchOddEntity> odds;
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlMatchResultEntity> results;
-	
+
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlMatchBetResultEntity> betResults;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date eventDate;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
 	@JoinColumn(name = "gl_tournament_id")
 	private GlTournamentEntity tournament;
 
 	@Column(length = 512)
 	private String title;
-	
 
-	
 	private boolean isActive;
 
 	public Integer getId() {

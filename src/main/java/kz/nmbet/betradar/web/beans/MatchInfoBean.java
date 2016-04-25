@@ -25,6 +25,8 @@ public class MatchInfoBean {
 	private static final Logger logger = LoggerFactory.getLogger(MatchInfoBean.class);
 
 	private Integer matchId;
+
+	private Long betRadarMatchId;
 	private String homeTeamName;
 	private String awayTeamName;
 	private Date matchDate;
@@ -37,6 +39,7 @@ public class MatchInfoBean {
 
 	public MatchInfoBean(GlMatchEntity matchEntity, boolean key) {
 		matchId = matchEntity.getId();
+		betRadarMatchId = matchEntity.getMatchId();
 		matchDate = matchEntity.getEventDate();
 		for (GlCompetitorEntity competitorEntity : matchEntity.getCompetitors()) {
 			switch (competitorEntity.getTeamType()) {
@@ -95,7 +98,6 @@ public class MatchInfoBean {
 					handicapOdds.add(new HandicapOdd(oddEntity));
 					break;
 				case totals :
-					logger.info(totalsOdds == null ? "" : totalsOdds.toString());
 					if (totalsOdds == null) {
 						totalsOdds = new HashMap<String, TotalOdd>();
 					}
@@ -186,6 +188,45 @@ public class MatchInfoBean {
 
 	public void setTotalsOdds(Map<String, TotalOdd> totalsOdds) {
 		this.totalsOdds = totalsOdds;
+	}
+
+	public Long getBetRadarMatchId() {
+		return betRadarMatchId;
+	}
+
+	public void setBetRadarMatchId(Long betRadarMatchId) {
+		this.betRadarMatchId = betRadarMatchId;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((betRadarMatchId == null) ? 0 : betRadarMatchId.hashCode());
+		result = prime * result + ((matchId == null) ? 0 : matchId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MatchInfoBean other = (MatchInfoBean) obj;
+		if (betRadarMatchId == null) {
+			if (other.betRadarMatchId != null)
+				return false;
+		} else if (!betRadarMatchId.equals(other.betRadarMatchId))
+			return false;
+		if (matchId == null) {
+			if (other.matchId != null)
+				return false;
+		} else if (!matchId.equals(other.matchId))
+			return false;
+		return true;
 	}
 
 }

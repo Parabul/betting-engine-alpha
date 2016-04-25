@@ -47,6 +47,16 @@ public class GlOutrightEntity {
 	@OneToMany(mappedBy = "outright", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlOutrightResultEntity> results;
 
+	private boolean cancelled = false;
+
+	public boolean getCancelled() {
+		return cancelled;
+	}
+
+	public void setCancelled(boolean cancelled) {
+		this.cancelled = cancelled;
+	}
+
 	public Integer getId() {
 		return id;
 	}

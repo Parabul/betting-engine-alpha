@@ -20,7 +20,7 @@
 </head>
 <body>
 	<div th:fragment="content">
-		<H1 class="text-center" th:text="${category.nameEn}"></H1>	
+		<H1 class="text-center" ><span th:text="${tournament.category.sport.nameEn}"></span>, <span th:text="${tournament.category.nameEn}"></span>, <span th:text="${tournament.nameEn}"></span></H1>	
 		<hr/>
 		<div th:id="${match.matchId}" th:each="match : ${matches}">
 			<div class="row">

@@ -1,18 +1,20 @@
 package kz.nmbet.betradar.dao.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlTournamentEntity;
 import kz.nmbet.betradar.dao.domain.views.ActiveCategory;
 import kz.nmbet.betradar.dao.repository.GlCategoryEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
+import kz.nmbet.betradar.dao.repository.GlTournamentEntityRepository;
 import kz.nmbet.betradar.web.beans.MatchInfoBean;
 
 import org.slf4j.Logger;
@@ -35,6 +37,9 @@ public class PublicMatchService {
 	@Autowired
 	private GlCategoryEntityRepository categoryEntityRepository;
 
+	@Autowired
+	private GlTournamentEntityRepository tournamentEntityRepository;
+
 	@Transactional
 	public Map<String, List<ActiveCategory>> getActiveCategories() {
 		Map<String, List<ActiveCategory>> sports = new HashMap<String, List<ActiveCategory>>();
@@ -52,22 +57,24 @@ public class PublicMatchService {
 	}
 
 	@Transactional
-	public List<MatchInfoBean> getMatchesByCategory(Integer id) {
+	public List<MatchInfoBean> getMatchesByTournament(Integer id) {
 		List<MatchInfoBean> matches = new ArrayList<MatchInfoBean>();
-		GlCategoryEntity category = categoryEntityRepository.findOne(id);
-		for (GlTournamentEntity tournament : category.getTournaments()) {
-			for (GlMatchEntity match : tournament.getMatches()) {
-				MatchInfoBean matchInfoBean = new MatchInfoBean(match);
-				if (!matchInfoBean.isEmpty())
-					matches.add(matchInfoBean);
-			}
+		logger.info("getMatchesByCategory start ");
+		Collection<GlMatchEntity> matchEntities = new LinkedHashSet<GlMatchEntity>(matchEntityRepository.getByTournamentId(id));
+		logger.info("getMatchesByCategory obtain data " + matchEntities.size() + " end");
+		for (GlMatchEntity match : matchEntities) {
+			MatchInfoBean matchInfoBean = new MatchInfoBean(match);
+			if (!matchInfoBean.isEmpty())
+				matches.add(matchInfoBean);
+
 		}
+		logger.info("getMatchesByCategory loop end");
 		return matches;
 	}
 
 	@Transactional
-	public GlCategoryEntity getCategory(Integer id) {
-		return categoryEntityRepository.findOne(id);
+	public GlTournamentEntity getTournament(Integer id) {
+		return tournamentEntityRepository.findOne(id);
 	}
 
 }

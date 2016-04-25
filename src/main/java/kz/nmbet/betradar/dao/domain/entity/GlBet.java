@@ -22,6 +22,12 @@ public class GlBet {
 	@JoinColumn(name = "gl_outright_odd_id")
 	private GlOutrightOddEntity outrightOddEntity;
 
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "gl_match_odd_id")
+	private GlMatchOddEntity matchOddEntity;
+
+	private Double oddValue;
+
 	private Double betAmount;
 
 	private Double winAmount;
@@ -33,6 +39,10 @@ public class GlBet {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date checkDate;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "gl_owner_id")
+	private GlUser owner;
 
 	public Integer getId() {
 		return id;
@@ -90,12 +100,28 @@ public class GlBet {
 		this.wins = wins;
 	}
 
-	@Override
-	public String toString() {
-		return "GlBet [id=" + id + ", outrightOddEntity=" + outrightOddEntity
-				+ ", betAmount=" + betAmount + ", winAmount=" + winAmount
-				+ ", wins=" + wins + ", createDate=" + createDate
-				+ ", checkDate=" + checkDate + "]";
+	public GlMatchOddEntity getMatchOddEntity() {
+		return matchOddEntity;
+	}
+
+	public void setMatchOddEntity(GlMatchOddEntity matchOddEntity) {
+		this.matchOddEntity = matchOddEntity;
+	}
+
+	public Double getOddValue() {
+		return oddValue;
+	}
+
+	public void setOddValue(Double oddValue) {
+		this.oddValue = oddValue;
+	}
+
+	public GlUser getOwner() {
+		return owner;
+	}
+
+	public void setOwner(GlUser owner) {
+		this.owner = owner;
 	}
 
 }

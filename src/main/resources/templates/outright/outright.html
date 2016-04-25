@@ -19,7 +19,7 @@
 </head>
 <body>
 	<div th:fragment="content">
-		<H1 class="text-center" th:text="${outright.eventInfo}"></H1>
+		<H1 class="text-center" ><span th:text="${outright.category.sport.nameEn}"></span>, <span th:text="${outright.category.nameEn}"></span>, <span th:text="${outright.eventInfo}"></span></H1>
 		<H3 class="text-center"><span th:text="${#dates.format(outright.eventDate, 'dd.MM.yyyy HH:mm')}">matchDate</span></H3>
 		<hr />
 		<table class="table table-bordered">

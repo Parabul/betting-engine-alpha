@@ -99,7 +99,8 @@ public class PrivateOutrightService {
 		}
 
 		HashSet<GlOutrightOddEntity> newOdds = new HashSet<GlOutrightOddEntity>();
-
+		if (outright.getOdds() == null)
+			return;
 		int oddsType = outright.getOdds().getOddsType();
 		OutrightOddsType outrightOddsType = OutrightOddsType.find(oddsType);
 
@@ -159,6 +160,9 @@ public class PrivateOutrightService {
 			for (OutrightResultEntity item : outright.getResult()) {
 				GlOutrightResultEntity resultEntity = new GlOutrightResultEntity();
 				resultEntity.setOutright(glOutrightEntity);
+				if (item.getValue().equals("Cancelled")) {
+					glOutrightEntity.setCancelled(true);
+				}
 				try {
 					resultEntity.setResult(Integer.valueOf(item.getValue()));
 				} catch (Exception e) {

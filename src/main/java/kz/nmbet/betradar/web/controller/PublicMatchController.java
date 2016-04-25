@@ -24,10 +24,10 @@ public class PublicMatchController {
 		return "template";
 	}
 
-	@RequestMapping("/prematch/{categoryId}/")
-	public String table(Model model, @PathVariable("categoryId") Integer categoryId) {
-		model.addAttribute("matches", matchService.getMatchesByCategory(categoryId));
-		model.addAttribute("category", matchService.getCategory(categoryId));
+	@RequestMapping("/prematch/{tournamentId}/")
+	public String table(Model model, @PathVariable("tournamentId") Integer tournamentId) {
+		model.addAttribute("matches", matchService.getMatchesByTournament(tournamentId));
+		model.addAttribute("tournament", matchService.getTournament(tournamentId));
 		model.addAttribute("content", "prematch/category");
 		return "template";
 	}

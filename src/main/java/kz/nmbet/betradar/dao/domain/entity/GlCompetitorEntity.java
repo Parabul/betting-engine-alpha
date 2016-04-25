@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,10 +25,10 @@ public class GlCompetitorEntity {
 	private Integer teamId;
 
 	private Integer superId;
-	
+
 	private boolean isDeleted;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "gl_team_id")
 	private GlTeamEntity team;
 
@@ -105,8 +106,7 @@ public class GlCompetitorEntity {
 	public void setOutright(GlOutrightEntity outright) {
 		this.outright = outright;
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

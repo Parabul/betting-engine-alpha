@@ -18,9 +18,28 @@
     <![endif]-->
 </head>
 <body>
-	<div th:fragment="subpage">
-		<h4>Тут будет список последних ставок</h4>
-
+	<div  style="margin-top: 20px;" th:fragment="subpage">
+		<h4>Ваши текущие ставки</h4>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>№</th>
+					<th>Ставка победила</th>
+					<th>Сумма ставки</th>
+					<th>Сумма выйгрыша</th>
+					<th>Коэффициент</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:id="${bet.id}" th:each="bet : ${bets}">
+					<td><span th:text="${bet.id}"></span></td>
+					<td><span th:text="${bet.wins}"></span></td>
+					<td><span th:text="${bet.betAmount}"></span></td>
+					<td><span th:text="${bet.winAmount}"></span></td>
+					<td><span th:text="${bet.oddValue}"></span></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

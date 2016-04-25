@@ -25,7 +25,7 @@
 			<h4 th:text="${sport.key}">keyvalue</h4>
 			<table class="table">
 				<tr th:each="category : ${sport.value}">
-					<td><a th:href="|/prematch/${category.categoryId}/|" th:text="${category.groupName}"></a></td>
+					<td><a th:href="|/prematch/${category.tournamentId}/|" th:text="${category.groupName}"></a></td>
 				</tr>
 			</table>
 			<hr />
