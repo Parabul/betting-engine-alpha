@@ -9,17 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.postgresql.jdbc2.optional.SimpleDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.sportradar.sdk.shaded.org.apache.commons.logging.Log;
-
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
-import kz.nmbet.betradar.dao.service.PublicOutrightService;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MatchInfoBean {
 	private static final Logger logger = LoggerFactory.getLogger(MatchInfoBean.class);
