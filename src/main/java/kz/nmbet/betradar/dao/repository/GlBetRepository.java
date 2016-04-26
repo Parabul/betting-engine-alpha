@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface GlBetRepository extends JpaRepository<GlBet, Integer> {
 
 	List<GlBet> findByOwner(GlUser owner, Pageable page);
+
+	List<GlBet> findByOutrightOddEntityIsNotNullAndWinsIsNull();
 }

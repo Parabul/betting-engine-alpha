@@ -1,13 +1,9 @@
 package kz.nmbet.betradar.runner;
 
-import kz.nmbet.betradar.dao.repository.UserRepository;
-
-import org.jooq.DSLContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import com.sportradar.sdk.feed.lcoo.interfaces.LcooFeed;
 import com.sportradar.sdk.feed.lcoo.interfaces.LcooFeedListener;
@@ -16,17 +12,12 @@ import com.sportradar.sdk.feed.oddscreator.exceptions.OddsCreatorException;
 import com.sportradar.sdk.feed.oddscreator.interfaces.OddsCreatorFeed;
 import com.sportradar.sdk.feed.sdk.Sdk;
 
-@Component
+//@Component
 public class SdkInitialize implements CommandLineRunner {
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(SdkInitialize.class);
 
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private DSLContext create;
 
 	@Autowired
 	private LcooFeedListener lcooFeedListener;
