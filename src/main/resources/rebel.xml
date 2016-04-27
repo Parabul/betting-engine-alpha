@@ -6,4 +6,11 @@
 		</dir>
 	</classpath>
 
+	<web>
+		<link target="/">
+			<dir name="C:/nmbet/src/betting-engine-alpha/src/main/webapp">
+			</dir>
+		</link>
+	</web>
+
 </application>

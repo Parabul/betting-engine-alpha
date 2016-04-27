@@ -1,11 +1,27 @@
 package kz.nmbet.betradar.dao.service;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 import javax.transaction.Transactional;
+
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sportradar.sdk.feed.common.entities.TypeValueTuple;
+import com.sportradar.sdk.feed.lcoo.entities.BetEntity;
+import com.sportradar.sdk.feed.lcoo.entities.BetResultEntity;
+import com.sportradar.sdk.feed.lcoo.entities.GoalEntity;
+import com.sportradar.sdk.feed.lcoo.entities.GoalsEntity;
+import com.sportradar.sdk.feed.lcoo.entities.MatchEntity;
+import com.sportradar.sdk.feed.lcoo.entities.OddsEntity;
+import com.sportradar.sdk.feed.lcoo.entities.ResultEntity;
+import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
+import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 
 import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
@@ -19,21 +35,6 @@ import kz.nmbet.betradar.dao.domain.types.TeamType;
 import kz.nmbet.betradar.dao.repository.GlCompetitorEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
-
-import org.joda.time.DateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.sportradar.sdk.feed.common.entities.TypeValueTuple;
-import com.sportradar.sdk.feed.lcoo.entities.BetEntity;
-import com.sportradar.sdk.feed.lcoo.entities.BetResultEntity;
-import com.sportradar.sdk.feed.lcoo.entities.MatchEntity;
-import com.sportradar.sdk.feed.lcoo.entities.OddsEntity;
-import com.sportradar.sdk.feed.lcoo.entities.ResultEntity;
-import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
-import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 
 @Service
 public class PrivateMatchService {
@@ -122,17 +123,25 @@ public class PrivateMatchService {
 				betResultEntity.setMatch(glMatchEntity);
 				glMatchEntity.getBetResults().add(betResultEntity);
 			}
+
+//		GoalsEntity goals = match.getGoals();
+//		for (GoalEntity goal : goals.getGoals()) {
+//			goal.getScoringTeam().name()
+//		}
 	}
 
-	private GlMatchOddEntity findOdd(GlMatchEntity glMatchEntity, MatchOddsType matchOddsType, String outCome, String specialBetValue) {
+	private GlMatchOddEntity findOdd(GlMatchEntity glMatchEntity, MatchOddsType matchOddsType, String outCome,
+			String specialBetValue) {
 		for (GlMatchOddEntity odd : glMatchEntity.getOdds()) {
 			if (specialBetValue != null) {
-				if (matchOddsType.equals(odd.getOddsType()) && specialBetValue.equalsIgnoreCase(odd.getSpecialBetValue())
+				if (matchOddsType.equals(odd.getOddsType())
+						&& specialBetValue.equalsIgnoreCase(odd.getSpecialBetValue())
 						&& outCome.equalsIgnoreCase(odd.getOutCome())) {
 					return odd;
 				}
 			} else {
-				if (odd.getSpecialBetValue() == null && matchOddsType.equals(odd.getOddsType()) && outCome.equalsIgnoreCase(odd.getOutCome())) {
+				if (odd.getSpecialBetValue() == null && matchOddsType.equals(odd.getOddsType())
+						&& outCome.equalsIgnoreCase(odd.getOutCome())) {
 					return odd;
 				}
 			}
@@ -154,7 +163,8 @@ public class PrivateMatchService {
 				int oddsType = bet.getOddsType();
 				MatchOddsType matchOddsType = MatchOddsType.find(oddsType);
 				for (OddsEntity odd : bet.getOdds()) {
-					GlMatchOddEntity matchOddEntity = findOdd(glMatchEntity, matchOddsType, odd.getOutCome(), odd.getSpecialBetValue());
+					GlMatchOddEntity matchOddEntity = findOdd(glMatchEntity, matchOddsType, odd.getOutCome(),
+							odd.getSpecialBetValue());
 					if (matchOddEntity == null) {
 						matchOddEntity = new GlMatchOddEntity();
 						matchOddEntity.setOddsType(matchOddsType);
@@ -194,7 +204,8 @@ public class PrivateMatchService {
 		String name = textsEntityUtils.getCDefaultValue(teamData.getText());
 
 		if (matchEntity != null && matchEntity.getId() != null) {
-			GlCompetitorEntity competitor = competitorEntityRepository.findByMatchIdAndSuperIdAndTeamId(matchEntity.getId(), superTeamId, teamId);
+			GlCompetitorEntity competitor = competitorEntityRepository
+					.findByMatchIdAndSuperIdAndTeamId(matchEntity.getId(), superTeamId, teamId);
 			return competitor;
 		}
 		GlCompetitorEntity competitor = new GlCompetitorEntity();

@@ -16,18 +16,18 @@ function showDropDown(url, select, callback) {
 }
 
 function showCategory() {
-	showDropDown("/cabinet/categories?sportId=" + $("#sport").val(), '#category', showTournament);
+	showDropDown("./categories?sportId=" + $("#sport").val(), '#category', showTournament);
 }
 
 function showTournament() {
-	showDropDown("/cabinet/tournaments?categoryId=" + $("#category").val(), '#tournament', showMatch);
+	showDropDown("./tournaments?categoryId=" + $("#category").val(), '#tournament', showMatch);
 }
 
 function showMatch() {
-	showDropDown("/cabinet/matches?tournamentId=" + $("#tournament").val(), '#match', showOdd);
+	showDropDown("./matches?tournamentId=" + $("#tournament").val(), '#match', showOdd);
 }
 function showOdd() {
-	showDropDown("/cabinet/matches/odds?matchId=" + $("#match").val(), '#odd', enable);
+	showDropDown("./matches/odds?matchId=" + $("#match").val(), '#odd', enable);
 }
 
 function enable() {
@@ -43,5 +43,5 @@ $(function() {
 		postfix : 'тг.',
 		initval : 100
 	});
-	showDropDown("/cabinet/sports", '#sport', showCategory);// showSport();
+	showDropDown("./sports", '#sport', showCategory);// showSport();
 });

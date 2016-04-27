@@ -20,10 +20,10 @@
 <body>
 	<div style="margin-top: 20px;" th:fragment="subpage">
 
-		<script type="text/javascript" src="/js/cabinet-outright.js"></script>
+		<script type="text/javascript" th:src="@{/js/cabinet-outright.js}"></script>
 		<div class="row">
 			<div class="col-md-12">
-				<form action="/cabinet/outright/bet/create" class="form-horizontal">
+				<form th:action="@{/cabinet/outright/bet/create}" class="form-horizontal">
 					<h3>Оформление ставки на победителя</h3>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Сумма</label>

@@ -33,15 +33,15 @@ function showOddsDropDown(url, select, callback) {
 }
 
 function showCategory() {
-	showDropDown("/cabinet/categories?sportId=" + $("#sport").val(), '#category', showOutright);
+	showDropDown("./categories?sportId=" + $("#sport").val(), '#category', showOutright);
 }
 
 function showOutright() {
-	showDropDown("/cabinet/outrights?categoryId=" + $("#category").val(), '#outright', showOdd);
+	showDropDown("./outrights?categoryId=" + $("#category").val(), '#outright', showOdd);
 }
 
 function showOdd() {
-	showOddsDropDown("/cabinet/outright/odds?outrightId=" + $("#outright").val(), '#odd', enable);
+	showOddsDropDown("./outright/odds?outrightId=" + $("#outright").val(), '#odd', enable);
 }
 
 function enable() {
@@ -57,5 +57,5 @@ $(function() {
 		postfix : 'тг.',
 		initval : 100
 	});
-	showDropDown("/cabinet/sports", '#sport', showCategory);// showSport();
+	showDropDown("./sports", '#sport', showCategory);// showSport();
 });

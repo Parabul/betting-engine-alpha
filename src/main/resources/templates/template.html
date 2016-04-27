@@ -7,22 +7,22 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="" />
 <meta name="author" content="" />
-<link rel="icon" href="/favicon.ico" />
+<link rel="icon" th:href="@{/favicon.ico}" />
 
 <title>NMbet sport</title>
 
 <!-- Bootstrap core CSS -->
-<link href="/css/bootstrap.min.css" rel="stylesheet" />
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link href="/css/ie10-viewport-bug-workaround.css" rel="stylesheet" />
+<link th:href="@{/css/ie10-viewport-bug-workaround.css}" rel="stylesheet" />
 
 <!-- Custom styles for this template -->
-<link href="/css/navbar.css" rel="stylesheet" />
+<link th:href="@{/css/navbar.css}" rel="stylesheet" />
 
-<link href="/js/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
-<link href="/js/select2/select2.min.css" rel="stylesheet" />
-<link href="/js/select2/select2-bootstrap.min.css" rel="stylesheet" />
+<link th:href="@{/js/touchspin/jquery.bootstrap-touchspin.min.css}" rel="stylesheet" />
+<link th:href="@{/js/select2/select2.min.css}" rel="stylesheet" />
+<link th:href="@{/js/select2/select2-bootstrap.min.css}" rel="stylesheet" />
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -36,11 +36,11 @@
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="/js/bootstrap.min.js"></script>
-	<script src="/js/touchspin/jquery.bootstrap-touchspin.min.js"></script>  
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/touchspin/jquery.bootstrap-touchspin.min.js}"></script>  
 	
-	<script src="/js/select2/select2.min.js"></script>    
-	<script src="/js/select2/i18n/ru.js"></script>    
+	<script th:src="@{/js/select2/select2.min.js}"></script>    
+	<script th:src="@{/js/select2/i18n/ru.js}"></script>    
 	
 </head>
 
@@ -55,13 +55,13 @@
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="/">NMbet sport</a>
+					<a class="navbar-brand" th:href="@{/}">NMbet sport</a>
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
-						<li><a th:href="|/prematch/|">Линия</a></li>
-						<li><a th:href="|/outright/|">Долгосрочные ставки</a></li>
-						<li><a th:href="|/cabinet|">Кабинет кассира</a></li>
+						<li><a th:href="@{/prematch/}">Линия</a></li>
+						<li><a th:href="@{/outright/}">Долгосрочные ставки</a></li>
+						<li><a th:href="@{/cabinet}">Кабинет кассира</a></li>
 
 
 					</ul>
