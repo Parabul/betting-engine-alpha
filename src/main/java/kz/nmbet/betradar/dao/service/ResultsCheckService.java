@@ -28,7 +28,7 @@ public class ResultsCheckService {
 
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
-	@Scheduled(fixedRate = 5000)
+//	@Scheduled(fixedRate = 5000)
 	@Transactional
 	public void checkOutrightOdds() {
 		logger.info("Start check on " + sdf.format(new Date()));

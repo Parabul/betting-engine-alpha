@@ -20,8 +20,10 @@
 </head>
 <body>
 	<div th:fragment="content">
-		<H1 class="text-center" ><span th:text="${tournament.category.sport.nameEn}"></span>, <span th:text="${tournament.category.nameEn}"></span>, <span th:text="${tournament.nameEn}"></span></H1>	
-		<hr/>
+		<H1 class="text-center">
+			<span th:text="${tournament.category.sport.nameEn}"></span>, <span th:text="${tournament.category.nameEn}"></span>, <span th:text="${tournament.nameEn}"></span>
+		</H1>
+		<hr />
 		<div th:id="${match.matchId}" th:each="match : ${matches}">
 			<div class="row">
 				<div class="col-xs-3 col-md-3">
@@ -119,9 +121,31 @@
 							</tr>
 						</tbody>
 					</table>
-				</div>				
+				</div>
+			</div>
+
+			<div class="extra" th:if="${match.extraOdds != null}">
+				<a class="btn btn-primary" role="button" data-toggle="collapse" th:href="${'#collapse'+match.matchId}" aria-expanded="false" aria-controls="collapseExample">
+					Подробнее...</a>
+				
+				<div class="collapse well" th:id="${'collapse'+match.matchId}">
+					<div class="row">
+
+
+						<div class="col-md-3 col-md-3" th:each="extraOddGroup : ${match.extraOdds}">
+							<b><span th:text="#{${'match.odds.types.type' + extraOddGroup.key}}"></span></b>
+							<div th:each="extraOdd : ${extraOddGroup.value}">
+								<span th:text="${extraOdd.outCome}"></span> <span th:if="${extraOdd.specialBetValue != null}" th:text="${'('+extraOdd.specialBetValue+')'}"></span> - <i><span
+									th:text="${extraOdd.value}"></span></i>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
 			</div>
 			<hr />
+
 		</div>
 	</div>
 

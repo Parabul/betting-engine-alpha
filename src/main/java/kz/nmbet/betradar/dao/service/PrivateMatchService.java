@@ -130,17 +130,17 @@ public class PrivateMatchService {
 //		}
 	}
 
-	private GlMatchOddEntity findOdd(GlMatchEntity glMatchEntity, MatchOddsType matchOddsType, String outCome,
+	private GlMatchOddEntity findOdd(GlMatchEntity glMatchEntity, Integer oddsType, String outCome,
 			String specialBetValue) {
 		for (GlMatchOddEntity odd : glMatchEntity.getOdds()) {
 			if (specialBetValue != null) {
-				if (matchOddsType.equals(odd.getOddsType())
+				if (oddsType.equals(odd.getMatchOddsType())
 						&& specialBetValue.equalsIgnoreCase(odd.getSpecialBetValue())
 						&& outCome.equalsIgnoreCase(odd.getOutCome())) {
 					return odd;
 				}
 			} else {
-				if (odd.getSpecialBetValue() == null && matchOddsType.equals(odd.getOddsType())
+				if (odd.getSpecialBetValue() == null && oddsType.equals(odd.getMatchOddsType())
 						&& outCome.equalsIgnoreCase(odd.getOutCome())) {
 					return odd;
 				}
@@ -163,7 +163,7 @@ public class PrivateMatchService {
 				int oddsType = bet.getOddsType();
 				MatchOddsType matchOddsType = MatchOddsType.find(oddsType);
 				for (OddsEntity odd : bet.getOdds()) {
-					GlMatchOddEntity matchOddEntity = findOdd(glMatchEntity, matchOddsType, odd.getOutCome(),
+					GlMatchOddEntity matchOddEntity = findOdd(glMatchEntity, oddsType, odd.getOutCome(),
 							odd.getSpecialBetValue());
 					if (matchOddEntity == null) {
 						matchOddEntity = new GlMatchOddEntity();

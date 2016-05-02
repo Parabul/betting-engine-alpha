@@ -32,6 +32,7 @@ public class MatchInfoBean {
 	private Map<String, Double> correctScoreOdds;
 	private List<HandicapOdd> handicapOdds;
 	private Map<String, TotalOdd> totalsOdds;
+	private Map<Integer, List<GlMatchOddEntity>> extraOdds;
 
 	public MatchInfoBean(GlMatchEntity matchEntity, boolean key) {
 		matchId = matchEntity.getId();
@@ -39,12 +40,12 @@ public class MatchInfoBean {
 		matchDate = matchEntity.getEventDate();
 		for (GlCompetitorEntity competitorEntity : matchEntity.getCompetitors()) {
 			switch (competitorEntity.getTeamType()) {
-				case HOME :
-					homeTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
-					break;
-				case AWAY :
-					awayTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
-					break;
+			case HOME:
+				homeTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
+				break;
+			case AWAY:
+				awayTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
+				break;
 			}
 		}
 	}
@@ -59,41 +60,42 @@ public class MatchInfoBean {
 		matchDate = matchEntity.getEventDate();
 		for (GlCompetitorEntity competitorEntity : matchEntity.getCompetitors()) {
 			switch (competitorEntity.getTeamType()) {
-				case HOME :
-					homeTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
-					break;
-				case AWAY :
-					awayTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
-					break;
+			case HOME:
+				homeTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
+				break;
+			case AWAY:
+				awayTeamName = TextsEntityUtils.getName(competitorEntity.getTeam());
+				break;
 			}
 		}
 
 		for (GlMatchOddEntity oddEntity : matchEntity.getOdds()) {
-			switch (oddEntity.getOddsType()) {
-				case three_way :
+			if (oddEntity.getOddsType() != null) {
+				switch (oddEntity.getOddsType()) {
+				case three_way:
 					if (threeWayOdds == null)
 						threeWayOdds = new ThreeWayOdds(oddEntity);
 					else
 						threeWayOdds.fill(oddEntity);
 					break;
-				case two_way :
+				case two_way:
 					if (twoWayOdds == null)
 						twoWayOdds = new TwoWayOdds(oddEntity);
 					else
 						twoWayOdds.fill(oddEntity);
 					break;
-				case correct_score :
+				case correct_score:
 					if (correctScoreOdds == null) {
 						correctScoreOdds = new TreeMap<String, Double>();
 					}
 					correctScoreOdds.put(oddEntity.getOutCome(), oddEntity.getValue());
 					break;
-				case handicap :
+				case handicap:
 					if (handicapOdds == null)
 						handicapOdds = new ArrayList<HandicapOdd>();
 					handicapOdds.add(new HandicapOdd(oddEntity));
 					break;
-				case totals :
+				case totals:
 					if (totalsOdds == null) {
 						totalsOdds = new HashMap<String, TotalOdd>();
 					}
@@ -106,12 +108,26 @@ public class MatchInfoBean {
 						totalsOdds.put(key, new TotalOdd(oddEntity));
 					}
 					break;
+				}
+			} else {
+				if (extraOdds == null)
+					extraOdds = new HashMap<>();
+				Integer key = oddEntity.getMatchOddsType();
+				if (!extraOdds.containsKey(key))
+					extraOdds.put(key, new ArrayList<GlMatchOddEntity>());
+
+				extraOdds.get(key).add(oddEntity);
 			}
 		}
 	}
 
 	public boolean isEmpty() {
-		return threeWayOdds == null && twoWayOdds == null && correctScoreOdds == null && handicapOdds == null && totalsOdds == null;
+		return threeWayOdds == null && twoWayOdds == null && correctScoreOdds == null && handicapOdds == null
+				&& totalsOdds == null;
+	}
+
+	public Map<Integer, List<GlMatchOddEntity>> getExtraOdds() {
+		return extraOdds;
 	}
 
 	public ThreeWayOdds getThreeWayOdds() {

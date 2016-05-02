@@ -18,7 +18,7 @@ public enum MatchOddsType {
 			if (oddsType.type == type)
 				return oddsType;
 		}
-		throw new IllegalArgumentException("unknown MatchOddsType");
-
+		// throw new IllegalArgumentException("unknown MatchOddsType");
+		return null;
 	}
 }

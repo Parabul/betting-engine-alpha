@@ -1,6 +1,7 @@
 package kz.nmbet.betradar.web.controller;
 
 import kz.nmbet.betradar.dao.service.PublicMatchService;
+import kz.nmbet.betradar.utils.MessageByLocaleService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,10 +18,14 @@ public class PublicMatchController {
 	@Autowired
 	private PublicMatchService matchService;
 
+	@Autowired
+	private MessageByLocaleService messageByLocaleService;
+
 	@RequestMapping("/prematch")
 	public String index(Model model) {
 		model.addAttribute("sports", matchService.getActiveCategories());
 		model.addAttribute("content", "prematch/index");
+		
 		return "template";
 	}
 
