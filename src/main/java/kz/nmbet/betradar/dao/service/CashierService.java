@@ -65,7 +65,8 @@ public class CashierService {
 	@Autowired
 	private GlMatchOddEntityRepository matchOddEntityRepository;
 
-
+@Autowired
+private RemoteStoreService remoteStoreService;
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -163,6 +164,7 @@ public class CashierService {
 			bet.setOddValue(odd.getValue());
 			bet.setOwner(user);
 			bet = betRepository.save(bet);
+			remoteStoreService.duplicateBet(bet);
 			return bet;
 		} else
 			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
@@ -179,6 +181,7 @@ public class CashierService {
 			bet.setOddValue(odd.getValue());
 			bet.setOwner(user);
 			bet = betRepository.save(bet);
+			remoteStoreService.duplicateBet(bet);
 			return bet;
 		} else
 			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");

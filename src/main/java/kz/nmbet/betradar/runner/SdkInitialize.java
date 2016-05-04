@@ -13,7 +13,7 @@ import com.sportradar.sdk.feed.oddscreator.exceptions.OddsCreatorException;
 import com.sportradar.sdk.feed.oddscreator.interfaces.OddsCreatorFeed;
 import com.sportradar.sdk.feed.sdk.Sdk;
 
-@Component
+//@Component
 public class SdkInitialize implements CommandLineRunner {
 
 	private static final Logger logger = LoggerFactory

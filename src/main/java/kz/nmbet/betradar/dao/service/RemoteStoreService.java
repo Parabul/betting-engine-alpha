@@ -17,6 +17,9 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
+import kz.nmbet.betradar.dao.domain.entity.GlBet;
+import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
+
 @Service
 public class RemoteStoreService {
 
@@ -33,24 +36,30 @@ public class RemoteStoreService {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public void chech() {
+	public Long duplicateBet(GlBet bet) {
 		jdbcTemplate.setDataSource(dataSource);
 
-		logger.info("CheckMySQLInitialize start ");
+		logger.info("duplicateBet start ");
 		logger.info("-------------------------------");
-		final String INSERT_SQL = "insert into animals (name) values (?)";
-		final String name = "Rob";
+		final String INSERT_SQL = "INSERT INTO day_bets(cashierid,created,round,bets,summ, will_win,game_type) VALUES (?, now(), ?, 'test', ?, ?, 'sport' );";
+
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement ps = connection.prepareStatement(INSERT_SQL, new String[] { "id" });
-				ps.setString(1, name);
+				ps.setInt(1, bet.getOwner().getCashierId());
+				ps.setInt(2, bet.getId());
+				ps.setDouble(3, bet.getBetAmount());
+				ps.setString(4, bet.getBetAmount()*bet.getOddValue()+"");
+				
 				return ps;
 			}
 		}, keyHolder);
 
 		logger.info("row inserted with id " + keyHolder.getKey());
-		logger.info("CheckMySQLInitialize finish ");
+		logger.info("duplicateBet finish ");
+		
+		return keyHolder.getKey().longValue();
 
 	}
 
