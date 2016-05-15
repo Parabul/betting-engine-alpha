@@ -2,16 +2,20 @@ package kz.nmbet.betradar.dao.service;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,6 +29,7 @@ import kz.nmbet.betradar.dao.domain.entity.GlBet;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
+import kz.nmbet.betradar.dao.domain.views.ShortMatch;
 import kz.nmbet.betradar.dao.repository.GlBetRepository;
 import kz.nmbet.betradar.dao.repository.GlCategoryEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
@@ -32,8 +37,9 @@ import kz.nmbet.betradar.dao.repository.GlMatchOddEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlOutrightOddEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlSportEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlTournamentEntityRepository;
+import kz.nmbet.betradar.utils.MessageByLocaleService;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
-import kz.nmbet.betradar.web.beans.MatchInfoBean;
+import kz.nmbet.betradar.web.beans.ShortOdd;
 
 @Service
 public class CashierService {
@@ -56,8 +62,7 @@ public class CashierService {
 	private GlTournamentEntityRepository tournamentEntityRepository;
 
 	@Autowired
-	private GlMatchEntityRepository glMatchEntityRepository;
-
+	private GlMatchEntityRepository matchEntityRepository;
 
 	@Autowired
 	private GlOutrightOddEntityRepository outrightOddEntityRepository;
@@ -65,8 +70,11 @@ public class CashierService {
 	@Autowired
 	private GlMatchOddEntityRepository matchOddEntityRepository;
 
-@Autowired
-private RemoteStoreService remoteStoreService;
+	@Autowired
+	private RemoteStoreService remoteStoreService;
+
+	@Autowired
+	private MessageByLocaleService messageByLocaleService;
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -90,17 +98,21 @@ private RemoteStoreService remoteStoreService;
 		return sportEntityRepository.findAll(new Sort(Sort.Direction.ASC, "nameEn")).stream()
 				.collect(Collectors.toMap(item -> item.getId(), item -> TextsEntityUtils.getName(item)));
 	}
+
 	@Transactional(readOnly = true)
 	public Map<Integer, String> getCategoryEntities(Integer sportId) {
-		return categoryEntityRepository.getBySportId(sportId).stream().collect(Collectors.toMap(item -> item.getId(), item -> TextsEntityUtils.getName(item)));
+		return categoryEntityRepository.getBySportId(sportId).stream()
+				.collect(Collectors.toMap(item -> item.getId(), item -> TextsEntityUtils.getName(item)));
 	}
 
 	@Transactional(readOnly = true)
 	public Map<Integer, String> getOutrightEntities(Integer categoryId) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 		return categoryEntityRepository.findOne(categoryId).getOutrights().stream()
-				.collect(Collectors.toMap(item -> item.getId(), item -> new String(sdf.format(item.getEventDate()) + " : " + item.getEventInfo())));
+				.collect(Collectors.toMap(item -> item.getId(),
+						item -> new String(sdf.format(item.getEventDate()) + " : " + item.getEventInfo())));
 	}
+
 	@Transactional(readOnly = true)
 	public Map<Integer, String> getTournamentEntities(Integer categoryId) {
 		return categoryEntityRepository.findOne(categoryId).getTournaments().stream()
@@ -109,15 +121,24 @@ private RemoteStoreService remoteStoreService;
 	}
 
 	@Transactional(readOnly = true)
-	public Map<Integer, String> getMatchEntities(Integer tournamentId) {
-		return tournamentEntityRepository.findOne(tournamentId).getMatches().stream()
-				.collect(Collectors.toMap(item -> item.getId(), item -> new MatchInfoBean(item, true).getTitle()));
-
+	public List<ShortMatch> getMatchesBySport(Integer sportId, String q) {
+		q = q.replaceAll("\\s", "%");
+		q = "%" + q + "%";
+		List<ShortMatch> result = new ArrayList<ShortMatch>();
+		jdbcTemplate.query(ShortMatch.query, new Object[] { sportId, q },
+				(resultSet, rowNum) -> result.add(new ShortMatch(resultSet, rowNum)));
+		return result;
 	}
 
-	private String getOddInfo(GlMatchOddEntity matchOdd) {
+	private ShortOdd getOddInfo(GlMatchOddEntity matchOdd) {
 		StringBuilder builder = new StringBuilder();
-		builder.append(matchOdd.getOddsType());
+		try {
+			String type = messageByLocaleService.getMessage("match.odds.types.type" + matchOdd.getMatchOddsType());
+			builder.append(type);
+		} catch (NoSuchMessageException e) {
+			builder.append(matchOdd.getMatchOddsType());
+			logger.error(e.getMessage(), e);
+		}
 		builder.append(": ");
 		builder.append(matchOdd.getOutCome());
 
@@ -129,11 +150,13 @@ private RemoteStoreService remoteStoreService;
 		builder.append(" - ");
 		builder.append(matchOdd.getValue());
 
-		return builder.toString();
+		return new ShortOdd(matchOdd.getId(), builder.toString());
 	}
+
 	@Transactional(readOnly = true)
-	public Map<Integer, String> getMatchOddEntities(Integer matchId) {
-		return glMatchEntityRepository.findOne(matchId).getOdds().stream().collect(Collectors.toMap(item -> item.getId(), item -> getOddInfo(item)));
+	public List<ShortOdd> getMatchOddEntities(Integer matchId) {
+		return matchOddEntityRepository.findByMatchIdOrderByMatchOddsTypeAsc(matchId).stream()
+				.map(item -> getOddInfo(item)).collect(Collectors.toList());
 
 	}
 
@@ -145,7 +168,8 @@ private RemoteStoreService remoteStoreService;
 	@Transactional
 	public GlUser autologin(String login, Integer cashierId, String hash) {
 		if (!checkHash(login, cashierId, hash)) {
-			throw new BadCredentialsException(MessageFormat.format("Wrong hash: {0} for ({1}, {2})", hash, login, cashierId));
+			throw new BadCredentialsException(
+					MessageFormat.format("Wrong hash: {0} for ({1}, {2})", hash, login, cashierId));
 		}
 		GlUser cashier = userService.findByCashierId(cashierId);
 		if (cashier == null)
@@ -164,28 +188,33 @@ private RemoteStoreService remoteStoreService;
 			bet.setOddValue(odd.getValue());
 			bet.setOwner(user);
 			bet = betRepository.save(bet);
-			remoteStoreService.duplicateBet(bet);
+			remoteStoreService.duplicateBet(bet, "test");
 			return bet;
 		} else
 			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
 	}
 
 	@Transactional
-	public GlBet createMatchBet(Integer matchOddId, double amount, GlUser user) {
-		GlMatchOddEntity odd = matchOddEntityRepository.findOne(matchOddId);
-		if (odd != null) {
+	public GlBet createMatchBets(String matchOddIds, double amount, GlUser user, String preview) {
+		String[] stringIds = StringUtils.split(matchOddIds, ",");
+		List<Integer> ids = Stream.of(stringIds).map(Integer::valueOf).collect(Collectors.toList());
+		List<GlMatchOddEntity> odds = matchOddEntityRepository.findByIdIn(ids);
+		double oddValue = 1.0d;
+		for (GlMatchOddEntity odd : odds) {
+			oddValue = oddValue * odd.getValue();
+		}
+		if (odds != null && odds.size() > 0) {
 			GlBet bet = new GlBet();
-			bet.setMatchOddEntity(odd);
+			bet.setMatchOddEntity(odds);
 			bet.setBetAmount(amount);
 			bet.setCreateDate(new Date());
-			bet.setOddValue(odd.getValue());
+			bet.setOddValue(oddValue);
 			bet.setOwner(user);
 			bet = betRepository.save(bet);
-			remoteStoreService.duplicateBet(bet);
+			remoteStoreService.duplicateBet(bet, preview);
 			return bet;
 		} else
 			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
 	}
 
-	
 }

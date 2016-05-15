@@ -26,4 +26,7 @@ public interface GlMatchEntityRepository extends JpaRepository<GlMatchEntity, In
 	@Query("select r from GlMatchEntity r left join fetch r.odds  left join fetch r.competitors where r.tournament.id = :id")
 	List<GlMatchEntity> getByTournamentId(@Param("id") Integer id);
 
+	@Fetch(FetchMode.SUBSELECT)
+	@Query("select r from GlMatchEntity r left join fetch r.competitors where r.tournament.category.sport.id = :id")	
+	List<GlMatchEntity> getBySportId(@Param("id") Integer id);
 }

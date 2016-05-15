@@ -8,9 +8,11 @@ import java.util.Map;
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
 import kz.nmbet.betradar.dao.domain.views.OutrightOdd;
+import kz.nmbet.betradar.dao.domain.views.ShortMatch;
 import kz.nmbet.betradar.dao.service.CashierService;
 import kz.nmbet.betradar.dao.service.PublicOutrightService;
 import kz.nmbet.betradar.dao.service.UserService;
+import kz.nmbet.betradar.web.beans.ShortOdd;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,9 +69,10 @@ public class CashierController {
 
 	@RequestMapping("/cabinet/match/bet/create")
 	public String createMatchBet(Model model, @RequestParam(name = "amount") double amount,
-			@RequestParam(name = "oddId") Integer oddId, Principal principal) {
+			@RequestParam(name = "oddIds") String oddIds, @RequestParam(name = "preview") String preview,
+			Principal principal) {
 		GlUser cashier = userService.findByEmail(principal.getName());
-		GlBet bet = cashierService.createMatchBet(oddId, amount, cashier);
+		GlBet bet = cashierService.createMatchBets(oddIds, amount, cashier, preview);
 		logger.info("createBet " + bet.getId());
 		return MessageFormat.format("redirect:/cabinet/bet/{0}/", bet.getId() + "");
 	}
@@ -106,13 +109,14 @@ public class CashierController {
 
 	@RequestMapping({ "/cabinet/matches" })
 	@ResponseBody
-	public Map<Integer, String> getMatches(@RequestParam(name = "tournamentId") Integer tournamentId) {
-		return cashierService.getMatchEntities(tournamentId);
+	public List<ShortMatch> getMatches(@RequestParam(name = "sportId") Integer sportId,
+			@RequestParam(name = "q") String q) {
+		return cashierService.getMatchesBySport(sportId, q);
 	}
 
 	@RequestMapping({ "/cabinet/matches/odds" })
 	@ResponseBody
-	public Map<Integer, String> getMatchOdds(@RequestParam(name = "matchId") Integer matchId) {
+	public List<ShortOdd> getMatchOdds(@RequestParam(name = "matchId") Integer matchId) {
 		return cashierService.getMatchOddEntities(matchId);
 	}
 
@@ -134,17 +138,18 @@ public class CashierController {
 			model.addAttribute("msg", e.getMessage());
 			return "common/403";
 		}
-		return "redirect:/cabinet";
+		return "redirect:/cabinet/index";
 	}
 
 	@RequestMapping({ "/cabinet" })
-	public String cabinet(Model model, Principal principal) {
-		GlUser cashier = userService.findByEmail(principal.getName());
-		model.addAttribute("content", "cabinet/index");
-		model.addAttribute("subpage", "cabinet/main");
-		model.addAttribute("bets", cashierService.getLastCashierBets(cashier));
+	public String cabinet(Model model) {
+		return "redirect:/cabinet/index";
+	}
 
-		return "template";
+	@RequestMapping({ "/cabinet/index" })
+	public String index(Model model) {
+		model.addAttribute("sports", cashierService.getSportEntities());
+		return "cabinet/template";
 	}
 
 	@RequestMapping({ "/cabinet/prematch" })

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 public class TournamentCsvBean {
 
 	private Integer sportId;
-	private Integer categoryId;
+	private Long categoryId;
 	private Integer tournamentId;
 	private Integer uniqueTournamentId;
 	private String sport;
@@ -21,7 +21,7 @@ public class TournamentCsvBean {
 		if (StringUtils.isNotBlank(record.get(0)))
 			this.sportId = Integer.parseInt(record.get(0));
 		if (StringUtils.isNotBlank(record.get(1)))
-			this.categoryId = Integer.parseInt(record.get(1));
+			this.categoryId = Long.parseLong(record.get(1));
 		if (StringUtils.isNotBlank(record.get(2)))
 			this.tournamentId = Integer.parseInt(record.get(2));
 		if (StringUtils.isNotBlank(record.get(3)))
@@ -65,11 +65,11 @@ public class TournamentCsvBean {
 		this.sportId = sportId;
 	}
 
-	public Integer getCategoryId() {
+	public Long getCategoryId() {
 		return categoryId;
 	}
 
-	public void setCategoryId(Integer categoryId) {
+	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
 

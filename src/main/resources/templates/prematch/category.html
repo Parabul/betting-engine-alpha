@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -21,19 +23,26 @@
 <body>
 	<div th:fragment="content">
 		<H1 class="text-center">
-			<span th:text="${tournament.category.sport.nameEn}"></span>, <span th:text="${tournament.category.nameEn}"></span>, <span th:text="${tournament.nameEn}"></span>
+			<span
+				th:text="${tournament.category.sport.nameRu != null} ? ${tournament.category.sport.nameRu} : ${tournament.category.sport.nameEn}"></span>,
+			<span
+				th:text="${tournament.category.nameRu !=null} ? ${tournament.category.nameRu} : ${tournament.category.nameEn}"></span>,
+			<span
+				th:text="${tournament.nameRu != null} ? ${tournament.nameRu}: ${tournament.nameEn}"></span>
 		</H1>
 		<hr />
 		<div th:id="${match.matchId}" th:each="match : ${matches}">
 			<div class="row">
 				<div class="col-xs-3 col-md-3">
 					<h3>
-						<span th:text="${#dates.format(match.matchDate, 'dd.MM.yyyy HH:mm')}">matchDate</span>
+						<span
+							th:text="${#dates.format(match.matchDate, 'dd.MM.yyyy HH:mm')}">matchDate</span>
 					</h3>
 				</div>
 				<div class="col-xs-9 col-md-9">
 					<h3>
-						<span th:text="${match.homeTeamName}"></span> - <span th:text="${match.awayTeamName}"></span>
+						<span th:text="${match.homeTeamName}"></span> - <span
+							th:text="${match.awayTeamName}"></span>
 					</h3>
 				</div>
 			</div>
@@ -73,7 +82,8 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="col-md-3 col-md-3" th:if="${match.correctScoreOdds != null}">
+				<div class="col-md-3 col-md-3"
+					th:if="${match.correctScoreOdds != null}">
 					<table class="table table-bordered">
 						<thead>
 							<tr>
@@ -125,17 +135,22 @@
 			</div>
 
 			<div class="extra" th:if="${match.extraOdds != null}">
-				<a class="btn btn-primary" role="button" data-toggle="collapse" th:href="${'#collapse'+match.matchId}" aria-expanded="false" aria-controls="collapseExample">
-					Подробнее...</a>
-				
+				<a class="btn btn-primary" role="button" data-toggle="collapse"
+					th:href="${'#collapse'+match.matchId}" aria-expanded="false"
+					aria-controls="collapseExample"> Подробнее...</a>
+
 				<div class="collapse well" th:id="${'collapse'+match.matchId}">
 					<div class="row">
 
 
-						<div class="col-md-3 col-md-3" th:each="extraOddGroup : ${match.extraOdds}">
-							<b><span th:text="#{${'match.odds.types.type' + extraOddGroup.key}}"></span></b>
+						<div class="col-md-3 col-md-3"
+							th:each="extraOddGroup : ${match.extraOdds}">
+							<b><span
+								th:text="#{${'match.odds.types.type' + extraOddGroup.key}}"></span></b>
 							<div th:each="extraOdd : ${extraOddGroup.value}">
-								<span th:text="${extraOdd.outCome}"></span> <span th:if="${extraOdd.specialBetValue != null}" th:text="${'('+extraOdd.specialBetValue+')'}"></span> - <i><span
+								<span th:text="${extraOdd.outCome}"></span> <span
+									th:if="${extraOdd.specialBetValue != null}"
+									th:text="${'('+extraOdd.specialBetValue+')'}"></span> - <i><span
 									th:text="${extraOdd.value}"></span></i>
 							</div>
 						</div>
@@ -151,7 +166,8 @@
 
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="/js/bootstrap.min.js"></script>
 </body>

@@ -1,6 +1,7 @@
 package kz.nmbet.betradar.dao.domain.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,9 +25,9 @@ public class GlBet {
 	@JoinColumn(name = "gl_outright_odd_id")
 	private GlOutrightOddEntity outrightOddEntity;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "gl_match_odd_id")
-	private GlMatchOddEntity matchOddEntity;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "mm_bet_match_odds", joinColumns = @JoinColumn(name = "bet_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "match_odd_id", referencedColumnName = "id"))
+	private List<GlMatchOddEntity> matchOddEntity;
 
 	private Double oddValue;
 
@@ -100,14 +103,6 @@ public class GlBet {
 		this.wins = wins;
 	}
 
-	public GlMatchOddEntity getMatchOddEntity() {
-		return matchOddEntity;
-	}
-
-	public void setMatchOddEntity(GlMatchOddEntity matchOddEntity) {
-		this.matchOddEntity = matchOddEntity;
-	}
-
 	public Double getOddValue() {
 		return oddValue;
 	}
@@ -122,6 +117,14 @@ public class GlBet {
 
 	public void setOwner(GlUser owner) {
 		this.owner = owner;
+	}
+
+	public List<GlMatchOddEntity> getMatchOddEntity() {
+		return matchOddEntity;
+	}
+
+	public void setMatchOddEntity(List<GlMatchOddEntity> matchOddEntity) {
+		this.matchOddEntity = matchOddEntity;
 	}
 
 }

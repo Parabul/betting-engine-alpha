@@ -34,7 +34,8 @@ public class GlMatchOddEntity {
 	private String outcomeId;
 
 	private Integer matchOddsType;
-	
+
+	private Boolean oddResult;
 	
 	private boolean isDeleted;
 
@@ -182,6 +183,14 @@ public class GlMatchOddEntity {
 
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+
+	public Boolean getOddResult() {
+		return oddResult;
+	}
+
+	public void setOddResult(Boolean oddResult) {
+		this.oddResult = oddResult;
 	}
 
 }

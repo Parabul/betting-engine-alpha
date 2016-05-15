@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import com.sportradar.sdk.feed.common.entities.TypeValueTuple;
 import com.sportradar.sdk.feed.lcoo.entities.BetEntity;
 import com.sportradar.sdk.feed.lcoo.entities.BetResultEntity;
+import com.sportradar.sdk.feed.lcoo.entities.CardEntity;
+import com.sportradar.sdk.feed.lcoo.entities.CardsEntity;
+import com.sportradar.sdk.feed.lcoo.entities.CornerEntity;
+import com.sportradar.sdk.feed.lcoo.entities.CornersEntity;
 import com.sportradar.sdk.feed.lcoo.entities.GoalEntity;
 import com.sportradar.sdk.feed.lcoo.entities.GoalsEntity;
 import com.sportradar.sdk.feed.lcoo.entities.MatchEntity;
@@ -26,7 +30,10 @@ import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchBetResultEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlMatchCardsEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlMatchCornersEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlMatchGoalsEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchResultEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlTeamEntity;
@@ -98,6 +105,16 @@ public class PrivateMatchService {
 		if (glMatchEntity.getBetResults() == null) {
 			glMatchEntity.setBetResults(new HashSet<GlMatchBetResultEntity>());
 		}
+		if (glMatchEntity.getGoals() == null) {
+			glMatchEntity.setGoals(new HashSet<GlMatchGoalsEntity>());
+		}
+		if (glMatchEntity.getCards() == null) {
+			glMatchEntity.setCards(new HashSet<GlMatchCardsEntity>());
+		}
+		if (glMatchEntity.getCorners() == null) {
+			glMatchEntity.setCorners(new HashSet<GlMatchCornersEntity>());
+		}
+
 		ResultEntity result = match.getResult();
 		if (result != null && result.getScoresInfo() != null)
 			for (TypeValueTuple scoresInfo : result.getScoresInfo().getScores()) {
@@ -124,10 +141,32 @@ public class PrivateMatchService {
 				glMatchEntity.getBetResults().add(betResultEntity);
 			}
 
-//		GoalsEntity goals = match.getGoals();
-//		for (GoalEntity goal : goals.getGoals()) {
-//			goal.getScoringTeam().name()
-//		}
+		GoalsEntity goals = match.getGoals();
+		if (goals != null && goals.getGoals() != null)
+			for (GoalEntity goal : goals.getGoals()) {
+
+				GlMatchGoalsEntity goalsEntity = new GlMatchGoalsEntity(goal);
+				goalsEntity.setMatch(glMatchEntity);
+				glMatchEntity.getGoals().add(goalsEntity);
+			}
+
+		CardsEntity cards = match.getCards();
+
+		if (cards != null && cards.getCards() != null)
+			for (CardEntity card : cards.getCards()) {
+				GlMatchCardsEntity cardsEntity = new GlMatchCardsEntity(card);
+				cardsEntity.setMatch(glMatchEntity);
+				glMatchEntity.getCards().add(cardsEntity);
+			}
+
+		CornersEntity corners = match.getCorners();
+
+		if (corners != null && corners.getCorners() != null)
+			for (CornerEntity corner : corners.getCorners()) {
+				GlMatchCornersEntity cornersEntity = new GlMatchCornersEntity(corner);
+				cornersEntity.setMatch(glMatchEntity);
+				glMatchEntity.getCorners().add(cornersEntity);
+			}
 	}
 
 	private GlMatchOddEntity findOdd(GlMatchEntity glMatchEntity, Integer oddsType, String outCome,

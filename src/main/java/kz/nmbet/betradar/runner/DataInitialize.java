@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlSportEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
 import kz.nmbet.betradar.dao.service.TeamService;
 import kz.nmbet.betradar.dao.service.UserService;
@@ -41,14 +43,13 @@ public class DataInitialize implements CommandLineRunner {
 		}
 
 		// initTeams();
-
 		logger.info("DataInitialize finish ");
 
 	}
 
 	private void initTeams() throws IOException {
 		InputStream tournaments = this.getClass().getClassLoader().getResourceAsStream("data/AllTournamentsIDs.csv");
-		InputStreamReader reader = new InputStreamReader(tournaments);
+		InputStreamReader reader = new InputStreamReader(tournaments, "UTF-8");
 		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withDelimiter(';').parse(reader);
 		List<TournamentCsvBean> tournamentCsvBeans = new ArrayList<TournamentCsvBean>();
 		boolean first = true;
@@ -60,8 +61,9 @@ public class DataInitialize implements CommandLineRunner {
 			TournamentCsvBean bean = new TournamentCsvBean(record);
 			tournamentCsvBeans.add(bean);
 			logger.info(bean.toString());
-			if (bean.isNotEmpty())
-				teamService.create(bean);
+			if (bean.isNotEmpty()) {
+				teamService.initData(bean);
+			}
 			logger.info("-----------");
 		}
 		reader.close();

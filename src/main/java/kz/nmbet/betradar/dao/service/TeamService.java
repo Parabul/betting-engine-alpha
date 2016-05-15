@@ -46,21 +46,70 @@ public class TeamService {
 	private GlTournamentEntityRepository tournamentEntityRepository;
 
 	@Transactional
+	public void initData(TournamentCsvBean bean) {
+		create(bean);
+		GlSportEntity sport = createSport(bean);
+		GlCategoryEntity category = createCategory(bean, sport);
+		createTournament(bean, category);
+	}
+
+	@Transactional
 	public GlTeamEntity create(TournamentCsvBean csvBean) {
 		GlTeamEntity teamEntity = teamEntityRepository.findBySuperTeamId(csvBean.getSuperTeamId());
-		if (teamEntity != null) {
-			logger.info("Already saved teamEntity " + csvBean.getSuperTeamId());
-			return teamEntity;
+		if (teamEntity == null) {
+			teamEntity = new GlTeamEntity();
+			teamEntity.setSuperTeamId(csvBean.getSuperTeamId());
 		}
 		logger.info("Save new " + csvBean.getSuperTeamId());
-		teamEntity = new GlTeamEntity();
-
+		
 		teamEntity.setNameRu(csvBean.getTeamName());
-		teamEntity.setSuperTeamId(csvBean.getSuperTeamId());
 
 		teamEntity = teamEntityRepository.save(teamEntity);
 		return teamEntity;
 
+	}
+
+	@Transactional
+	public GlSportEntity createSport(TournamentCsvBean csvBean) {
+		GlSportEntity sport = sportEntityRepository.findBySportId(csvBean.getSportId());
+		if (sport == null) {
+			sport = new GlSportEntity();
+			sport.setSportId(csvBean.getSportId());
+		}
+
+		sport.setNameRu(csvBean.getSport());
+
+		sport = sportEntityRepository.save(sport);
+		return sport;
+	}
+
+	@Transactional
+	public GlCategoryEntity createCategory(TournamentCsvBean csvBean, GlSportEntity sport) {
+		GlCategoryEntity category = categoryEntityRepository.findByCategoryId(csvBean.getCategoryId());
+		if (category == null) {
+			category = new GlCategoryEntity();
+			category.setCategoryId(csvBean.getCategoryId());
+		}
+
+		category.setNameRu(csvBean.getCategory());
+		category.setSport(sport);
+		category = categoryEntityRepository.save(category);
+		return category;
+	}
+
+	@Transactional
+	public GlTournamentEntity createTournament(TournamentCsvBean csvBean, GlCategoryEntity category) {
+		GlTournamentEntity tournament = tournamentEntityRepository.findByTournamentId(csvBean.getTournamentId());
+		if (tournament == null) {
+			tournament = new GlTournamentEntity();
+			tournament.setTournamentId(csvBean.getTournamentId());
+		}
+
+		tournament.setNameRu(csvBean.getTournament());
+		tournament.setCategory(category);
+
+		tournament = tournamentEntityRepository.save(tournament);
+		return tournament;
 	}
 
 	@Transactional

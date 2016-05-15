@@ -34,6 +34,15 @@ public class GlMatchEntity {
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlMatchResultEntity> results;
+	
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlMatchGoalsEntity> goals;
+	
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlMatchCardsEntity> cards;
+	
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlMatchCornersEntity> corners;
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlMatchBetResultEntity> betResults;
@@ -159,6 +168,30 @@ public class GlMatchEntity {
 		} else if (!matchId.equals(other.matchId))
 			return false;
 		return true;
+	}
+
+	public Set<GlMatchGoalsEntity> getGoals() {
+		return goals;
+	}
+
+	public void setGoals(Set<GlMatchGoalsEntity> goals) {
+		this.goals = goals;
+	}
+
+	public Set<GlMatchCardsEntity> getCards() {
+		return cards;
+	}
+
+	public void setCards(Set<GlMatchCardsEntity> cards) {
+		this.cards = cards;
+	}
+
+	public Set<GlMatchCornersEntity> getCorners() {
+		return corners;
+	}
+
+	public void setCorners(Set<GlMatchCornersEntity> corners) {
+		this.corners = corners;
 	}
 
 }
