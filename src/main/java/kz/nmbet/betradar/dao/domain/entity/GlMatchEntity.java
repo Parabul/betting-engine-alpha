@@ -29,8 +29,11 @@ public class GlMatchEntity {
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<GlCompetitorEntity> competitors;
 
-	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlMatchOddEntity> odds;
+	
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<GlMatchLiveOdd> liveOdds;
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<GlMatchResultEntity> results;
@@ -192,6 +195,14 @@ public class GlMatchEntity {
 
 	public void setCorners(Set<GlMatchCornersEntity> corners) {
 		this.corners = corners;
+	}
+
+	public Set<GlMatchLiveOdd> getLiveOdds() {
+		return liveOdds;
+	}
+
+	public void setLiveOdds(Set<GlMatchLiveOdd> liveOdds) {
+		this.liveOdds = liveOdds;
 	}
 
 }

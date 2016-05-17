@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sportradar.sdk.common.enums.FeedEventType;
-import com.sportradar.sdk.feed.common.LiveFeed;
 import com.sportradar.sdk.feed.lcoo.entities.BatchCompleted;
 import com.sportradar.sdk.feed.lcoo.entities.MatchEntity;
 import com.sportradar.sdk.feed.lcoo.entities.OutrightsEntity;
@@ -105,18 +104,23 @@ public class LcooFeedListenerImpl implements LcooFeedListener {
 	 *            member specifying the type of the occurred event.
 	 */
 
-	public void onFeedEvent(LiveFeed sender, FeedEventType eventType) {
-		logger.info("Lcoo feed event occurred. Event: {}", eventType);
-		logger.info(eventType.toString());
+
+
+	@Override
+	public void onClosed(LcooFeed arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void onOpened(LiveFeed sender) {
-		logger.info("On opened");
-		logger.info(sender.getConnectionParams().toString());
+	@Override
+	public void onFeedEvent(LcooFeed arg0, FeedEventType arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public void onClosed(LiveFeed sender) {
-		logger.info("On closed");
-
+	@Override
+	public void onOpened(LcooFeed arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
