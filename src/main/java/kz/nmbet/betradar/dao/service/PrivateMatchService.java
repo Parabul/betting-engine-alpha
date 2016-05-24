@@ -62,7 +62,6 @@ public class PrivateMatchService {
 
 	@Transactional
 	public GlMatchEntity save(MatchEntity entity) {
-		logger.info(entity.toString());
 
 		GlMatchEntity glMatchEntity = matchEntityRepository.findByMatchId(entity.getMatchId());
 
@@ -78,8 +77,7 @@ public class PrivateMatchService {
 
 			for (TextsEntity competitor : entity.getFixture().getCompetitors().getTexts()) {
 
-				if (competitor != null) {
-					logger.info(competitor.toString());
+				if (competitor != null) {					
 					glMatchEntity.getCompetitors().add(create(competitor, glMatchEntity));
 				}
 			}

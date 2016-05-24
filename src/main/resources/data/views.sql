@@ -50,8 +50,28 @@ CREATE OR REPLACE VIEW public.v_matches AS
      LEFT JOIN gl_competitor_entity away_competitor ON match.id = away_competitor.gl_match_id AND 'AWAY'::text = away_competitor.team_type::text
      LEFT JOIN gl_team_entity away_team ON away_team.id = away_competitor.gl_team_id;
 
+CREATE OR REPLACE VIEW public.v_match_infos AS 
+	 SELECT sport.id AS sport_id,
+	 match.id  match_id,
+	 COALESCE(sport.name_ru, sport.name_en) sport_name,
+	 COALESCE(category.name_ru, category.name_en) category_name,
+	 COALESCE(tournament.name_ru, tournament.name_en) tournament_name,
+	 to_char(match.event_date, 'DD.MM.YYYY HH24:MI'::text) event_date,
+	 COALESCE(home_team.name_ru, home_team.name_en, home_competitor.title)  home_team_name,
+	 COALESCE(away_team.name_ru, away_team.name_en, away_competitor.title) away_team_name
+ 
+
+   FROM gl_sport_entity sport
+     LEFT JOIN gl_category_entity category ON category.gl_sport_id = sport.id
+     LEFT JOIN gl_tournament_entity tournament ON tournament.gl_category_id = category.id
+     LEFT JOIN gl_match_entity match ON match.gl_tournament_id = tournament.id
+     LEFT JOIN gl_competitor_entity home_competitor ON match.id = home_competitor.gl_match_id AND 'HOME'::text = home_competitor.team_type::text
+     LEFT JOIN gl_team_entity home_team ON home_team.id = home_competitor.gl_team_id
+     LEFT JOIN gl_competitor_entity away_competitor ON match.id = away_competitor.gl_match_id AND 'AWAY'::text = away_competitor.team_type::text
+     LEFT JOIN gl_team_entity away_team ON away_team.id = away_competitor.gl_team_id
+     where  match.id is not null;
      
-     select * from gl_match_bet_result_entity br
-	left join gl_match_entity m on m.id=br.gl_match_id
-	left join gl_match_odd_entity odd on m.id=odd.gl_match_id and br.odds_type=odd.match_odds_type and br.outcome=odd.out_come and br.special_bet_value=odd.special_bet_value
-	where status is not null and odd.id is not null
+create view  v_ready_results as 
+select odd.out_come=bet_result.outcome as wins, odd.id odd_id from gl_match_odd_entity odd 
+	left join gl_match_bet_result_entity bet_result on bet_result.odds_type=odd.match_odds_type and bet_result.gl_match_id=odd.gl_match_id and (bet_result.special_bet_value=odd.special_bet_value or (odd.special_bet_value is null and bet_result.special_bet_value is null))
+	where bet_result.id is not null and bet_result.void_factor is null and odd_result is null;     

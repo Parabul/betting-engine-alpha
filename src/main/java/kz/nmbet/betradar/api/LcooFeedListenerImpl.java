@@ -44,7 +44,7 @@ public class LcooFeedListenerImpl implements LcooFeedListener {
 	 */
 
 	public void onMatchReceived(LcooFeed sender, MatchEntity match) {
-		logger.info("On match with match id: {}", match.getMatchId());
+//		logger.info("On match with match id: {}", match.getMatchId());
 		privateMatchService.save(match);
 	}
 

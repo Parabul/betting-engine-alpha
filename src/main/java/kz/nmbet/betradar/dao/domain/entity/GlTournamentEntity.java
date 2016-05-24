@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 import kz.nmbet.betradar.dao.domain.types.LocalizedEntity;
 
@@ -18,7 +19,8 @@ import kz.nmbet.betradar.dao.domain.types.LocalizedEntity;
 public class GlTournamentEntity implements LocalizedEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_TOURNAMENT_ID_GENERATOR", sequenceName="GL_TOURNAMENT_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_TOURNAMENT_ID_GENERATOR")
 	private Integer id;
 
 	private Integer tournamentId;

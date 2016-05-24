@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,7 +20,8 @@ import javax.persistence.TemporalType;
 public class GlOutrightEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_OUTRIGHT_ID_GENERATOR", sequenceName="GL_OUTRIGHT_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_OUTRIGHT_ID_GENERATOR")
 	private Integer id;
 
 	private Integer outrightId;

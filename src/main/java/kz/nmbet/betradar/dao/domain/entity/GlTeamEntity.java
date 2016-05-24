@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 import kz.nmbet.betradar.dao.domain.types.LocalizedEntity;
 
@@ -12,7 +13,8 @@ import kz.nmbet.betradar.dao.domain.types.LocalizedEntity;
 public class GlTeamEntity implements LocalizedEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_TEAM_ID_GENERATOR", sequenceName="GL_TEAM_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_TEAM_ID_GENERATOR")
 	private Integer id;
 
 	private Integer superTeamId;

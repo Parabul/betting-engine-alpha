@@ -76,6 +76,16 @@ public class CashierController {
 		logger.info("createBet " + bet.getId());
 		return MessageFormat.format("redirect:/cabinet/bet/{0}/", bet.getId() + "");
 	}
+	
+	@RequestMapping("/cabinet/live/bet/create")
+	public String createLiveBet(Model model, @RequestParam(name = "amount") double amount,
+			@RequestParam(name = "oddIds") String oddIds, @RequestParam(name = "preview") String preview,
+			Principal principal) {
+		GlUser cashier = userService.findByEmail(principal.getName());
+		GlBet bet = cashierService.createLiveBets(oddIds, amount, cashier, preview);
+		logger.info("createBet " + bet.getId());
+		return MessageFormat.format("redirect:/cabinet/bet/{0}/", bet.getId() + "");
+	}
 
 	@RequestMapping({ "/cabinet/sports" })
 	@ResponseBody
@@ -114,14 +124,26 @@ public class CashierController {
 		return cashierService.getMatchesBySport(sportId, q);
 	}
 
+	@RequestMapping({ "/cabinet/live-matches" })
+	@ResponseBody
+	public List<ShortMatch> getLiveMatches(@RequestParam(name = "q") String q) {
+		return cashierService.getLiveMatches(q);
+	}
+
 	@RequestMapping({ "/cabinet/matches/odds" })
 	@ResponseBody
 	public List<ShortOdd> getMatchOdds(@RequestParam(name = "matchId") Integer matchId) {
 		return cashierService.getMatchOddEntities(matchId);
 	}
+	
+	@RequestMapping({ "/cabinet/live-matches/odds" })
+	@ResponseBody
+	public List<ShortOdd> getLiveMatchOdds(@RequestParam(name = "matchId") Integer matchId) {
+		return cashierService.getMatchLiveOdds(matchId);
+	}
 
-	@RequestMapping("/autologin")
-	public String index(Model model, @RequestParam(name = "login") String login,
+	@RequestMapping("/autologin/prematch")
+	public String autologinPrematch(Model model, @RequestParam(name = "login") String login,
 			@RequestParam(name = "cashierId") Integer cashierId, @RequestParam(name = "hash") String hash) {
 
 		try {
@@ -138,7 +160,28 @@ public class CashierController {
 			model.addAttribute("msg", e.getMessage());
 			return "common/403";
 		}
-		return "redirect:/cabinet/index";
+		return "redirect:/cabinet/prematch";
+	}
+	
+	@RequestMapping("/autologin/live")
+	public String autologinLive(Model model, @RequestParam(name = "login") String login,
+			@RequestParam(name = "cashierId") Integer cashierId, @RequestParam(name = "hash") String hash) {
+
+		try {
+			GlUser cashier = cashierService.autologin(login, cashierId, hash);
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(cashier.getEmail(),
+					userService.getCashierDefaultPassword(login));
+			token.setDetails(userDetailsService.loadUserByUsername(login));
+			Authentication authentication = authenticationManager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		} catch (Exception e) {
+			SecurityContextHolder.getContext().setAuthentication(null);
+			logger.error(e.getMessage(), e);
+			model.addAttribute("msg", e.getMessage());
+			return "common/403";
+		}
+		return "redirect:/cabinet/live";
 	}
 
 	@RequestMapping({ "/cabinet" })
@@ -146,24 +189,15 @@ public class CashierController {
 		return "redirect:/cabinet/index";
 	}
 
-	@RequestMapping({ "/cabinet/index" })
+	@RequestMapping({ "/cabinet/prematch" })
 	public String index(Model model) {
 		model.addAttribute("sports", cashierService.getSportEntities());
 		return "cabinet/template";
 	}
 
-	@RequestMapping({ "/cabinet/prematch" })
-	public String prematch(Model model) {
-		model.addAttribute("content", "cabinet/index");
-		model.addAttribute("subpage", "cabinet/prematch");
-		return "template";
-	}
-
-	@RequestMapping({ "/cabinet/outright" })
-	public String outright(Model model) {
-		model.addAttribute("content", "cabinet/index");
-		model.addAttribute("subpage", "cabinet/outright");
-		return "template";
+	@RequestMapping({ "/cabinet/live" })
+	public String live(Model model) {
+		return "cabinet/live";
 	}
 
 }

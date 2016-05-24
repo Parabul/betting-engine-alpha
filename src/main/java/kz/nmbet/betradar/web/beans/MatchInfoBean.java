@@ -11,6 +11,7 @@ import java.util.TreeMap;
 
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
+import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOdd;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 
@@ -33,6 +34,8 @@ public class MatchInfoBean {
 	private List<HandicapOdd> handicapOdds;
 	private Map<String, TotalOdd> totalsOdds;
 	private Map<Integer, List<GlMatchOddEntity>> extraOdds;
+	
+	private List<GlMatchLiveOdd> liveOdds;
 
 	public MatchInfoBean(GlMatchEntity matchEntity, boolean key) {
 		matchId = matchEntity.getId();
@@ -239,6 +242,14 @@ public class MatchInfoBean {
 		} else if (!matchId.equals(other.matchId))
 			return false;
 		return true;
+	}
+
+	public List<GlMatchLiveOdd> getLiveOdds() {
+		return liveOdds;
+	}
+
+	public void setLiveOdds(List<GlMatchLiveOdd> liveOdds) {
+		this.liveOdds = liveOdds;
 	}
 
 }

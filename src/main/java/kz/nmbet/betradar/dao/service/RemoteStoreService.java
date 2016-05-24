@@ -3,6 +3,7 @@ package kz.nmbet.betradar.dao.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
@@ -18,12 +19,14 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
-import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
 
 @Service
 public class RemoteStoreService {
 
 	private static final Logger logger = LoggerFactory.getLogger(RemoteStoreService.class);
+
+	public static final String PREMATCH_TYPE = "sport prematch";
+	public static final String LIVE_TYPE = "sport live";
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -36,12 +39,10 @@ public class RemoteStoreService {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public Long duplicateBet(GlBet bet, String preview) {
+	public Long duplicateBet(GlBet bet, String preview, String type) {
 		jdbcTemplate.setDataSource(dataSource);
 
-		logger.info("duplicateBet start ");
-		logger.info("-------------------------------");
-		final String INSERT_SQL = "INSERT INTO day_bets(cashierid,created,round,bets,summ, will_win,game_type) VALUES (?, now(), ?, ?, ?, ?, 'sport' );";
+		final String INSERT_SQL = "INSERT INTO day_bets(cashierid,created,round,bets,summ, will_win,game_type) VALUES (?, now(), ?, ?, ?, ?, ? );";
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
@@ -52,15 +53,24 @@ public class RemoteStoreService {
 				ps.setString(3, preview);
 				ps.setDouble(4, bet.getBetAmount());
 				ps.setString(5, bet.getBetAmount() * bet.getOddValue() + "");
+				ps.setString(6, type);
 
 				return ps;
 			}
 		}, keyHolder);
 
-		logger.info("row inserted with id " + keyHolder.getKey());
-		logger.info("duplicateBet finish ");
-
+		logger.info(MessageFormat.format("duplicateBet - {0}, inserted with id = {1}", bet.getId().toString(),
+				keyHolder.getKey().toString()));
 		return keyHolder.getKey().longValue();
+	}
+
+	public void updateWithResult(GlBet bet) {
+		jdbcTemplate.setDataSource(dataSource);
+		final String UPDATE_SQL = "UPDATE day_bets SET utys=?, is_active=? WHERE id=?";
+
+		int result = jdbcTemplate.update(UPDATE_SQL, new Object[] { bet.getWinAmount(), true, bet.getRemoteId() });
+
+		logger.info(MessageFormat.format("rupdateWithResult - {0}, result = {1}", bet.getId().toString(), result + ""));
 
 	}
 

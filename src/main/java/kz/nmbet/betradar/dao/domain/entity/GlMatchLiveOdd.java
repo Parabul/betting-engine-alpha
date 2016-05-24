@@ -1,5 +1,8 @@
 package kz.nmbet.betradar.dao.domain.entity;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,16 +12,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.sportradar.sdk.feed.liveodds.entities.common.OddsEntity;
 import com.sportradar.sdk.feed.liveodds.enums.OddsType;
 
-import kz.nmbet.betradar.dao.domain.types.MatchOddsType;
-
 @Entity
-public class GlMatchLiveOdd {
+public class GlMatchLiveOdd implements Comparable<GlMatchLiveOdd> {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_MATCH_LIVE_ODD_ID_GENERATOR", sequenceName="GL_MATCH_LIVE_ODD_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_MATCH_LIVE_ODD_ID_GENERATOR")
 	private Integer id;
 
 	private Long betradarId;
@@ -51,6 +58,38 @@ public class GlMatchLiveOdd {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_match_id")
 	private GlMatchEntity match;
+
+	@OneToMany(mappedBy = "liveOdd", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<GlMatchLiveOddField> oddFields;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date checkDate;
+
+	public GlMatchLiveOdd() {
+
+	}
+
+	public GlMatchLiveOdd(OddsEntity oddsEntity, String name, GlMatchEntity match) {
+		this.match = match;
+		this.betradarId = oddsEntity.getId();
+		this.name = name;
+		update(oddsEntity);
+	}
+
+	public void update(OddsEntity oddsEntity) {
+		this.active = oddsEntity.isActive();
+		this.changed = oddsEntity.hasChanged();
+		this.combination = oddsEntity.getCombination();
+		this.forTheRest = oddsEntity.getForTheRest();
+		this.freeText = oddsEntity.getFreeText();
+		this.mostBalanced = oddsEntity.isMostBalanced();
+		this.specialOddsValue = oddsEntity.getSpecialOddsValue();
+		this.subType = oddsEntity.getSubType();
+		this.oddsType = oddsEntity.getType();
+		this.typeId = oddsEntity.getTypeId();
+		this.clearedScore = oddsEntity.getClearedScore();
+
+	}
 
 	public Integer getId() {
 		return id;
@@ -195,6 +234,27 @@ public class GlMatchLiveOdd {
 		} else if (!betradarId.equals(other.betradarId))
 			return false;
 		return true;
+	}
+
+	public List<GlMatchLiveOddField> getOddFields() {
+		return oddFields;
+	}
+
+	public void setOddFields(List<GlMatchLiveOddField> oddFields) {
+		this.oddFields = oddFields;
+	}
+
+	public Date getCheckDate() {
+		return checkDate;
+	}
+
+	public void setCheckDate(Date checkDate) {
+		this.checkDate = checkDate;
+	}
+
+	@Override
+	public int compareTo(GlMatchLiveOdd o) {
+		return Long.compare(betradarId, o.getBetradarId());
 	}
 
 }

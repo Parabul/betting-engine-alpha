@@ -20,33 +20,33 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	public void addViewControllers(ViewControllerRegistry registry) {
 	}
 
-    static final Logger logger = LoggerFactory.getLogger(MvcConfig.class);
+	static final Logger logger = LoggerFactory.getLogger(MvcConfig.class);
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-            registry.addInterceptor(localeChangeInterceptor());
-    }
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(localeChangeInterceptor());
+	}
 
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-            LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-            localeChangeInterceptor.setParamName("language");
-            return localeChangeInterceptor;
-    }
+	@Bean
+	public LocaleChangeInterceptor localeChangeInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("language");
+		return localeChangeInterceptor;
+	}
 
-    @Bean(name = "localeResolver")
-    public CookieLocaleResolver localeResolver() {
-            CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-            Locale defaultLocale = new Locale("ru_RU");
-            localeResolver.setDefaultLocale(defaultLocale);
-            return localeResolver;
-    }
+	@Bean(name = "localeResolver")
+	public CookieLocaleResolver localeResolver() {
+		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+		Locale defaultLocale = new Locale("en_US");
+		localeResolver.setDefaultLocale(defaultLocale);
+		return localeResolver;
+	}
 
-    @Bean
-    public ReloadableResourceBundleMessageSource messageSource() {
-            ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-            messageSource.setBasename("classpath:locale/messages");
-            messageSource.setCacheSeconds(10); //reload messages every 10 seconds
-            return messageSource;
-    }
+	@Bean
+	public ReloadableResourceBundleMessageSource messageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename("classpath:locale/messages");
+		messageSource.setCacheSeconds(10); // reload messages every 10 seconds
+		return messageSource;
+	}
 }

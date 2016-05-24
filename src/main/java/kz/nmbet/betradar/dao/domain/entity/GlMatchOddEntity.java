@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import kz.nmbet.betradar.dao.domain.types.MatchOddsType;
 
@@ -16,7 +17,8 @@ import kz.nmbet.betradar.dao.domain.types.MatchOddsType;
 public class GlMatchOddEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_MATCH_ODD_ID_GENERATOR", sequenceName="GL_MATCH_ODD_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_MATCH_ODD_ID_GENERATOR")
 	private Integer id;
 
 	private Integer teamId;

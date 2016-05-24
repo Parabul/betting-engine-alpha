@@ -3,10 +3,11 @@ package kz.nmbet.betradar.dao.service;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -20,25 +21,29 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
+import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOdd;
+import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOddField;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
+import kz.nmbet.betradar.dao.domain.views.MatchDetails;
 import kz.nmbet.betradar.dao.domain.views.ShortMatch;
 import kz.nmbet.betradar.dao.repository.GlBetRepository;
 import kz.nmbet.betradar.dao.repository.GlCategoryEntityRepository;
-import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
+import kz.nmbet.betradar.dao.repository.GlMatchLiveOddFieldRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchOddEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlOutrightOddEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlSportEntityRepository;
-import kz.nmbet.betradar.dao.repository.GlTournamentEntityRepository;
 import kz.nmbet.betradar.utils.MessageByLocaleService;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
+import kz.nmbet.betradar.web.beans.MatchInfoBean;
 import kz.nmbet.betradar.web.beans.ShortOdd;
 
 @Service
@@ -59,12 +64,6 @@ public class CashierService {
 	private GlCategoryEntityRepository categoryEntityRepository;
 
 	@Autowired
-	private GlTournamentEntityRepository tournamentEntityRepository;
-
-	@Autowired
-	private GlMatchEntityRepository matchEntityRepository;
-
-	@Autowired
 	private GlOutrightOddEntityRepository outrightOddEntityRepository;
 
 	@Autowired
@@ -77,10 +76,50 @@ public class CashierService {
 	private MessageByLocaleService messageByLocaleService;
 
 	@Autowired
+	private GlMatchLiveOddFieldRepository liveOddFieldRepository;
+
+	@Autowired
+	private PublicLiveService publicLiveService;
+
+	@Autowired
 	JdbcTemplate jdbcTemplate;
 
 	@Value("${autologin.salt}")
 	private String salt;
+
+	// @Scheduled(fixedRate = 3000)
+	@Transactional
+	public void createRandom() {
+		return;
+//		logger.info("Start createRandom");
+//
+//		Random rand = new Random();
+//		int n = rand.nextInt(50) + 1;
+//		double amount = 100.0d * n;
+//
+//		List<MatchDetails> matches = publicLiveService.getLiveMathes();
+//
+//		if (matches != null && matches.size() > 0) {
+//			Collections.shuffle(matches);
+//			MatchDetails match = matches.get(0);
+//			MatchInfoBean matchInfoBean = publicLiveService.getActiveOdds(match.getMatchId());
+//			if (matchInfoBean != null && matchInfoBean.getLiveOdds() != null
+//					&& matchInfoBean.getLiveOdds().size() > 0) {
+//				Collections.shuffle(matchInfoBean.getLiveOdds());
+//				GlMatchLiveOdd liveOdd = matchInfoBean.getLiveOdds().get(0);
+//				if (liveOdd.getOddFields() != null && liveOdd.getOddFields().size() > 0) {
+//					Collections.shuffle(liveOdd.getOddFields());
+//					GlMatchLiveOddField liveOddField = liveOdd.getOddFields().get(0);
+//					GlBet liveBet = createLiveBets(liveOddField.getId() + "", amount,
+//							userService.findByEmail("anarbek"), "test");
+//					logger.info("liveBet created " + liveBet.getId());
+//				}
+//
+//			}
+//		}
+//
+//		logger.info("End createRandom");
+	}
 
 	@Transactional
 	public GlBet getBet(Integer id) {
@@ -130,6 +169,16 @@ public class CashierService {
 		return result;
 	}
 
+	@Transactional(readOnly = true)
+	public List<ShortMatch> getLiveMatches(String q) {
+		q = q.replaceAll("\\s", "%");
+		q = "%" + q + "%";
+		List<ShortMatch> result = new ArrayList<ShortMatch>();
+		jdbcTemplate.query(ShortMatch.live_query, new Object[] { q },
+				(resultSet, rowNum) -> result.add(new ShortMatch(resultSet, rowNum)));
+		return result;
+	}
+
 	private ShortOdd getOddInfo(GlMatchOddEntity matchOdd) {
 		StringBuilder builder = new StringBuilder();
 		try {
@@ -160,6 +209,31 @@ public class CashierService {
 
 	}
 
+	@Transactional(readOnly = true)
+	public List<ShortOdd> getMatchLiveOdds(Integer matchId) {
+		return liveOddFieldRepository
+				.findByLiveOddMatchIdAndActiveTrueAndLiveOddActiveTrueOrderByLiveOddIdAscViewIndexAsc(matchId).stream()
+				.map(item -> getOddInfo(item)).collect(Collectors.toList());
+
+	}
+
+	private ShortOdd getOddInfo(GlMatchLiveOddField item) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(item.getLiveOdd().getName());
+		builder.append(": ");
+		builder.append(item.getType());
+
+		if (StringUtils.isNotBlank(item.getLiveOdd().getSpecialOddsValue())) {
+			builder.append(" (");
+			builder.append(item.getLiveOdd().getSpecialOddsValue());
+			builder.append(")");
+		}
+		builder.append(" - ");
+		builder.append(item.getValue());
+
+		return new ShortOdd(item.getId(), builder.toString());
+	}
+
 	private boolean checkHash(String login, Integer cashierId, String hash) {
 		String checkString = DigestUtils.md5DigestAsHex(new String(login + cashierId + salt).getBytes());
 		return checkString.equalsIgnoreCase(hash);
@@ -188,7 +262,34 @@ public class CashierService {
 			bet.setOddValue(odd.getValue());
 			bet.setOwner(user);
 			bet = betRepository.save(bet);
-			remoteStoreService.duplicateBet(bet, "test");
+			Long remoteId = remoteStoreService.duplicateBet(bet, "test", RemoteStoreService.PREMATCH_TYPE);
+			bet.setRemoteId(remoteId);
+			bet = betRepository.save(bet);
+			return bet;
+		} else
+			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
+	}
+
+	@Transactional
+	public GlBet createLiveBets(String matchOddIds, double amount, GlUser user, String preview) {
+		String[] stringIds = StringUtils.split(matchOddIds, ",");
+		List<Integer> ids = Stream.of(stringIds).map(Integer::valueOf).collect(Collectors.toList());
+		List<GlMatchLiveOddField> odds = liveOddFieldRepository.findByIdInAndActiveTrue(ids);
+		double oddValue = 1.0d;
+		for (GlMatchLiveOddField odd : odds) {
+			oddValue = oddValue * odd.getValue();
+		}
+		if (odds != null && odds.size() > 0) {
+			GlBet bet = new GlBet();
+			bet.setLiveOdds(odds);
+			bet.setBetAmount(amount);
+			bet.setCreateDate(new Date());
+			bet.setOddValue(oddValue);
+			bet.setOwner(user);
+			bet = betRepository.save(bet);
+			Long remoteId = remoteStoreService.duplicateBet(bet, preview, RemoteStoreService.LIVE_TYPE);
+			bet.setRemoteId(remoteId);
+			bet = betRepository.save(bet);
 			return bet;
 		} else
 			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
@@ -211,7 +312,9 @@ public class CashierService {
 			bet.setOddValue(oddValue);
 			bet.setOwner(user);
 			bet = betRepository.save(bet);
-			remoteStoreService.duplicateBet(bet, preview);
+			Long remoteId = remoteStoreService.duplicateBet(bet, preview, RemoteStoreService.PREMATCH_TYPE);
+			bet.setRemoteId(remoteId);
+			bet = betRepository.save(bet);
 			return bet;
 		} else
 			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");

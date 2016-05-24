@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import com.sportradar.sdk.feed.lcoo.entities.CardEntity;
 import com.sportradar.sdk.feed.lcoo.enums.CardType;
@@ -17,7 +18,8 @@ import com.sportradar.sdk.feed.lcoo.enums.CardType;
 public class GlMatchCardsEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_MATCH_CARDS_ID_GENERATOR", sequenceName="GL_MATCH_CARDS_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_MATCH_CARDS_ID_GENERATOR")
 	private Integer id;
 
 	private String cardTime;

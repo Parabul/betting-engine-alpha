@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import kz.nmbet.betradar.dao.domain.types.TeamType;
 
@@ -17,7 +18,8 @@ import kz.nmbet.betradar.dao.domain.types.TeamType;
 public class GlCompetitorEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_COMPETITOR_ID_GENERATOR", sequenceName="GL_COMPETITOR_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_COMPETITOR_ID_GENERATOR")
 	private Integer id;
 
 	private String title;

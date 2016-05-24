@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>Outrights</title>
+
+<!-- Bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+	<div th:fragment="content">
+		<script type="text/javascript" th:src="@{/js/live-update.js}"></script>
+		<h1>Live</h1>
+		<hr />
+		<div class="match-wrapper" th:id="${match.key}" th:each="match : ${matches}">
+			<div class="row">
+				<div class="col-xs-3 col-md-3">
+					<h3>
+						<span
+							th:text="${#dates.format(match.value.matchDate, 'dd.MM.yyyy HH:mm')}">matchDate</span>
+					</h3>
+				</div>
+				<div class="col-xs-9 col-md-9">
+					<h3>
+						[<i><span
+					th:text="${match.key}"></span></i>] <span th:text="${match.value.homeTeamName}"></span> - <span
+							th:text="${match.value.awayTeamName}"></span>
+					</h3>
+				</div>
+			</div>
+
+
+			<div class="row extra" th:if="${match.value.liveOdds != null}">
+
+				<div class="col-md-3 col-md-3"
+					th:each="liveOddGroup : ${match.value.liveOdds}">
+					<b><span th:text="${liveOddGroup.name}"></span><span
+						th:if="${liveOddGroup.specialOddsValue != null}"
+						th:text="${'('+liveOddGroup.specialOddsValue+')'}"></span></b>
+					<div th:each="extraOdd : ${liveOddGroup.oddFields}">
+						<span th:text="${extraOdd.type}"></span> - <i><span
+							th:text="${extraOdd.value}"></span></i> <span
+							th:if="${extraOdd.value &lt; extraOdd.oldValue}"
+							class="glyphicon glyphicon glyphicon-arrow-down text-danger"></span>
+						<span th:if="${extraOdd.value &gt; extraOdd.oldValue}"
+							class="glyphicon glyphicon glyphicon-arrow-up text-success"></span>
+					</div>
+				</div>
+
+			</div>
+			<hr />
+
+		</div>
+	</div>
+
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

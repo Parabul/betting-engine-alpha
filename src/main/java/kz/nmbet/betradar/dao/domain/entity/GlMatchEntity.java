@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,10 +22,15 @@ import javax.persistence.TemporalType;
 public class GlMatchEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_MATCH_ID_GENERATOR", sequenceName="GL_MATCH_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_MATCH_ID_GENERATOR")
 	private Integer id;
 
 	private Long matchId;
+	
+	private Boolean liveStarted;
+	
+	private Boolean liveStoped;
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<GlCompetitorEntity> competitors;
@@ -203,6 +209,22 @@ public class GlMatchEntity {
 
 	public void setLiveOdds(Set<GlMatchLiveOdd> liveOdds) {
 		this.liveOdds = liveOdds;
+	}
+
+	public Boolean getLiveStarted() {
+		return liveStarted;
+	}
+
+	public void setLiveStarted(Boolean liveStarted) {
+		this.liveStarted = liveStarted;
+	}
+
+	public Boolean getLiveStoped() {
+		return liveStoped;
+	}
+
+	public void setLiveStoped(Boolean liveStoped) {
+		this.liveStoped = liveStoped;
 	}
 
 }

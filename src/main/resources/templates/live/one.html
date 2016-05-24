@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div th:if="${match == null}">Ставки не возможны. Матч прерван
+	или завершен</div>
+
+<div th:if="${match != null}" class="row">
+	<div class="col-xs-3 col-md-3">
+		<h3>
+			<span th:text="${#dates.format(match.matchDate, 'dd.MM.yyyy HH:mm')}">matchDate</span>
+		</h3>
+	</div>
+	<div class="col-xs-9 col-md-9">
+		<h3>
+			[<i><span th:text="${match.matchId}"></span></i>] <span
+				th:text="${match.homeTeamName}"></span> - <span
+				th:text="${match.awayTeamName}"></span>
+		</h3>
+	</div>
+</div>
+
+
+<div class="row extra"
+	th:if="${match != null and match.liveOdds != null}">
+
+	<div class="col-md-3 col-md-3"
+		th:each="liveOddGroup : ${match.liveOdds}">
+		<b><span th:text="${liveOddGroup.name}"></span><span
+			th:if="${liveOddGroup.specialOddsValue != null}"
+			th:text="${'('+liveOddGroup.specialOddsValue+')'}"></span></b>
+		<div th:each="extraOdd : ${liveOddGroup.oddFields}">
+			<span th:text="${extraOdd.type}"></span> - <i><span
+				th:text="${extraOdd.value}"></span></i> <span
+				th:if="${extraOdd.value &lt; extraOdd.oldValue}"
+				class="glyphicon glyphicon glyphicon-arrow-down text-danger"></span>
+			<span th:if="${extraOdd.value &gt; extraOdd.oldValue}"
+				class="glyphicon glyphicon glyphicon-arrow-up text-success"></span>
+		</div>
+	</div>
+
+</div>
+<hr th:if="${match != null}" class="row" />
+
+
+
+</html>

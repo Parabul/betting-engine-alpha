@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import com.sportradar.sdk.feed.common.entities.LocalizedString;
 import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
 import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 
+import kz.nmbet.betradar.dao.domain.types.Lang;
 import kz.nmbet.betradar.dao.domain.types.LocalizedEntity;
 
 @Component
@@ -51,5 +53,13 @@ public class TextsEntityUtils {
 			}
 		}
 		return null;
+	}
+
+	public String getName(LocalizedString name) {
+		if (name.getAvailableTranslationLanguages().contains(Lang.RU.getLang())) {
+			return name.getTranslation(Lang.RU.getLang());
+		}
+		return name.getInternational();
+
 	}
 }

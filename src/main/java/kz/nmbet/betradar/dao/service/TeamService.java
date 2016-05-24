@@ -1,8 +1,23 @@
 package kz.nmbet.betradar.dao.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.transaction.Transactional;
+
+import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sportradar.sdk.feed.lcoo.entities.CategoryEntity;
+import com.sportradar.sdk.feed.lcoo.entities.PlayerEntity;
+import com.sportradar.sdk.feed.lcoo.entities.SportEntity;
+import com.sportradar.sdk.feed.lcoo.entities.TournamentEntity;
 
 import kz.nmbet.betradar.dao.domain.entity.GlCategoryEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlSportEntity;
@@ -14,16 +29,6 @@ import kz.nmbet.betradar.dao.repository.GlTeamEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlTournamentEntityRepository;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 import kz.nmbet.betradar.web.beans.TournamentCsvBean;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.sportradar.sdk.feed.lcoo.entities.CategoryEntity;
-import com.sportradar.sdk.feed.lcoo.entities.PlayerEntity;
-import com.sportradar.sdk.feed.lcoo.entities.SportEntity;
-import com.sportradar.sdk.feed.lcoo.entities.TournamentEntity;
 
 @Service
 public class TeamService {
@@ -46,11 +51,87 @@ public class TeamService {
 	private GlTournamentEntityRepository tournamentEntityRepository;
 
 	@Transactional
-	public void initData(TournamentCsvBean bean) {
-		create(bean);
-		GlSportEntity sport = createSport(bean);
-		GlCategoryEntity category = createCategory(bean, sport);
-		createTournament(bean, category);
+	public void initData(Iterable<CSVRecord> records) {
+		boolean first = true;
+		for (CSVRecord record : records) {
+			if (first) {
+				first = false;
+				continue;
+			}
+			TournamentCsvBean bean = new TournamentCsvBean(record);
+			if (bean.isNotEmpty()) {
+				create(bean);
+				GlSportEntity sport = createSport(bean);
+				GlCategoryEntity category = createCategory(bean, sport);
+				createTournament(bean, category);
+			}
+		}
+
+	}
+
+	@Transactional
+	public void initDataForce(Iterable<CSVRecord> records) {
+		boolean first = true;
+		Map<Integer, GlTeamEntity> teams = new HashMap<>();
+		Map<Integer, GlSportEntity> sports = new HashMap<>();
+		Map<Long, TournamentCsvBean> categories = new HashMap<>();
+		Map<Integer, TournamentCsvBean> tournaments = new HashMap<>();
+		List<GlCategoryEntity> categoryEntities = new ArrayList<>();
+		List<GlTournamentEntity> tournamentEntities = new ArrayList<>();
+		for (CSVRecord record : records) {
+			if (first) {
+				first = false;
+				continue;
+			}
+			TournamentCsvBean bean = new TournamentCsvBean(record);
+
+			if (bean.isNotEmpty()) {
+
+				GlTeamEntity teamEntity = new GlTeamEntity();
+				teamEntity.setSuperTeamId(bean.getSuperTeamId());
+				teamEntity.setNameRu(bean.getTeamName());
+				teams.put(bean.getSuperTeamId(), teamEntity);
+
+				if (!sports.containsKey(bean.getSportId())) {
+					GlSportEntity sport = new GlSportEntity();
+					sport.setSportId(bean.getSportId());
+					sport.setNameRu(bean.getSport());
+					sports.put(sport.getSportId(), sport);
+				}
+
+				if (!categories.containsKey(bean.getCategoryId())) {
+					categories.put(bean.getCategoryId(), bean);
+				}
+				if (!tournaments.containsKey(bean.getTournamentId())) {
+					tournaments.put(bean.getTournamentId(), bean);
+				}
+			}
+		}
+		logger.info("start save teams " + teams.values().size());
+		teamEntityRepository.save(teams.values());
+		logger.info("start save sports " + sports.values().size());
+		List<GlSportEntity> sportEntities = sportEntityRepository.save(sports.values());
+
+		for (Entry<Long, TournamentCsvBean> categoryBean : categories.entrySet()) {
+			GlSportEntity sport = null;
+			for (GlSportEntity sportEntity : sportEntities) {
+				if (sportEntity.getSportId().equals(categoryBean.getValue().getSportId())) {
+					sport = sportEntity;
+				}
+			}
+			categoryEntities.add(createCategory(categoryBean.getValue(), sport));
+		}
+		logger.info("categoryEntities saved " + categoryEntities.size());
+		for (Entry<Integer, TournamentCsvBean> tournamentBean : tournaments.entrySet()) {
+			GlCategoryEntity category = null;
+			for (GlCategoryEntity categoryEntity : categoryEntities) {
+				if (categoryEntity.getCategoryId().equals(tournamentBean.getValue().getCategoryId())) {
+					category = categoryEntity;
+				}
+			}
+			tournamentEntities.add(createTournament(tournamentBean.getValue(), category));
+		}
+		logger.info("tournamentBean saved " + tournamentEntities.size());
 	}
 
 	@Transactional
@@ -60,8 +141,7 @@ public class TeamService {
 			teamEntity = new GlTeamEntity();
 			teamEntity.setSuperTeamId(csvBean.getSuperTeamId());
 		}
-		logger.info("Save new " + csvBean.getSuperTeamId());
-		
+
 		teamEntity.setNameRu(csvBean.getTeamName());
 
 		teamEntity = teamEntityRepository.save(teamEntity);

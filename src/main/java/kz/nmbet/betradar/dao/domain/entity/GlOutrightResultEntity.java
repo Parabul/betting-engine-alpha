@@ -7,12 +7,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class GlOutrightResultEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_OUTRIGHT_RESULT_ID_GENERATOR", sequenceName="GL_OUTRIGHT_RESULT_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_OUTRIGHT_RESULT_ID_GENERATOR")
 	private Integer id;
 
 	private Integer teamId;

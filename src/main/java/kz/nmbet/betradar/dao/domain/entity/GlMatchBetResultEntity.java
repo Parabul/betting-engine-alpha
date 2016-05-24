@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 
 import com.sportradar.sdk.feed.lcoo.entities.BetResultEntity;
 
@@ -14,7 +15,8 @@ import com.sportradar.sdk.feed.lcoo.entities.BetResultEntity;
 public class GlMatchBetResultEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_MATCH_BET_RESULT_ID_GENERATOR", sequenceName="GL_MATCH_BET_RESULT_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_MATCH_BET_RESULT_ID_GENERATOR")
 	private Integer id;
 
 	private long oddsType;

@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public class ShortMatch {
 
 	public static final String query = "select sport_id, description, match_id from v_matches where sport_id = ? and upper(description) like upper(?) limit 20";
+	public static final String live_query = "select sport_id, description, match_id from v_matches where match_id in (select distinct gl_match_id from gl_match_live_odd live_odd where live_odd.active = true) and upper(description) like upper(?) limit 20";
 
 	private Integer sportId;
 	private Integer matchId;

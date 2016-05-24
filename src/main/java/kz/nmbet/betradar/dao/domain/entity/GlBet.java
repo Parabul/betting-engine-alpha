@@ -12,13 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 public class GlBet {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(name="GL_BET_ID_GENERATOR", sequenceName="GL_BET_ID_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_BET_ID_GENERATOR")
 	private Integer id;
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -28,6 +30,10 @@ public class GlBet {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "mm_bet_match_odds", joinColumns = @JoinColumn(name = "bet_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "match_odd_id", referencedColumnName = "id"))
 	private List<GlMatchOddEntity> matchOddEntity;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "mm_bet_live_odd_fields", joinColumns = @JoinColumn(name = "bet_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "live_odd_field_id", referencedColumnName = "id"))
+	private List<GlMatchLiveOddField> liveOdds;
 
 	private Double oddValue;
 
@@ -46,6 +52,8 @@ public class GlBet {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_owner_id")
 	private GlUser owner;
+	
+	private Long remoteId;
 
 	public Integer getId() {
 		return id;
@@ -125,6 +133,22 @@ public class GlBet {
 
 	public void setMatchOddEntity(List<GlMatchOddEntity> matchOddEntity) {
 		this.matchOddEntity = matchOddEntity;
+	}
+
+	public List<GlMatchLiveOddField> getLiveOdds() {
+		return liveOdds;
+	}
+
+	public void setLiveOdds(List<GlMatchLiveOddField> liveOdds) {
+		this.liveOdds = liveOdds;
+	}
+
+	public Long getRemoteId() {
+		return remoteId;
+	}
+
+	public void setRemoteId(Long remoteId) {
+		this.remoteId = remoteId;
 	}
 
 }
