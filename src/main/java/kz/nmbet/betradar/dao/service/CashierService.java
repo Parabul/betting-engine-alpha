@@ -3,11 +3,9 @@ package kz.nmbet.betradar.dao.service;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,19 +19,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
-import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOdd;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOddField;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlOutrightOddEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
-import kz.nmbet.betradar.dao.domain.views.MatchDetails;
+import kz.nmbet.betradar.dao.domain.types.BetType;
 import kz.nmbet.betradar.dao.domain.views.ShortMatch;
 import kz.nmbet.betradar.dao.repository.GlBetRepository;
 import kz.nmbet.betradar.dao.repository.GlCategoryEntityRepository;
@@ -43,7 +39,6 @@ import kz.nmbet.betradar.dao.repository.GlOutrightOddEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlSportEntityRepository;
 import kz.nmbet.betradar.utils.MessageByLocaleService;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
-import kz.nmbet.betradar.web.beans.MatchInfoBean;
 import kz.nmbet.betradar.web.beans.ShortOdd;
 
 @Service
@@ -79,47 +74,10 @@ public class CashierService {
 	private GlMatchLiveOddFieldRepository liveOddFieldRepository;
 
 	@Autowired
-	private PublicLiveService publicLiveService;
-
-	@Autowired
 	JdbcTemplate jdbcTemplate;
 
 	@Value("${autologin.salt}")
 	private String salt;
-
-	// @Scheduled(fixedRate = 3000)
-	@Transactional
-	public void createRandom() {
-		return;
-//		logger.info("Start createRandom");
-//
-//		Random rand = new Random();
-//		int n = rand.nextInt(50) + 1;
-//		double amount = 100.0d * n;
-//
-//		List<MatchDetails> matches = publicLiveService.getLiveMathes();
-//
-//		if (matches != null && matches.size() > 0) {
-//			Collections.shuffle(matches);
-//			MatchDetails match = matches.get(0);
-//			MatchInfoBean matchInfoBean = publicLiveService.getActiveOdds(match.getMatchId());
-//			if (matchInfoBean != null && matchInfoBean.getLiveOdds() != null
-//					&& matchInfoBean.getLiveOdds().size() > 0) {
-//				Collections.shuffle(matchInfoBean.getLiveOdds());
-//				GlMatchLiveOdd liveOdd = matchInfoBean.getLiveOdds().get(0);
-//				if (liveOdd.getOddFields() != null && liveOdd.getOddFields().size() > 0) {
-//					Collections.shuffle(liveOdd.getOddFields());
-//					GlMatchLiveOddField liveOddField = liveOdd.getOddFields().get(0);
-//					GlBet liveBet = createLiveBets(liveOddField.getId() + "", amount,
-//							userService.findByEmail("anarbek"), "test");
-//					logger.info("liveBet created " + liveBet.getId());
-//				}
-//
-//			}
-//		}
-//
-//		logger.info("End createRandom");
-	}
 
 	@Transactional
 	public GlBet getBet(Integer id) {
@@ -263,6 +221,7 @@ public class CashierService {
 			bet.setOwner(user);
 			bet = betRepository.save(bet);
 			Long remoteId = remoteStoreService.duplicateBet(bet, "test", RemoteStoreService.PREMATCH_TYPE);
+			bet.setBetType(BetType.OUTRIGHT);
 			bet.setRemoteId(remoteId);
 			bet = betRepository.save(bet);
 			return bet;
@@ -286,6 +245,7 @@ public class CashierService {
 			bet.setCreateDate(new Date());
 			bet.setOddValue(oddValue);
 			bet.setOwner(user);
+			bet.setBetType(BetType.LIVE);
 			bet = betRepository.save(bet);
 			Long remoteId = remoteStoreService.duplicateBet(bet, preview, RemoteStoreService.LIVE_TYPE);
 			bet.setRemoteId(remoteId);
@@ -311,6 +271,7 @@ public class CashierService {
 			bet.setCreateDate(new Date());
 			bet.setOddValue(oddValue);
 			bet.setOwner(user);
+			bet.setBetType(BetType.PREMATCH);
 			bet = betRepository.save(bet);
 			Long remoteId = remoteStoreService.duplicateBet(bet, preview, RemoteStoreService.PREMATCH_TYPE);
 			bet.setRemoteId(remoteId);

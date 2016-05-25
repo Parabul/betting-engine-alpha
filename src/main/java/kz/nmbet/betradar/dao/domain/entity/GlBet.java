@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,11 +18,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import kz.nmbet.betradar.dao.domain.types.BetType;
+
 @Entity
 public class GlBet {
 	@Id
-	@SequenceGenerator(name="GL_BET_ID_GENERATOR", sequenceName="GL_BET_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_BET_ID_GENERATOR")
+	@SequenceGenerator(name = "GL_BET_ID_GENERATOR", sequenceName = "GL_BET_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GL_BET_ID_GENERATOR")
 	private Integer id;
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -30,7 +34,7 @@ public class GlBet {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "mm_bet_match_odds", joinColumns = @JoinColumn(name = "bet_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "match_odd_id", referencedColumnName = "id"))
 	private List<GlMatchOddEntity> matchOddEntity;
-	
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "mm_bet_live_odd_fields", joinColumns = @JoinColumn(name = "bet_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "live_odd_field_id", referencedColumnName = "id"))
 	private List<GlMatchLiveOddField> liveOdds;
@@ -43,6 +47,9 @@ public class GlBet {
 
 	private Boolean wins;
 
+	@Enumerated(EnumType.STRING)
+	private BetType betType;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 
@@ -52,7 +59,7 @@ public class GlBet {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_owner_id")
 	private GlUser owner;
-	
+
 	private Long remoteId;
 
 	public Integer getId() {
@@ -149,6 +156,14 @@ public class GlBet {
 
 	public void setRemoteId(Long remoteId) {
 		this.remoteId = remoteId;
+	}
+
+	public BetType getBetType() {
+		return betType;
+	}
+
+	public void setBetType(BetType betType) {
+		this.betType = betType;
 	}
 
 }

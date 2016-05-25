@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,6 +52,9 @@ public class CashierController {
 	@Autowired
 	AuthenticationManager authenticationManager;
 
+	@Value("${nmbet.print.url}")
+	private String printUrl;
+
 	@RequestMapping({ "/cabinet/bet/{betId}" })
 	public String bet(Model model, @PathVariable("betId") Integer betId) {
 		model.addAttribute("bet", cashierService.getBet(betId));
@@ -74,9 +78,9 @@ public class CashierController {
 		GlUser cashier = userService.findByEmail(principal.getName());
 		GlBet bet = cashierService.createMatchBets(oddIds, amount, cashier, preview);
 		logger.info("createBet " + bet.getId());
-		return MessageFormat.format("redirect:/cabinet/bet/{0}/", bet.getId() + "");
+		return MessageFormat.format("redirect:/cabinet/prematch?betId={0}", bet.getRemoteId() + "");
 	}
-	
+
 	@RequestMapping("/cabinet/live/bet/create")
 	public String createLiveBet(Model model, @RequestParam(name = "amount") double amount,
 			@RequestParam(name = "oddIds") String oddIds, @RequestParam(name = "preview") String preview,
@@ -84,7 +88,7 @@ public class CashierController {
 		GlUser cashier = userService.findByEmail(principal.getName());
 		GlBet bet = cashierService.createLiveBets(oddIds, amount, cashier, preview);
 		logger.info("createBet " + bet.getId());
-		return MessageFormat.format("redirect:/cabinet/bet/{0}/", bet.getId() + "");
+		return MessageFormat.format("redirect:/cabinet/live?betId={0}", bet.getRemoteId() + "");
 	}
 
 	@RequestMapping({ "/cabinet/sports" })
@@ -135,7 +139,7 @@ public class CashierController {
 	public List<ShortOdd> getMatchOdds(@RequestParam(name = "matchId") Integer matchId) {
 		return cashierService.getMatchOddEntities(matchId);
 	}
-	
+
 	@RequestMapping({ "/cabinet/live-matches/odds" })
 	@ResponseBody
 	public List<ShortOdd> getLiveMatchOdds(@RequestParam(name = "matchId") Integer matchId) {
@@ -162,7 +166,7 @@ public class CashierController {
 		}
 		return "redirect:/cabinet/prematch";
 	}
-	
+
 	@RequestMapping("/autologin/live")
 	public String autologinLive(Model model, @RequestParam(name = "login") String login,
 			@RequestParam(name = "cashierId") Integer cashierId, @RequestParam(name = "hash") String hash) {
@@ -190,13 +194,21 @@ public class CashierController {
 	}
 
 	@RequestMapping({ "/cabinet/prematch" })
-	public String index(Model model) {
+	public String index(Model model, @RequestParam(required = false, name = "betId") Integer betId) {
 		model.addAttribute("sports", cashierService.getSportEntities());
+		if (betId != null) {
+			model.addAttribute("betId", betId);
+			model.addAttribute("printUrl", MessageFormat.format(printUrl, betId + ""));
+		}
 		return "cabinet/template";
 	}
 
 	@RequestMapping({ "/cabinet/live" })
-	public String live(Model model) {
+	public String live(Model model, @RequestParam(required = false, name = "betId") Integer betId) {
+		if (betId != null) {
+			model.addAttribute("betId", betId);
+			model.addAttribute("printUrl", MessageFormat.format(printUrl, betId + ""));
+		}
 		return "cabinet/live";
 	}
 

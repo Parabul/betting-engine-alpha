@@ -8,22 +8,17 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOdd;
 import kz.nmbet.betradar.dao.domain.views.MatchDetails;
-import kz.nmbet.betradar.dao.repository.GlCompetitorEntityRepository;
-import kz.nmbet.betradar.dao.repository.GlMatchEntityRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchLiveOddRepository;
-import kz.nmbet.betradar.utils.TextsEntityUtils;
 import kz.nmbet.betradar.web.beans.MatchInfoBean;
 
 @Service
@@ -32,29 +27,26 @@ public class PublicLiveService {
 	private static final Logger logger = LoggerFactory.getLogger(PublicLiveService.class);
 
 	@Autowired
-	private GlMatchEntityRepository matchEntityRepository;
-
-	@Autowired
-	private TeamService teamService;
-
-	@Autowired
-	private GlCompetitorEntityRepository competitorEntityRepository;
-
-	@Autowired
 	private GlMatchLiveOddRepository liveOddRepository;
-
-	@Autowired
-	private TextsEntityUtils textsEntityUtils;
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
 	@Transactional(readOnly = true)
-	public List<MatchDetails> getLiveMathes() {
-		List<MatchDetails> result = new ArrayList<MatchDetails>();
+	public Map<String, List<MatchDetails>> getLiveMathes() {
+		List<MatchDetails> results = new ArrayList<MatchDetails>();
 		jdbcTemplate.query(MatchDetails.live_query, new Object[] {},
-				(resultSet, rowNum) -> result.add(new MatchDetails(resultSet, rowNum)));
-		return result;
+				(resultSet, rowNum) -> results.add(new MatchDetails(resultSet, rowNum)));
+		Map<String, List<MatchDetails>> resultMap = new HashMap<>();
+		for (MatchDetails result : results) {
+			String key = result.getSport();
+			if (!resultMap.containsKey(key)) {
+				resultMap.put(key, new ArrayList<MatchDetails>());
+			}
+			resultMap.get(key).add(result);
+		}
+
+		return resultMap;
 	}
 
 	@Transactional

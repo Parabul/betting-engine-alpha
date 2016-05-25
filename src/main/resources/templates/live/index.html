@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<title>Outrights</title>
+<title>Live</title>
 
 <!-- Bootstrap -->
 <link href="/css/bootstrap.min.css" rel="stylesheet" />
@@ -21,21 +21,38 @@
 </head>
 <body>
 	<div th:fragment="content">
+		<script type="text/javascript">
+			$(function() {
+				$('.sport-group-trigger').change(
+						function() {
+							var trigger = $(this);
+							trigger.closest('.sport-group').find(
+									'.sport-group-item').prop('checked',
+									trigger.is(":checked"));
+						});
+			});
+		</script>
 		<H1>Live</H1>
-		<form  th:action="@{/live/odds/}">
-			<ul class="list-unstyled">
-				<li th:id="${match.matchId}" th:each="match : ${matches}">
-				
-				<input
-					type="checkbox" name="matchIds" th:value="${match.matchId}" /><i><span
-					th:text="${match.matchId}"></span></i> <span
-					th:text="${match.sport}"></span>, <span th:text="${match.category}"></span>,
-					<span th:text="${match.tournament}"></span> <b><span
-						th:text="${match.homeTeam}"></span> - <span
-						th:text="${match.awayTeam}"></span></b> <span class="pull-right">
-						<span th:text="${match.eventDate}">matchDate</span>
-				</span></li>
-			</ul>
+		<form th:action="@{/live/odds/}">
+			<div class="sport-group" th:each="sport : ${matches}">
+				<h4>
+					<input class="sport-group-trigger" type="checkbox"
+						style="margin-right: 10px;" /><span th:text="${sport.key}"></span>
+				</h4>
+				<ul class="list-unstyled" style="padding-left: 10px;">
+					<li th:id="${match.matchId}" th:each="match : ${sport.value}"><input
+						type="checkbox" name="matchIds" class="sport-group-item"
+						th:value="${match.matchId}" /> [<i><span
+							th:text="${match.matchId}"></span></i>] <span
+						th:text="${match.sport}"></span>, <span
+						th:text="${match.category}"></span>, <span
+						th:text="${match.tournament}"></span> <b><span
+							th:text="${match.homeTeam}"></span> - <span
+							th:text="${match.awayTeam}"></span></b> <span class="pull-right">
+							<span th:text="${match.eventDate}">matchDate</span>
+					</span></li>
+				</ul>
+			</div>
 			<input type="submit" value="Просмотр выбранных"
 				class="btn btn-primary" />
 		</form>
