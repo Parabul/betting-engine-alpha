@@ -36,4 +36,14 @@ public class PublicMatchController {
 		model.addAttribute("content", "prematch/category");
 		return "template";
 	}
+	
+
+	@RequestMapping("/olimp/prematch")
+	public String olimp(Model model) {
+		model.addAttribute("sports", matchService.getActiveCategories());
+		model.addAttribute("content", "prematch/index");
+		
+		return "prematch/olimp";
+	}
+
 }

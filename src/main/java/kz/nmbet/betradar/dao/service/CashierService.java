@@ -199,10 +199,10 @@ public class CashierService {
 
 	@Transactional
 	public GlUser autologin(String login, Integer cashierId, String hash) {
-		if (!checkHash(login, cashierId, hash)) {
-			throw new BadCredentialsException(
-					MessageFormat.format("Wrong hash: {0} for ({1}, {2})", hash, login, cashierId));
-		}
+//		if (!checkHash(login, cashierId, hash)) {
+//			throw new BadCredentialsException(
+//					MessageFormat.format("Wrong hash: {0} for ({1}, {2})", hash, login, cashierId+""));
+//		}
 		GlUser cashier = userService.findByCashierId(cashierId);
 		if (cashier == null)
 			cashier = userService.create(login, null, UserService.CASHIER_ROLES, cashierId);

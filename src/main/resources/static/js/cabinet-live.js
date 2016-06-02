@@ -81,8 +81,17 @@ function check() {
 		$("#create").addClass("disabled");
 		$("#create").attr("disabled", true);
 	}
-
+	updateRemote();
 }
+
+function updateRemote(){
+	localStorage.setItem('preview', $('#bet-info').html());
+}
+
+function clearRemote(){
+	localStorage.setItem('preview', '<h1>Ставка оформлена!</h2>');
+}
+
 $(function() {
 
 	$("#amount").TouchSpin({
@@ -94,7 +103,7 @@ $(function() {
 	});
 
 	$("#amount").on("change", function() {
-
+		updateRemote();
 		$("#amount-copy").html($("#amount").val());
 	});
 
@@ -111,6 +120,7 @@ $(function() {
 	$("#create").click(function(e) {
 		e.preventDefault();
 		$("#main-form").submit();
+		clearRemote();
 	});
 	$("#add")
 			.click(

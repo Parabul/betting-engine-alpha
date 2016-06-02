@@ -81,7 +81,15 @@ function check() {
 		$("#create").addClass("disabled");
 		$("#create").attr("disabled", true);
 	}
+	updateRemote();
+}
 
+function updateRemote(){
+	localStorage.setItem('preview', $('#bet-info').html());
+}
+
+function clearRemote(){
+	localStorage.setItem('preview', '<h1>Ставка оформлена!</h2>');
 }
 $(function() {
 
@@ -94,8 +102,8 @@ $(function() {
 	});
 
 	$("#amount").on("change", function() {
-
 		$("#amount-copy").html($("#amount").val());
+		updateRemote();
 	});
 
 	$("#sport-icons li").click(function() {
@@ -115,6 +123,7 @@ $(function() {
 	$("#create").click(function(e) {
 		e.preventDefault();
 		$("#main-form").submit();
+		clearRemote();
 	});
 	$("#add")
 			.click(

@@ -46,11 +46,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/", "/home", "/autologin/**", "/css/**", "/js/**", "/fonts/**", "/live/**", "/outright/**",
-						"/prematch/**")
+				.antMatchers("/", "/home", "/autologin/**", "/css/**", "/js/**", "/fonts/**", "/live/**",
+						"/outright/**", "/prematch/**")
 				.permitAll().anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().and()
 				.logout().permitAll();
 		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+		http.headers().frameOptions().disable();
 	}
 	/*
 	 * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth)

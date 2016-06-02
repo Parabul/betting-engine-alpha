@@ -5,15 +5,6 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
-import kz.nmbet.betradar.dao.domain.entity.GlBet;
-import kz.nmbet.betradar.dao.domain.entity.GlUser;
-import kz.nmbet.betradar.dao.domain.views.OutrightOdd;
-import kz.nmbet.betradar.dao.domain.views.ShortMatch;
-import kz.nmbet.betradar.dao.service.CashierService;
-import kz.nmbet.betradar.dao.service.PublicOutrightService;
-import kz.nmbet.betradar.dao.service.UserService;
-import kz.nmbet.betradar.web.beans.ShortOdd;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +21,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import kz.nmbet.betradar.dao.domain.entity.GlBet;
+import kz.nmbet.betradar.dao.domain.entity.GlUser;
+import kz.nmbet.betradar.dao.domain.views.OutrightOdd;
+import kz.nmbet.betradar.dao.domain.views.ShortMatch;
+import kz.nmbet.betradar.dao.service.CashierService;
+import kz.nmbet.betradar.dao.service.PublicOutrightService;
+import kz.nmbet.betradar.dao.service.UserService;
+import kz.nmbet.betradar.web.beans.ShortOdd;
 
 @Controller
 public class CashierController {
@@ -168,7 +170,7 @@ public class CashierController {
 	}
 
 	@RequestMapping("/autologin/live")
-	public String autologinLive(Model model, @RequestParam(name = "login") String login,
+	public ModelAndView autologinLive(Model model, @RequestParam(name = "login") String login,
 			@RequestParam(name = "cashierId") Integer cashierId, @RequestParam(name = "hash") String hash) {
 
 		try {
@@ -183,9 +185,9 @@ public class CashierController {
 			SecurityContextHolder.getContext().setAuthentication(null);
 			logger.error(e.getMessage(), e);
 			model.addAttribute("msg", e.getMessage());
-			return "common/403";
+			return new ModelAndView("common/403");
 		}
-		return "redirect:/cabinet/live";
+		return new ModelAndView(new RedirectView("/cabinet/live", false, true, true));
 	}
 
 	@RequestMapping({ "/cabinet" })
@@ -193,15 +195,7 @@ public class CashierController {
 		return "redirect:/cabinet/index";
 	}
 
-	@RequestMapping({ "/cabinet/prematch" })
-	public String index(Model model, @RequestParam(required = false, name = "betId") Integer betId) {
-		model.addAttribute("sports", cashierService.getSportEntities());
-		if (betId != null) {
-			model.addAttribute("betId", betId);
-			model.addAttribute("printUrl", MessageFormat.format(printUrl, betId + ""));
-		}
-		return "cabinet/template";
-	}
+
 
 	@RequestMapping({ "/cabinet/live" })
 	public String live(Model model, @RequestParam(required = false, name = "betId") Integer betId) {
@@ -211,5 +205,21 @@ public class CashierController {
 		}
 		return "cabinet/live";
 	}
+
+	@RequestMapping({ "/cabinet/prematch" })
+	public String index(Model model, @RequestParam(required = false, name = "betId") Integer betId) {
+		model.addAttribute("sports", cashierService.getSportEntities());
+		if (betId != null) {
+			model.addAttribute("betId", betId);
+			model.addAttribute("printUrl", MessageFormat.format(printUrl, betId + ""));
+		}
+		return "cabinet/prematch";
+	}
+	
+	@RequestMapping({ "/cabinet/preview" })
+	public String prematchPreview(Model model) {		
+		return "cabinet/preview";
+	}
+
 
 }
