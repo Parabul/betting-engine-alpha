@@ -86,13 +86,13 @@
 
 								<tr class="m_c" align="middle" th:each="sport : ${sports}">
 									<td align="center" valign="middle" width="1%"><input
-										onclick="javascript:set_check(111,v27,this.checked);"
 										type="checkbox" /></td>
 									<td class="smwndcap" align="center" valign="middle" width="99%"
 										th:text="${sport.key}">Песапалло</td>
 								<tr class="bg" th:each="category : ${sport.value}">
 									<td align="center" valign="middle" width="1%"><input
-										class="selchamp" type="checkbox" value="2372929" name="sel[]" /></td>
+										type="checkbox" name="matchIds" class="sport-group-item"
+										th:value="${match.matchId}" /></td>
 									<td valign="middle" align="left" width="99%"><a
 										th:href="@{|/prematch/${category.tournamentId}/|}"
 										th:text="${category.groupName}"></a></td>
@@ -116,14 +116,11 @@
 						</table>
 						<br /> <font class="txtmed"><b>Выбор большого
 								количества матчей и доп. ставок приведет к замедлению загрузки
-								линии</b></font> <br /> <br /> <input class="msbtn1"
-							onclick="javascript:set_check(0,200,1)" type="button"
-							value="Выделить все" style="width: 120px;" /> <input
-							class="msbtn1" type="reset" value="Отменить все"
-							style="width: 120px;" /> <input class="msbtn1" type="submit"
-							value="Далее"
-							onclick="javascript:this.disabled=1;this.form.submit();"
-							style="width: 120px;" /> <br /> <br />
+								линии</b></font> <br /> <br /> <input class="msbtn1" value="Выделить все"
+							style="width: 120px;" /> <input class="msbtn1" type="reset"
+							value="Отменить все" style="width: 120px;" /> <input
+							class="msbtn1" type="submit" value="Далее" style="width: 120px;" />
+						<br /> <br />
 
 
 
