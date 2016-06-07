@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PublicMatchController {
@@ -25,7 +26,7 @@ public class PublicMatchController {
 	public String index(Model model) {
 		model.addAttribute("sports", matchService.getActiveCategories());
 		model.addAttribute("content", "prematch/index");
-		
+
 		return "template";
 	}
 
@@ -36,14 +37,19 @@ public class PublicMatchController {
 		model.addAttribute("content", "prematch/category");
 		return "template";
 	}
-	
 
 	@RequestMapping("/olimp/prematch")
 	public String olimp(Model model) {
 		model.addAttribute("sports", matchService.getActiveCategories());
 		model.addAttribute("content", "prematch/index");
-		
+
 		return "prematch/olimp";
+	}
+
+	@RequestMapping("/olimp/selected")
+	public String selected(Model model, @RequestParam(value = "matchIds", required = false) Integer[] matchIds) {
+		model.addAttribute("content", "live/odds");
+		return "prematch/olimp-category";
 	}
 
 }
