@@ -47,8 +47,8 @@ public class PublicMatchController {
 	}
 
 	@RequestMapping("/olimp/selected")
-	public String selected(Model model, @RequestParam(value = "matchIds", required = false) Integer[] matchIds) {
-		model.addAttribute("content", "live/odds");
+	public String selected(Model model, @RequestParam(value = "tournamentIds", required = false) Integer[] tournamentIds) {
+		model.addAttribute("tournaments", matchService.getMatchesByTournaments(tournamentIds));
 		return "prematch/olimp-category";
 	}
 

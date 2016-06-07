@@ -44,7 +44,8 @@ public class PublicMatchService {
 	public Map<String, List<ActiveCategory>> getActiveCategories() {
 		Map<String, List<ActiveCategory>> sports = new HashMap<String, List<ActiveCategory>>();
 		List<ActiveCategory> result = new ArrayList<ActiveCategory>();
-		jdbcTemplate.query(ActiveCategory.query, (resultSet, rowNum) -> result.add(new ActiveCategory(resultSet, rowNum)));
+		jdbcTemplate.query(ActiveCategory.query,
+				(resultSet, rowNum) -> result.add(new ActiveCategory(resultSet, rowNum)));
 
 		for (ActiveCategory activeCategory : result) {
 			String sportName = activeCategory.getSportName();
@@ -60,7 +61,8 @@ public class PublicMatchService {
 	public List<MatchInfoBean> getMatchesByTournament(Integer id) {
 		List<MatchInfoBean> matches = new ArrayList<MatchInfoBean>();
 		logger.info("getMatchesByCategory start ");
-		Collection<GlMatchEntity> matchEntities = new LinkedHashSet<GlMatchEntity>(matchEntityRepository.getByTournamentId(id));
+		Collection<GlMatchEntity> matchEntities = new LinkedHashSet<GlMatchEntity>(
+				matchEntityRepository.getByTournamentId(id));
 		logger.info("getMatchesByCategory obtain data " + matchEntities.size() + " end");
 		for (GlMatchEntity match : matchEntities) {
 			MatchInfoBean matchInfoBean = new MatchInfoBean(match);
@@ -75,6 +77,16 @@ public class PublicMatchService {
 	@Transactional
 	public GlTournamentEntity getTournament(Integer id) {
 		return tournamentEntityRepository.findOne(id);
+	}
+
+	@Transactional
+	public Map<GlTournamentEntity, List<MatchInfoBean>> getMatchesByTournaments(Integer[] ids) {
+		Map<GlTournamentEntity, List<MatchInfoBean>> result = new HashMap<GlTournamentEntity, List<MatchInfoBean>>();
+		if (ids != null)
+			for (Integer id : ids) {
+				result.put(getTournament(id), getMatchesByTournament(id));
+			}
+		return result;
 	}
 
 }

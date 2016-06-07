@@ -1427,3 +1427,15 @@ select.bas:disabled {
 	text-shadow: 1px 1px 1px, -1px -1px 1px, 1px -1px 1px, -1px 1px 1px;
 	text-shadow: 1px 1px 1px;
 }
+
+.odd-group{
+	display:inline;
+}
+
+.odd-item{
+	display:inline;
+}
+
+.extra{
+	display:none;
+}
