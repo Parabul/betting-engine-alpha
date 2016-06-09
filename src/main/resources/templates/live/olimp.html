@@ -71,7 +71,6 @@
 											<tr>
 												<td class="ns" colspan="2"><a
 													th:href="@{/olimp/prematch}">Линия - Olimp</a></td>
-
 											</tr>
 											<tr>
 												<td class="ns" colspan="2"><a th:href="@{/olimp/live/}">Live
@@ -88,28 +87,28 @@
 				</td>
 				<td class="central_td" valign="top">
 
-					<h1 style="text-align: center;">
-						Линия на <span
-							th:text="${#dates.format(#dates.createNow(), 'dd.MM.yyyy')}"></span>
-					</h1>
-					<form name="BetLine" th:action="@{/olimp/selected}" method="get">
+					<h1 style="text-align: center;">Live-Ставки</h1>
+					<form name="BetLine" th:action="@{/olimp/live/odds/}" method="get">
 						<table class="smallwnd3" style="width: 99%;">
 							<tbody>
 
 
-								<tr class="m_c" align="middle" th:each="sport : ${sports}">
+								<tr class="m_c" align="middle" th:each="sport : ${matches}">
 									<td align="center" valign="middle" width="1%"><input
 										type="checkbox" class="sportParent" th:id="${sport.key}" /></td>
 									<td class="smwndcap" align="center" valign="middle" width="99%"
 										th:text="${sport.key}">Песапалло</td>
-								<tr class="bg" th:each="category : ${sport.value}">
+								<tr class="bg" th:each="match : ${sport.value}">
 									<td align="center" valign="middle" width="1%"><input
-										type="checkbox" name="tournamentIds" class="sport-group-item"
-										th:attr="sport=${sport.key}"
-										th:value="${category.tournamentId}" /></td>
-									<td valign="middle" align="left" width="99%"><a
-										th:href="@{|/olimp/selected?tournamentIds=${category.tournamentId}|}"
-										th:text="${category.groupName}"></a></td>
+										type="checkbox" name="matchIds" class="sport-group-item"
+										th:value="${match.matchId}" th:attr="sport=${sport.key}" /></td>
+									<td valign="middle" align="left" width="99%">[<i><span
+											th:text="${match.matchId}"></span></i>] <span
+										th:text="${match.sport}"></span>, <span
+										th:text="${match.category}"></span>, <span
+										th:text="${match.tournament}"></span> <b><span
+											th:text="${match.homeTeam}"></span> - <span
+											th:text="${match.awayTeam}"></span></b></td>
 								</tr>
 
 								</tr>

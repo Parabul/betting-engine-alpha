@@ -91,7 +91,7 @@ public class LcooFeedListenerImpl implements LcooFeedListener {
 	public void onOutrightsReceived(LcooFeed sender, OutrightsEntity outrights) {
 		logger.info("On outrights with nr of {} outrights", outrights
 				.getOutrightEntities().size());
-		logger.info(outrights.toString());
+//		logger.info(outrights.toString());
 		privateOutrightService.create(outrights);
 	}
 

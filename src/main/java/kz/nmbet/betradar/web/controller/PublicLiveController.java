@@ -13,7 +13,8 @@ import kz.nmbet.betradar.utils.MessageByLocaleService;
 
 @Controller
 public class PublicLiveController {
-	private static final Logger logger = LoggerFactory.getLogger(PublicLiveController.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(PublicLiveController.class);
 
 	@Autowired
 	private PublicLiveService liveService;
@@ -29,15 +30,38 @@ public class PublicLiveController {
 		return "template";
 	}
 
+	@RequestMapping("/olimp/live")
+	public String olimp(Model model) {
+		model.addAttribute("matches", liveService.getLiveMathes());
+		return "live/olimp";
+	}
+
+	@RequestMapping("/olimp/live/odds/")
+	public String tableOlimp(Model model,
+			@RequestParam(value = "matchIds") Integer[] matchIds) {
+		model.addAttribute("matches", liveService.getActiveOdds(matchIds));
+		return "live/olimp-odds";
+	}
+
+	@RequestMapping("/olimp/live/odds/one")
+	public String updateOlimp(Model model,
+			@RequestParam(value = "matchId") Integer matchId) {
+		model.addAttribute("match", liveService.getActiveOdds(matchId));
+
+		return "live/olimp-one";
+	}
+
 	@RequestMapping("/live/odds/")
-	public String table(Model model, @RequestParam(value = "matchIds") Integer[] matchIds) {
+	public String table(Model model,
+			@RequestParam(value = "matchIds") Integer[] matchIds) {
 		model.addAttribute("matches", liveService.getActiveOdds(matchIds));
 		model.addAttribute("content", "live/odds");
 		return "template";
 	}
 
 	@RequestMapping("/live/odds/one")
-	public String update(Model model, @RequestParam(value = "matchId") Integer matchId) {
+	public String update(Model model,
+			@RequestParam(value = "matchId") Integer matchId) {
 		model.addAttribute("match", liveService.getActiveOdds(matchId));
 
 		return "live/one";

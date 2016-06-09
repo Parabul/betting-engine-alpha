@@ -40,8 +40,14 @@ public class IndexController {
 		return "template";
 	}
 
-	@RequestMapping(value = "/changelang")
-	public String welcome(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/changelang/ru")
+	public String changelangRu(HttpServletRequest request, HttpServletResponse response) {
+		localeResolver.setLocale(request, response, new Locale("ru_RU"));
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/changelang/en")
+	public String changelangEn(HttpServletRequest request, HttpServletResponse response) {
 		localeResolver.setLocale(request, response, new Locale("en_US"));
 		return "redirect:/";
 	}
