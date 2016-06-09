@@ -6,7 +6,7 @@
 <div th:if="${match == null}">Ставки не возможны. Матч прерван или
 	завершен</div>
 
-<tbody>
+<tbody  th:if="${match != null}">
 	<tr class="hi">
 		<td width="20%" align="center"><span
 			th:text="${#dates.format(match.matchDate, 'dd.MM.yyyy HH:mm')}">matchDate</span><br />

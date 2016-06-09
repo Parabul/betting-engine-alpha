@@ -40,7 +40,8 @@ import kz.nmbet.betradar.utils.TextsEntityUtils;
 @Service
 public class PrivateLiveService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PrivateLiveService.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(PrivateLiveService.class);
 
 	@Autowired
 	private GlMatchEntityRepository matchEntityRepository;
@@ -58,7 +59,7 @@ public class PrivateLiveService {
 	}
 
 	public void save(MetaInfoEntity entity) {
-		// TODO Auto-generated method stub
+		logger.info("###MetaInfoEntity###" + entity.toString());
 
 	}
 
@@ -71,7 +72,8 @@ public class PrivateLiveService {
 		return null;
 	}
 
-	private Map<String, GlMatchLiveOddField> getFields(GlMatchLiveOdd matchOddEntity) {
+	private Map<String, GlMatchLiveOddField> getFields(
+			GlMatchLiveOdd matchOddEntity) {
 		Map<String, GlMatchLiveOddField> fields = new HashMap<String, GlMatchLiveOddField>();
 		if (matchOddEntity.getOddFields() != null) {
 			for (GlMatchLiveOddField oddField : matchOddEntity.getOddFields()) {
@@ -82,19 +84,22 @@ public class PrivateLiveService {
 		return fields;
 	}
 
-	private void updateFields(GlMatchLiveOdd matchOddEntity, Map<String, GlMatchLiveOddField> fields) {
+	private void updateFields(GlMatchLiveOdd matchOddEntity,
+			Map<String, GlMatchLiveOddField> fields) {
 		if (matchOddEntity.getOddFields() == null) {
 			matchOddEntity.setOddFields(new ArrayList<GlMatchLiveOddField>());
 		}
 
 		for (GlMatchLiveOddField oddField : matchOddEntity.getOddFields()) {
-			fields.get(oddField.getCode()).update(fields.get(oddField.getCode()));
+			fields.get(oddField.getCode()).update(
+					fields.get(oddField.getCode()));
 		}
 	}
 
 	@Transactional
 	public void save(OddsChangeEntity entity) {
-		GlMatchEntity match = matchEntityRepository.findByMatchId(entity.getEventId().getEventId());
+		GlMatchEntity match = matchEntityRepository.findByMatchId(entity
+				.getEventId().getEventId());
 		if (match == null)
 			return;
 
@@ -107,13 +112,19 @@ public class PrivateLiveService {
 
 			if (matchOddEntity == null) {
 
-				matchOddEntity = new GlMatchLiveOdd(odd, textsEntityUtils.getName(odd.getName()), match);
-				matchOddEntity.setOddFields(new ArrayList<GlMatchLiveOddField>());
+				matchOddEntity = new GlMatchLiveOdd(odd,
+						textsEntityUtils.getName(odd.getName()), match);
+				matchOddEntity
+						.setOddFields(new ArrayList<GlMatchLiveOddField>());
 				if (odd.getOddFields() != null) {
-					for (Entry<String, OddsFieldEntity> oddFieldEntrySet : odd.getOddFields().entrySet()) {
-						matchOddEntity.getOddFields()
-								.add(new GlMatchLiveOddField(oddFieldEntrySet.getValue(), oddFieldEntrySet.getKey(),
-										textsEntityUtils.getName(oddFieldEntrySet.getValue().getType()),
+					for (Entry<String, OddsFieldEntity> oddFieldEntrySet : odd
+							.getOddFields().entrySet()) {
+						matchOddEntity.getOddFields().add(
+								new GlMatchLiveOddField(oddFieldEntrySet
+										.getValue(), oddFieldEntrySet.getKey(),
+										textsEntityUtils
+												.getName(oddFieldEntrySet
+														.getValue().getType()),
 										matchOddEntity));
 					}
 				}
@@ -124,14 +135,20 @@ public class PrivateLiveService {
 
 			Map<String, GlMatchLiveOddField> oddFields = getFields(matchOddEntity);
 			if (odd.getOddFields() != null) {
-				for (Entry<String, OddsFieldEntity> oddFieldEntrySet : odd.getOddFields().entrySet()) {
+				for (Entry<String, OddsFieldEntity> oddFieldEntrySet : odd
+						.getOddFields().entrySet()) {
 					if (!oddFields.containsKey(oddFieldEntrySet.getKey())) {
-						oddFields.put(oddFieldEntrySet.getKey(),
-								new GlMatchLiveOddField(oddFieldEntrySet.getValue(), oddFieldEntrySet.getKey(),
-										textsEntityUtils.getName(oddFieldEntrySet.getValue().getType()),
+						oddFields.put(
+								oddFieldEntrySet.getKey(),
+								new GlMatchLiveOddField(oddFieldEntrySet
+										.getValue(), oddFieldEntrySet.getKey(),
+										textsEntityUtils
+												.getName(oddFieldEntrySet
+														.getValue().getType()),
 										matchOddEntity));
 					} else {
-						oddFields.get(oddFieldEntrySet.getKey()).update(oddFieldEntrySet.getValue());
+						oddFields.get(oddFieldEntrySet.getKey()).update(
+								oddFieldEntrySet.getValue());
 					}
 				}
 			}
@@ -147,14 +164,16 @@ public class PrivateLiveService {
 	}
 
 	public void stopBet(BetStopEntity entity) {
-		GlMatchEntity match = matchEntityRepository.findByMatchId(entity.getEventId().getEventId());
+		GlMatchEntity match = matchEntityRepository.findByMatchId(entity
+				.getEventId().getEventId());
 		if (match == null)
 			return;
 		match.setLiveStoped(true);
 	}
 
 	public void startBet(BetStartEntity entity) {
-		GlMatchEntity match = matchEntityRepository.findByMatchId(entity.getEventId().getEventId());
+		GlMatchEntity match = matchEntityRepository.findByMatchId(entity
+				.getEventId().getEventId());
 		if (match == null)
 			return;
 		match.setLiveStarted(true);
@@ -167,20 +186,25 @@ public class PrivateLiveService {
 
 	@Transactional
 	public void betClear(BetClearEntity entity) {
-		GlMatchEntity match = matchEntityRepository.findByMatchId(entity.getEventId().getEventId());
+		GlMatchEntity match = matchEntityRepository.findByMatchId(entity
+				.getEventId().getEventId());
 		if (match == null)
 			return;
 		for (OddsEntity odd : entity.getEventOdds()) {
 			GlMatchLiveOdd matchOdd = findOdd(match, odd.getId());
 			if (matchOdd == null)
 				continue;
-			for (Entry<String, OddsFieldEntity> oddFieldEntrySet : odd.getOddFields().entrySet()) {
-				GlMatchLiveOddField matchOddField = findOddField(matchOdd, oddFieldEntrySet.getKey());
+			for (Entry<String, OddsFieldEntity> oddFieldEntrySet : odd
+					.getOddFields().entrySet()) {
+				GlMatchLiveOddField matchOddField = findOddField(matchOdd,
+						oddFieldEntrySet.getKey());
 				if (matchOddField == null)
 					continue;
-				matchOddField.setOutcome(oddFieldEntrySet.getValue().getOutcome());
+				matchOddField.setOutcome(oddFieldEntrySet.getValue()
+						.getOutcome());
 				matchOddField.setActive(false);
-				matchOddField.setVoidFactor(oddFieldEntrySet.getValue().getVoidFactor());
+				matchOddField.setVoidFactor(oddFieldEntrySet.getValue()
+						.getVoidFactor());
 				matchOdd.setActive(false);
 			}
 
@@ -209,7 +233,7 @@ public class PrivateLiveService {
 	}
 
 	public void save(ScoreCardSummaryEntity entity) {
-		// TODO Auto-generated method stub
+		logger.info("###ScoreCardSummaryEntity###" + entity.toString());
 
 	}
 
@@ -217,7 +241,8 @@ public class PrivateLiveService {
 	public void aliveReceived(AliveEntity entity) {
 		if (entity != null && entity.getEventHeaders() != null) {
 			for (EventHeaderEntity eventHeader : entity.getEventHeaders()) {
-				GlMatchEntity match = matchEntityRepository.findByMatchId(eventHeader.getEventId());
+				GlMatchEntity match = matchEntityRepository
+						.findByMatchId(eventHeader.getEventId());
 				if (match != null) {
 					liveOddRepository.keepAlive(match.getId());
 				}
