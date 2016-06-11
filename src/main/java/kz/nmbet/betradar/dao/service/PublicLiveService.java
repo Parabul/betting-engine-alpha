@@ -55,7 +55,7 @@ public class PublicLiveService {
 		logger.info("getActiveOdds" + Arrays.toString(matchIds));
 		Map<Integer, MatchInfoBean> matchInfos = new HashMap<Integer, MatchInfoBean>();
 
-		List<GlMatchLiveOdd> liveOdds = liveOddRepository.findByMatchIdIn(matchIds);
+		List<GlMatchLiveOdd> liveOdds = liveOddRepository.getByMatchIdIn(matchIds);
 		logger.info("liveOdds size" + liveOdds.size());
 		for (GlMatchLiveOdd liveOdd : liveOdds) {
 			Integer key = liveOdd.getMatch().getId();
@@ -77,7 +77,7 @@ public class PublicLiveService {
 		MatchInfoBean matchInfo = null;
 
 		Collection<GlMatchLiveOdd> liveOdds = new LinkedHashSet<GlMatchLiveOdd>(
-				liveOddRepository.findByMatchId(matchId));
+				liveOddRepository.getByMatchId(matchId));
 
 		for (GlMatchLiveOdd liveOdd : liveOdds) {
 			Collections.sort(liveOdd.getOddFields());

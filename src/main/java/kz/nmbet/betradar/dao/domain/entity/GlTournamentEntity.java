@@ -19,8 +19,8 @@ import kz.nmbet.betradar.dao.domain.types.LocalizedEntity;
 public class GlTournamentEntity implements LocalizedEntity {
 
 	@Id
-	@SequenceGenerator(name="GL_TOURNAMENT_ID_GENERATOR", sequenceName="GL_TOURNAMENT_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_TOURNAMENT_ID_GENERATOR")
+	@SequenceGenerator(name = "GL_TOURNAMENT_ID_GENERATOR", sequenceName = "GL_TOURNAMENT_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GL_TOURNAMENT_ID_GENERATOR")
 	private Integer id;
 
 	private Integer tournamentId;
@@ -33,14 +33,13 @@ public class GlTournamentEntity implements LocalizedEntity {
 
 	@Column(length = 512)
 	private String nameEn;
-	
+
 	@OneToMany(mappedBy = "tournament")
 	private List<GlMatchEntity> matches;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gl_category_id")
 	private GlCategoryEntity category;
-
 
 	public Integer getId() {
 		return id;
@@ -96,6 +95,37 @@ public class GlTournamentEntity implements LocalizedEntity {
 
 	public void setCategory(GlCategoryEntity category) {
 		this.category = category;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((tournamentId == null) ? 0 : tournamentId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		GlTournamentEntity other = (GlTournamentEntity) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (tournamentId == null) {
+			if (other.tournamentId != null)
+				return false;
+		} else if (!tournamentId.equals(other.tournamentId))
+			return false;
+		return true;
 	}
 
 }

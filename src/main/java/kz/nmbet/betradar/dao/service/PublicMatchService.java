@@ -75,18 +75,31 @@ public class PublicMatchService {
 	}
 
 	@Transactional
-	public GlTournamentEntity getTournament(Integer id) {
-		return tournamentEntityRepository.findOne(id);
+	public Map<GlTournamentEntity, List<MatchInfoBean>> getMatchesByTournaments(Integer[] ids) {
+		Map<GlTournamentEntity, List<MatchInfoBean>> result = new HashMap<GlTournamentEntity, List<MatchInfoBean>>();
+
+		logger.info("getMatchesByTournaments start ");
+		Collection<GlMatchEntity> matchEntities = new LinkedHashSet<GlMatchEntity>(
+				matchEntityRepository.getByTournamentIds(ids));
+		logger.info("getMatchesByTournaments obtain data " + matchEntities.size() + " end");
+		for (GlMatchEntity match : matchEntities) {
+			MatchInfoBean matchInfoBean = new MatchInfoBean(match);
+			GlTournamentEntity key = match.getTournament();
+			if (!result.containsKey(key))
+				result.put(key, new ArrayList<MatchInfoBean>());
+
+			if (!matchInfoBean.isEmpty()) {
+				result.get(key).add(matchInfoBean);
+			}
+
+		}
+		logger.info("getMatchesByTournaments loop end");
+		return result;
 	}
 
 	@Transactional
-	public Map<GlTournamentEntity, List<MatchInfoBean>> getMatchesByTournaments(Integer[] ids) {
-		Map<GlTournamentEntity, List<MatchInfoBean>> result = new HashMap<GlTournamentEntity, List<MatchInfoBean>>();
-		if (ids != null)
-			for (Integer id : ids) {
-				result.put(getTournament(id), getMatchesByTournament(id));
-			}
-		return result;
+	public GlTournamentEntity getTournament(Integer id) {
+		return tournamentEntityRepository.findOne(id);
 	}
 
 }
