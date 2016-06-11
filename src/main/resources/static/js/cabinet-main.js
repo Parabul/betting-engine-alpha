@@ -118,12 +118,6 @@ $(function() {
 		updateRemote();
 	});
 
-	$("#sport-icons li").click(function() {
-		$("#sport-icons li").removeClass("selected");
-		$(this).addClass("selected");
-		updateMatch($(this).attr("id"));
-	});
-
 	$("#bet-info").on('click', '.delete-odd', function(e) {
 		var oddInfo = $(this).parent('div.odd-info');
 		var oddId = oddInfo.attr("id").replace("odd", "");
@@ -207,6 +201,11 @@ $(function() {
 	var sportMenu = localStorage.getItem('sport-menu');
 	if (sportMenu != null) {
 		$('#sport-icons').html(sportMenu);
+		$("#sport-icons li").click(function() {
+			$("#sport-icons li").removeClass("selected");
+			$(this).addClass("selected");
+			updateMatch($(this).attr("id"));
+		});
 	}
 
 });
