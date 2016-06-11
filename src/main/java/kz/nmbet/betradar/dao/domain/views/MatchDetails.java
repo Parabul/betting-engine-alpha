@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class MatchDetails {
 
-	public static final String live_query = "SELECT sport_id, match_id, sport_name, category_name, tournament_name, event_date, home_team_name, away_team_name  FROM public.v_match_infos where match_id in (select distinct gl_match_id from gl_match_live_odd live_odd where live_odd.active = true)";
+	public static final String live_query = "SELECT sport_id, match_id, sport_name, category_name, tournament_name, event_date, home_team_name, away_team_name  FROM public.v_live_match_infos  ";
 
 	private Integer sportId;
 	private Integer matchId;

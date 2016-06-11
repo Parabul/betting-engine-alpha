@@ -67,6 +67,11 @@ public class GlMatchEntity {
 	private String title;
 
 	private boolean isActive;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date liveCheckDate;
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -225,6 +230,14 @@ public class GlMatchEntity {
 
 	public void setLiveStoped(Boolean liveStoped) {
 		this.liveStoped = liveStoped;
+	}
+
+	public Date getLiveCheckDate() {
+		return liveCheckDate;
+	}
+
+	public void setLiveCheckDate(Date liveCheckDate) {
+		this.liveCheckDate = liveCheckDate;
 	}
 
 }

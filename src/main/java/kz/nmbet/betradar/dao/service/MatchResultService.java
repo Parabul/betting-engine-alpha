@@ -37,7 +37,7 @@ public class MatchResultService {
 		
 	}
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 30000)
 	@Transactional
 	public void updateLiveOddWthResult() {
 		List<GlBet> bets = betRepository.getBetsWithLiveResult();
@@ -66,7 +66,7 @@ public class MatchResultService {
 			}
 	}
 
-	@Scheduled(fixedRate = 5000)
+	@Scheduled(fixedRate = 30000)
 	@Transactional
 	public void updatePreMatchOddWthResult() {
 		List<GlBet> bets = betRepository.getBetsWithPreMatchResult();

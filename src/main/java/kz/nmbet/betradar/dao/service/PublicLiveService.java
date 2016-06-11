@@ -1,6 +1,7 @@
 package kz.nmbet.betradar.dao.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,9 +52,11 @@ public class PublicLiveService {
 
 	@Transactional
 	public Map<Integer, MatchInfoBean> getActiveOdds(Integer[] matchIds) {
+		logger.info("getActiveOdds" + Arrays.toString(matchIds));
 		Map<Integer, MatchInfoBean> matchInfos = new HashMap<Integer, MatchInfoBean>();
 
-		List<GlMatchLiveOdd> liveOdds = liveOddRepository.findByMatchIdInAndActiveTrue(matchIds);
+		List<GlMatchLiveOdd> liveOdds = liveOddRepository.findByMatchIdIn(matchIds);
+		logger.info("liveOdds size" + liveOdds.size());
 		for (GlMatchLiveOdd liveOdd : liveOdds) {
 			Integer key = liveOdd.getMatch().getId();
 			Collections.sort(liveOdd.getOddFields());
@@ -74,7 +77,7 @@ public class PublicLiveService {
 		MatchInfoBean matchInfo = null;
 
 		Collection<GlMatchLiveOdd> liveOdds = new LinkedHashSet<GlMatchLiveOdd>(
-				liveOddRepository.findByMatchIdAndActiveTrue(matchId));
+				liveOddRepository.findByMatchId(matchId));
 
 		for (GlMatchLiveOdd liveOdd : liveOdds) {
 			Collections.sort(liveOdd.getOddFields());

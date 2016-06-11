@@ -112,12 +112,14 @@
 									<td colspan="2">
 										<div class="tab">
 											<div class="odd-group"
-												th:each="liveOddGroup : ${match.value.liveOdds}">
+												th:each="liveOddGroup : ${match.value.liveOdds}"
+												th:if="${not #lists.isEmpty(liveOddGroup.oddFields)}">
 												<b><span th:text="${liveOddGroup.name}"></span><span
 													th:if="${liveOddGroup.specialOddsValue != null}"
 													th:text="${'('+liveOddGroup.specialOddsValue+')'}"></span>:</b><br />
 												<div class="odd-item"
-													th:each="extraOdd : ${liveOddGroup.oddFields}">
+													th:each="extraOdd : ${liveOddGroup.oddFields}"
+													th:if="${extraOdd.value !=null}">
 													<span th:text="${extraOdd.type}"></span> - <i><span
 														th:text="${extraOdd.value}"></span></i>
 													<div th:if="${extraOdd.value &lt; extraOdd.oldValue}"
@@ -133,9 +135,9 @@
 								</tr>
 							</tbody>
 						</table>
-		</div>
-		</td>
-		</tr>
+					</div>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 

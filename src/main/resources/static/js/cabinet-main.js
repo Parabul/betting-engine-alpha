@@ -66,7 +66,7 @@ var selectedOdds = [];
 function check() {
 	$("#oddIds").val(selectedOdds.join());
 	var betInfo = $("#bet-info").clone();
-	$('.delete-odd',betInfo).remove(); 
+	$('.delete-odd', betInfo).remove();
 	$("#preview").val(betInfo.html());
 
 	if (selectedOdds.length > 0) {
@@ -84,13 +84,25 @@ function check() {
 	updateRemote();
 }
 
-function updateRemote(){
+function updateRemote() {
 	localStorage.setItem('preview', $('#bet-info').html());
 }
 
-function clearRemote(){
+function clearRemote() {
 	localStorage.setItem('preview', '<h1>Ставка оформлена!</h2>');
 }
+
+function storageAvailable(type) {
+	try {
+		var storage = window[type], x = '__storage_test__';
+		storage.setItem(x, x);
+		storage.removeItem(x);
+		return true;
+	} catch (e) {
+		return false;
+	}
+}
+
 $(function() {
 
 	$("#amount").TouchSpin({
@@ -152,5 +164,49 @@ $(function() {
 							check();
 						}
 					});
+
+	$('#change-sport-list').click(function() {
+		console.log('#change-sport-list');
+		$('#save-sport-list').show();
+		$('#revert-sport-list').show();
+		$('.remove-sport').show();
+		$('#change-sport-list').hide();
+		$("#sport-icons").sortable({
+			tolerance : 'pointer',
+			revert : 'invalid',
+			placeholder : 'span2 well placeholder tile',
+			forceHelperSize : true
+		});
+
+		$('.remove-sport').click(function() {
+			$(this).closest('.sport-item').hide();
+		});
+	});
+
+	$('#save-sport-list').click(function() {
+		$('#save-sport-list').hide();
+		$('#revert-sport-list').hide();
+		$('.remove-sport').hide();
+		$('#change-sport-list').show();
+
+		if (storageAvailable('localStorage')) {
+			localStorage.setItem('sport-menu', $('#sport-icons').html());
+		}
+	});
+
+	$('#revert-sport-list').click(function() {
+		$('#save-sport-list').hide();
+		$('#revert-sport-list').hide();
+		if (storageAvailable('localStorage')) {
+			localStorage.removeItem('sport-menu');
+			window.location.reload();
+		}
+
+	});
+
+	var sportMenu = localStorage.getItem('sport-menu');
+	if (sportMenu != null) {
+		$('#sport-icons').html(sportMenu);
+	}
 
 });
