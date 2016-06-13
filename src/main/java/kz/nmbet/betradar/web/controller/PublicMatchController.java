@@ -44,8 +44,15 @@ public class PublicMatchController {
 		return "prematch/olimp";
 	}
 
+	@RequestMapping("/olimp/prematch/sport")
+	public String olimp(Model model, @RequestParam(value = "sportId", required = false) Integer sportId) {
+		model.addAttribute("sports", matchService.getActiveCategories(sportId));
+		return "prematch/olimp";
+	}
+
 	@RequestMapping("/olimp/selected")
-	public String selected(Model model, @RequestParam(value = "tournamentIds", required = false) Integer[] tournamentIds) {
+	public String selected(Model model,
+			@RequestParam(value = "tournamentIds", required = false) Integer[] tournamentIds) {
 		model.addAttribute("tournaments", matchService.getMatchesByTournaments(tournamentIds));
 		return "prematch/olimp-category";
 	}

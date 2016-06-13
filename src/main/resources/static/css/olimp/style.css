@@ -524,11 +524,12 @@ TABLE.report TD {
 }
 
 .gr {
-	BACKGROUND-COLOR: #C0C0C0
+	BACKGROUND-COLOR: #C0C0C0;
 }
 
 .m_c {
-	BACKGROUND-COLOR: #800000
+	BACKGROUND-COLOR: #309C68;
+	/* BACKGROUND-COLOR: #800000 */
 }
 
 TABLE.bb {
@@ -874,7 +875,7 @@ a.curs:active {
 }
 
 .with-ornament {
-	background: url('ornament.gif') !important;
+	background: url('ornament_nm.png') !important;
 }
 
 .btn-clear-pay_busket:hover {

@@ -29,15 +29,40 @@ public class IndexController {
 
 	@RequestMapping("/login")
 	public String login(Model model) {
-		model.addAttribute("content", "login");
-		return "template";
+		return "index";
+	}
+	
+	@RequestMapping("/olimp/bonus")
+	public String bonus(Model model) {
+		return "bonus";
+	}
+	
+	@RequestMapping("/olimp/support")
+	public String support(Model model) {
+		return "support";
 	}
 
+	
+	@RequestMapping("/olimp/liveresults")
+	public String liveresults(Model model) {
+		return "liveresults";
+	}
+	
+	@RequestMapping("/olimp/rules")
+	public String rules(Model model) {
+		return "rules";
+	}
+	
+	@RequestMapping("/olimp/about")
+	public String about(Model model) {
+		return "aboutF";
+	}
+	
 	@RequestMapping({ "/" })
 	public String home(Model model) {
 		// remoteStoreService.chech();
-		model.addAttribute("content", "index");
-		return "template";
+		// model.addAttribute("content", "index");
+		return "index";
 	}
 
 	@RequestMapping(value = "/changelang/ru")
@@ -45,7 +70,7 @@ public class IndexController {
 		localeResolver.setLocale(request, response, new Locale("ru_RU"));
 		return "redirect:/";
 	}
-	
+
 	@RequestMapping(value = "/changelang/en")
 	public String changelangEn(HttpServletRequest request, HttpServletResponse response) {
 		localeResolver.setLocale(request, response, new Locale("en_US"));

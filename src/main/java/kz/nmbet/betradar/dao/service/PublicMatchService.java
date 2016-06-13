@@ -58,6 +58,23 @@ public class PublicMatchService {
 	}
 
 	@Transactional
+	public Map<String, List<ActiveCategory>> getActiveCategories(Integer sportId) {
+		Map<String, List<ActiveCategory>> sports = new HashMap<String, List<ActiveCategory>>();
+		List<ActiveCategory> result = new ArrayList<ActiveCategory>();
+		jdbcTemplate.query(ActiveCategory.query_with_sport, new Integer[] { sportId },
+				(resultSet, rowNum) -> result.add(new ActiveCategory(resultSet, rowNum)));
+
+		for (ActiveCategory activeCategory : result) {
+			String sportName = activeCategory.getSportName();
+			if (!sports.containsKey(sportName)) {
+				sports.put(sportName, new ArrayList<ActiveCategory>());
+			}
+			sports.get(sportName).add(activeCategory);
+		}
+		return sports;
+	}
+
+	@Transactional
 	public List<MatchInfoBean> getMatchesByTournament(Integer id) {
 		List<MatchInfoBean> matches = new ArrayList<MatchInfoBean>();
 		logger.info("getMatchesByCategory start ");

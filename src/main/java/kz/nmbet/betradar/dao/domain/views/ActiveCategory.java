@@ -6,6 +6,7 @@ import java.sql.SQLException;
 public class ActiveCategory {
 
 	public static final String query = "SELECT sport_name, group_name, tournament_id FROM v_active_categories";
+	public static final String query_with_sport = "SELECT sport_name, group_name, tournament_id FROM v_active_categories where sport_id = ?";
 
 	private Integer tournamentId;
 	private String groupName;

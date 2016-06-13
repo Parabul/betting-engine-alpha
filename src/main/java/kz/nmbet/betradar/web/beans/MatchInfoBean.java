@@ -7,16 +7,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOdd;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MatchInfoBean {
 	private static final Logger logger = LoggerFactory.getLogger(MatchInfoBean.class);
@@ -35,7 +36,7 @@ public class MatchInfoBean {
 	private Map<String, TotalOdd> totalsOdds;
 	private Map<Integer, List<GlMatchOddEntity>> extraOdds;
 	
-	private List<GlMatchLiveOdd> liveOdds;
+	private Set<GlMatchLiveOdd> liveOdds;
 
 	public MatchInfoBean(GlMatchEntity matchEntity, boolean key) {
 		matchId = matchEntity.getId();
@@ -244,11 +245,11 @@ public class MatchInfoBean {
 		return true;
 	}
 
-	public List<GlMatchLiveOdd> getLiveOdds() {
+	public Set<GlMatchLiveOdd> getLiveOdds() {
 		return liveOdds;
 	}
 
-	public void setLiveOdds(List<GlMatchLiveOdd> liveOdds) {
+	public void setLiveOdds(Set<GlMatchLiveOdd> liveOdds) {
 		this.liveOdds = liveOdds;
 	}
 

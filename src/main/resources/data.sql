@@ -1,5 +1,8 @@
+drop view v_active_categories;
 CREATE OR REPLACE VIEW v_active_categories AS 
- SELECT COALESCE(sport.name_ru, sport.name_en) AS sport_name,
+ SELECT 
+ 	sport.id sport_id,
+ 	COALESCE(sport.name_ru, sport.name_en) AS sport_name,
     (COALESCE(category.name_ru, category.name_en)::text || ', '::text) || COALESCE(tournament.name_ru, tournament.name_en)::text AS group_name,
     tournament.id AS tournament_id
    FROM gl_sport_entity sport

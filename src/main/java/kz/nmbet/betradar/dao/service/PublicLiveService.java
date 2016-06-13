@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,13 +62,11 @@ public class PublicLiveService {
 			Collections.sort(liveOdd.getOddFields());
 			if (!matchInfos.containsKey(key)) {
 				matchInfos.put(key, new MatchInfoBean(liveOdd.getMatch(), true));
-				matchInfos.get(key).setLiveOdds(new ArrayList<>());
+				matchInfos.get(key).setLiveOdds(new TreeSet<>());
 			}
 			matchInfos.get(key).getLiveOdds().add(liveOdd);
 		}
-		for (Entry<Integer, MatchInfoBean> matchInfo : matchInfos.entrySet()) {
-			Collections.sort(matchInfo.getValue().getLiveOdds());
-		}
+		
 		return matchInfos;
 	}
 
@@ -83,12 +81,11 @@ public class PublicLiveService {
 			Collections.sort(liveOdd.getOddFields());
 			if (matchInfo == null) {
 				matchInfo = new MatchInfoBean(liveOdd.getMatch(), true);
-				matchInfo.setLiveOdds(new ArrayList<>());
+				matchInfo.setLiveOdds(new TreeSet<>());
 			}
 			matchInfo.getLiveOdds().add(liveOdd);
 		}
-		if (matchInfo != null && matchInfo.getLiveOdds() != null)
-			Collections.sort(matchInfo.getLiveOdds());
+		
 		return matchInfo;
 	}
 
@@ -101,7 +98,7 @@ public class PublicLiveService {
 			Integer key = liveOdd.getMatch().getId();
 			if (!matchInfos.containsKey(key)) {
 				matchInfos.put(key, new MatchInfoBean(liveOdd.getMatch(), true));
-				matchInfos.get(key).setLiveOdds(new ArrayList<>());
+				matchInfos.get(key).setLiveOdds(new TreeSet<>());
 			}
 			matchInfos.get(key).getLiveOdds().add(liveOdd);
 		}
