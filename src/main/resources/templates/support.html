@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>NMSport - Список спортивных событий</title>
+
+
+
+
+<link type="text/css" rel="stylesheet" th:href="@{/css/olimp/style.css}" />
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
+<body>
+	<div class="row-fluid" th:replace="/fragments/header :: header">&nbsp;</div>
+
+
+	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tbody>
+			<tr>
+				<td class="col_td" valign="top">
+					<div class="row-fluid" th:replace="/fragments/sidebar :: sidebar">&nbsp;</div>
+				</td>
+				<td class="central_td" valign="top">
+
+					<h1 style="text-align: center;">Поддержка</h1>
+
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr class="hr1" />
+
+</body>
+</html>

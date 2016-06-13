@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div th:fragment="sidebar">
+	<table class="smallwnd">
+		<tbody>
+			<tr class="m_c" align="middle">
+				<td class="smwndcap">Региональные настройки</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<table cellspacing="5" width="90%" style="z-index: 1">
+
+						<tbody>
+							<tr>
+								<td align="center"><nobr>Язык интерфейса:</nobr> <select
+									style="width: 100%">
+										<option>Русский</option>
+										<option>Қазақша</option>
+										<option>English</option>
+
+								</select></td>
+							</tr>
+
+							<tr>
+								<td align="center"><nobr>Формат коэффициентов:</nobr> <select
+									style="width: 100%">
+										<option>Десятичные</option>
+										<option>Дробные</option>
+								</select></td>
+							</tr>
+							<tr>
+								<td align="center">
+									<hr class="hr2" />
+									<table width="100%">
+										<tbody>
+											<tr>
+												<td align="right" width="25%"><img
+													src="https://www.olimpkz.com/img/flag/mob2.gif" />&nbsp;</td>
+												<td align="left" width="75%" style="color: #800000">Мобильная
+													версия</td>
+											</tr>
+
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td align="center">
+									<hr class="hr2" /> <span
+									th:text="${#dates.format(#dates.createNow(), 'dd.MM.yyyy HH:mm')}"></span>&nbsp;<a
+									th:href="@{/}">(GMT +06:00)</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<form th:action="@{/login}" method="post">
+		<table class="smallwnd">
+			<tbody>
+				<tr class="m_c" align="middle">
+					<td class="smwndcap">Вход в систему</td>
+				</tr>
+				<tr>
+					<td align="middle">
+						<table style="width: 96%;">
+
+
+							<tbody sec:authorize="isAuthenticated()">
+								<tr>
+									<td><b><span sec:authentication="name"></span>(0.00
+											тг)</b></td>
+								</tr>
+								<tr>
+									<td><a th:href="@{/logout}">Выход</a></td>
+								</tr>
+							</tbody>
+							<tbody sec:authorize="isAnonymous()">
+								<tr>
+									<td align="left">Введите Ваши данные:</td>
+								</tr>
+								<tr>
+									<td nowrap=""><input type="text" name="username"
+										placeholder="Логин, E-mail или Телефон" /></td>
+								</tr>
+								<tr>
+									<td><input type="password" name="password"
+										placeholder="Пароль" /></td>
+								</tr>
+								<tr>
+									<td nowrap="" align="middle"><a id="recl"
+										href="?page=recover">Забыли данные?</a></td>
+								</tr>
+
+								<tr>
+									<td align="middle"><input type="submit" value="Вход"
+										class="msbtn1" /></td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</form>
+
+	<table class="smallwnd">
+		<tbody>
+			<tr class="m_c" align="middle">
+				<td class="smwndcap">Сейчас в линии</td>
+			</tr>
+			<tr>
+				<td align="center">
+					<table width="90%">
+						<tbody>
+							<tr>
+								<td class="ns" colspan="2"><a th:href="@{/olimp/prematch}">Линия
+										- Olimp</a></td>
+
+							</tr>
+							<tr>
+								<td class="ns" colspan="2"><a th:href="@{/olimp/live/}">Live
+										- Olimp</a></td>
+							</tr>
+
+							<tr>
+								<td><hr class="hr2" /></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=50}"><font
+										class="txtmed" color="black">Футбол (125)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=60}"><font
+										class="txtmed" color="black">Регби (17)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=51}"><font
+										class="txtmed" color="black">Баскетбол (13)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=52}"><font
+										class="txtmed" color="black">Бейсбол (9)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=69}"><font
+										class="txtmed" color="black">Волейбол (7)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=73}"><font
+										class="txtmed" color="black">Футзал (4)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=67}"><font
+										class="txtmed" color="black">Крикет (3)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=85}"><font
+										class="txtmed" color="black">Песапалло (3)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=59}"><font
+										class="txtmed" color="black">Автоспорт (2)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=64}"><font
+										class="txtmed" color="black">Американский футбол (2)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=75}"><font
+										class="txtmed" color="black">Игра в боулз (1)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=65}"><font
+										class="txtmed" color="black">Снукер (1)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=61}"><font
+										class="txtmed" color="black">Австралийский футбол (1)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=70}"><font
+										class="txtmed" color="black">Хоккей на траве (1)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/olimp/prematch/sport?sportId=55}"><font
+										class="txtmed" color="black">Гандбол (1)</font></a></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<div th:fragment="header">
+	<table class="m_c" cellspacing="0" cellpadding="0" width="100%"
+		border="0">
+		<tbody>
+			<tr>
+				<td class="menu_td" valign="middle" align="left">
+					<div class="tab">
+						<a th:href="@{/}"><img
+							src="http://nmbetgames.kz/images/nmbetgames1.png" /></a>
+					</div>
+				</td>
+				<td class="menu_td" valign="middle" align="right">
+					<table class="head_tbl">
+						<tbody>
+							<tr align="center">
+								<td nowrap=""><a th:href="@{/olimp/bonus}" id="bonus_div">Бонусы
+										и акции</a></td>
+								<td>::</td>
+								<td nowrap=""><a th:href="@{/olimp/rules}">Правила</a></td>
+								<td>::</td>
+								<td nowrap=""><a th:href="@{/olimp/support}">Поддержка</a></td>
+								<td>::</td>
+								<td nowrap=""><a th:href="@{/olimp/liveresults}">Результаты
+										<font class="g">LIVE</font>
+								</a></td>
+								<td>::</td>
+								<td nowrap=""><a th:href="@{/olimp/about}">О нас</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr>
+				<td class="with-ornament" colspan="2" height="14" />
+			</tr>
+		</tbody>
+	</table>
+</div>
+</html>
