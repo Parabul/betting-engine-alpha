@@ -55,7 +55,7 @@ public class IndexController {
 	
 	@RequestMapping("/olimp/about")
 	public String about(Model model) {
-		return "aboutF";
+		return "about";
 	}
 	
 	@RequestMapping({ "/" })
