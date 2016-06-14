@@ -26,6 +26,14 @@
 					$('.sport-group-item[sport="' + triggerId + '"]').prop(
 							'checked', trigger.is(":checked"));
 				});
+		$('#select-all').click(function(e) {
+			e.preventDefault();
+			$('.sport-group-item').prop('checked', true);
+		});
+		$('#select-none').click(function(e) {
+			e.preventDefault();
+			$('.sport-group-item').prop('checked', false);
+		});
 	});
 </script>
 </head>
@@ -46,7 +54,7 @@
 						Линия на <span
 							th:text="${#dates.format(#dates.createNow(), 'dd.MM.yyyy')}"></span>
 					</h1>
-					<form name="BetLine" th:action="@{/olimp/selected}" method="get">
+					<form name="BetLine" th:action="@{/nm/selected}" method="get">
 						<table class="smallwnd3" style="width: 99%;">
 							<tbody>
 
@@ -82,18 +90,23 @@
 								</tr>
 							</tbody>
 						</table>
-						<br /> <font class="txtmed"><b>Выбор большого
-								количества матчей и доп. ставок приведет к замедлению загрузки
-								линии</b></font> <br /> <br /> <input class="msbtn1" value="Выделить все"
-							style="width: 120px;" /> <input class="msbtn1" type="reset"
-							value="Отменить все" style="width: 120px;" /> <input
-							class="msbtn1" type="submit" value="Далее" style="width: 120px;" />
-						<br /> <br />
+						<table style="width: 100%">
+							<tr>
+								<td align="center"><br /> <font class="txtmed"><b>Выбор
+											большого количества матчей и доп. ставок приведет к
+											замедлению загрузки линии</b></font> <br /> <br /> <input
+									type="button" class="msbtn1" id="select-all"
+									value="Выделить все" style="width: 120px;" /> <input
+									class="msbtn1" type="reset" value="Отменить все"
+									id="select-none" style="width: 120px;" /> <input
+									class="msbtn1" type="submit" value="Далее"
+									style="width: 120px;" /> <br /> <br /></td>
+							</tr>
+						</table>
 
 
-
-					</form>
-				</td>
+			</form>
+			</td>
 			</tr>
 		</tbody>
 	</table>

@@ -30,20 +30,20 @@ public class PublicLiveController {
 		return "template";
 	}
 
-	@RequestMapping("/olimp/live")
+	@RequestMapping("/nm/live")
 	public String olimp(Model model) {
 		model.addAttribute("matches", liveService.getLiveMathes());
 		return "live/olimp";
 	}
 
-	@RequestMapping("/olimp/live/odds/")
+	@RequestMapping("/nm/live/odds/")
 	public String tableOlimp(Model model,
 			@RequestParam(value = "matchIds") Integer[] matchIds) {
 		model.addAttribute("matches", liveService.getActiveOdds(matchIds));
 		return "live/olimp-odds";
 	}
 
-	@RequestMapping("/olimp/live/odds/one")
+	@RequestMapping("/nm/live/odds/one")
 	public String updateOlimp(Model model,
 			@RequestParam(value = "matchId") Integer matchId) {
 		model.addAttribute("match", liveService.getActiveOdds(matchId));

@@ -1,4 +1,4 @@
-drop view v_active_categories;
+drop view IF EXISTS v_active_categories;
 CREATE OR REPLACE VIEW v_active_categories AS 
  SELECT 
  	sport.id sport_id,

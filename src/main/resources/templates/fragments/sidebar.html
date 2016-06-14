@@ -4,6 +4,47 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <div th:fragment="sidebar">
+
+	<script th:src="@{/js/jquery.selectric.js}"></script>
+	<link th:href="@{/css/selectric.css}" rel="stylesheet" />
+	<script>
+		$(function() {
+			$('#langs')
+					.selectric(
+							{
+								optionsItemBuilder : function(itemData,
+										element, index) {
+									return element.val().length ? '<span class="ico ico-'
+											+ index
+											+ '"></span>'
+											+ itemData.text
+											: itemData.text;
+								}
+							});
+			$(".selectric p.label").prepend('<span class="ico ico-0"></span>');
+			var oldVal = 'Русский';
+			$('#langs')
+					.on(
+							'change',
+							function() {
+								var langs = {
+									'Русский' : 0,
+									'Қазақша' : 1,
+									'English' : 2
+								}
+								var lang = $('#langs').val();
+								console.log(lang);
+								newVal = lang;
+								if (newVal != oldVal) {
+									$(".selectric p.label")
+											.prepend(
+													'<span class="ico ico-'+langs[lang]+'"></span>');
+									oldVal = newVal;
+								}
+
+							});
+		});
+	</script>
 	<table class="smallwnd">
 		<tbody>
 			<tr class="m_c" align="middle">
@@ -16,7 +57,7 @@
 						<tbody>
 							<tr>
 								<td align="center"><nobr>Язык интерфейса:</nobr> <select
-									style="width: 100%">
+									id="langs" style="width: 100%">
 										<option>Русский</option>
 										<option>Қазақша</option>
 										<option>English</option>
@@ -24,29 +65,6 @@
 								</select></td>
 							</tr>
 
-							<tr>
-								<td align="center"><nobr>Формат коэффициентов:</nobr> <select
-									style="width: 100%">
-										<option>Десятичные</option>
-										<option>Дробные</option>
-								</select></td>
-							</tr>
-							<tr>
-								<td align="center">
-									<hr class="hr2" />
-									<table width="100%">
-										<tbody>
-											<tr>
-												<td align="right" width="25%"><img
-													src="https://www.olimpkz.com/img/flag/mob2.gif" />&nbsp;</td>
-												<td align="left" width="75%" style="color: #800000">Мобильная
-													версия</td>
-											</tr>
-
-										</tbody>
-									</table>
-								</td>
-							</tr>
 							<tr>
 								<td align="center">
 									<hr class="hr2" /> <span
@@ -86,7 +104,7 @@
 								</tr>
 								<tr>
 									<td nowrap=""><input type="text" name="username"
-										placeholder="Логин, E-mail или Телефон" /></td>
+										placeholder="Телефон" /></td>
 								</tr>
 								<tr>
 									<td><input type="password" name="password"
@@ -119,14 +137,14 @@
 				<td align="center">
 					<table width="90%">
 						<tbody>
-							<tr>
-								<td class="ns" colspan="2"><a th:href="@{/olimp/prematch}">Линия
-										- Olimp</a></td>
+							<tr style="display: none;">
+								<td class="ns" colspan="2"><a th:href="@{/nm/prematch}">Линия
+								</a></td>
 
 							</tr>
 							<tr>
-								<td class="ns" colspan="2"><a th:href="@{/olimp/live/}">Live
-										- Olimp</a></td>
+								<td class="ns" colspan="2"><a th:href="@{/nm/live/}">Live
+								</a></td>
 							</tr>
 
 							<tr>
@@ -134,77 +152,82 @@
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=50}"><font
+									th:href="@{/nm/prematch/sport?sportId=50}"><font
 										class="txtmed" color="black">Футбол (125)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=60}"><font
+									th:href="@{/nm/prematch/sport?sportId=54}"><font
+										class="txtmed" color="black">Теннис (55)</font></a></td>
+							</tr>
+							<tr>
+								<td class="ns"><a
+									th:href="@{/nm/prematch/sport?sportId=60}"><font
 										class="txtmed" color="black">Регби (17)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=51}"><font
+									th:href="@{/nm/prematch/sport?sportId=51}"><font
 										class="txtmed" color="black">Баскетбол (13)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=52}"><font
+									th:href="@{/nm/prematch/sport?sportId=52}"><font
 										class="txtmed" color="black">Бейсбол (9)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=69}"><font
+									th:href="@{/nm/prematch/sport?sportId=69}"><font
 										class="txtmed" color="black">Волейбол (7)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=73}"><font
+									th:href="@{/nm/prematch/sport?sportId=73}"><font
 										class="txtmed" color="black">Футзал (4)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=67}"><font
+									th:href="@{/nm/prematch/sport?sportId=67}"><font
 										class="txtmed" color="black">Крикет (3)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=85}"><font
+									th:href="@{/nm/prematch/sport?sportId=85}"><font
 										class="txtmed" color="black">Песапалло (3)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=59}"><font
+									th:href="@{/nm/prematch/sport?sportId=59}"><font
 										class="txtmed" color="black">Автоспорт (2)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=64}"><font
+									th:href="@{/nm/prematch/sport?sportId=64}"><font
 										class="txtmed" color="black">Американский футбол (2)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=75}"><font
+									th:href="@{/nm/prematch/sport?sportId=75}"><font
 										class="txtmed" color="black">Игра в боулз (1)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=65}"><font
+									th:href="@{/nm/prematch/sport?sportId=65}"><font
 										class="txtmed" color="black">Снукер (1)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=61}"><font
+									th:href="@{/nm/prematch/sport?sportId=61}"><font
 										class="txtmed" color="black">Австралийский футбол (1)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=70}"><font
+									th:href="@{/nm/prematch/sport?sportId=70}"><font
 										class="txtmed" color="black">Хоккей на траве (1)</font></a></td>
 							</tr>
 							<tr>
 								<td class="ns"><a
-									th:href="@{/olimp/prematch/sport?sportId=55}"><font
+									th:href="@{/nm/prematch/sport?sportId=55}"><font
 										class="txtmed" color="black">Гандбол (1)</font></a></td>
 							</tr>
 

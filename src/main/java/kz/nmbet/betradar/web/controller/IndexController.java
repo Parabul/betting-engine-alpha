@@ -32,28 +32,28 @@ public class IndexController {
 		return "index";
 	}
 	
-	@RequestMapping("/olimp/bonus")
+	@RequestMapping("/nm/bonus")
 	public String bonus(Model model) {
 		return "bonus";
 	}
 	
-	@RequestMapping("/olimp/support")
+	@RequestMapping("/nm/support")
 	public String support(Model model) {
 		return "support";
 	}
 
 	
-	@RequestMapping("/olimp/liveresults")
+	@RequestMapping("/nm/liveresults")
 	public String liveresults(Model model) {
 		return "liveresults";
 	}
 	
-	@RequestMapping("/olimp/rules")
+	@RequestMapping("/nm/rules")
 	public String rules(Model model) {
 		return "rules";
 	}
 	
-	@RequestMapping("/olimp/about")
+	@RequestMapping("/nm/about")
 	public String about(Model model) {
 		return "about";
 	}
