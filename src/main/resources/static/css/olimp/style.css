@@ -106,10 +106,10 @@ HR.hr1 {
 }
 
 HR.hr2 {
-	BORDER-RIGHT: #800000 0px solid;
-	BORDER-TOP: #800000 1px solid;
-	BORDER-LEFT: #800000 0px solid;
-	BORDER-BOTTOM: #800000 0px solid;
+	BORDER-RIGHT: black 0px solid;
+	BORDER-TOP: black 1px solid;
+	BORDER-LEFT: black 0px solid;
+	BORDER-BOTTOM: black 0px solid;
 	HEIGHT: 0px
 }
 
@@ -121,10 +121,10 @@ IMG {
 }
 
 .brd {
-	BORDER-RIGHT: #800000 1px solid;
-	BORDER-TOP: #800000 1px solid;
-	BORDER-LEFT: #800000 1px solid;
-	BORDER-BOTTOM: #800000 1px solid
+	BORDER-RIGHT: black 1px solid;
+	BORDER-TOP: black 1px solid;
+	BORDER-LEFT: black 1px solid;
+	BORDER-BOTTOM: black 1px solid
 }
 
 .mmf {
@@ -137,7 +137,7 @@ IMG {
 
 H1 {
 	FONT-SIZE: 18px;
-	COLOR: #800000;
+	COLOR: black;
 	LINE-HEIGHT: 110%;
 	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, sans-serif;
 	TEXT-DECORATION: none
@@ -238,7 +238,7 @@ TABLE.smallwnd TD {
 
 TABLE.smallwnd A {
 	FONT-SIZE: 8pt;
-	COLOR: #800000
+	COLOR: black
 }
 
 .smwndcap {
@@ -289,7 +289,7 @@ TABLE.smallwnd A {
 }
 
 A {
-	COLOR: #800000
+	COLOR: black
 }
 
 .msbtn1 {
@@ -407,7 +407,7 @@ UL.ulmnu {
 
 UL.ulmnu A {
 	FONT-SIZE: 8pt;
-	COLOR: #800000;
+	COLOR: black;
 	FONT-FAMILY: Tahoma;
 	TEXT-DECORATION: none
 }
@@ -436,7 +436,7 @@ UL.ulmnu A:hover {
 .txtmedol {
 	FONT-SIZE: 11px;
 	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	COLOR: #800000
+	COLOR: black
 }
 
 .txtnorm {
@@ -458,7 +458,7 @@ UL.ulmnu A:hover {
 .r {
 	FONT-SIZE: 11px;
 	FONT-FAMILY: Tahoma, Verdana, Arial, Helvetica, sans-serif;
-	COLOR: #800000
+	COLOR: black
 }
 
 .l {
@@ -489,11 +489,11 @@ UL.ulmnu A:hover {
 	COLOR: #ffffff;
 	FONT-FAMILY: Tahoma;
 	HEIGHT: 12px;
-	BACKGROUND-COLOR: #800000
+	BACKGROUND-COLOR: black
 }
 
 .m {
-	COLOR: #800000
+	COLOR: black
 }
 
 .g {
@@ -529,14 +529,14 @@ TABLE.report TD {
 
 .m_c {
 	BACKGROUND-COLOR: #309C68;
-	/* BACKGROUND-COLOR: #800000 */
+	/* BACKGROUND-COLOR: black */
 }
 
 TABLE.bb {
-	BORDER-RIGHT: #800000 1px solid;
-	BORDER-TOP: #800000 1px solid;
-	BORDER-LEFT: #800000 1px solid;
-	BORDER-BOTTOM: #800000 1px solid;
+	BORDER-RIGHT: black 1px solid;
+	BORDER-TOP: black 1px solid;
+	BORDER-LEFT: black 1px solid;
+	BORDER-BOTTOM: black 1px solid;
 	PADDING-LEFT: 1px;
 	PADDING-RIGHT: 1px;
 	PADDING-TOP: 1px;
@@ -867,7 +867,7 @@ a.curs:active {
 	text-align: center;
 	color: #fff;
 	text-transform: uppercase;
-	border: 1px solid #800000;
+	border: 1px solid black;
 }
 
 .busket_load {
@@ -1452,4 +1452,40 @@ select.bas:disabled {
 	width: 9px;
 	height: 9px;
 	background: url('toup.png') !important;
+}
+
+#live{
+    display: block;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    float: none;
+    z-index: auto;
+    width: auto;
+    height: auto;
+    position: static;
+    cursor: default;
+    opacity: 1;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: none;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    font: bold 18px/normal "Anton", Helvetica, sans-serif;
+    color: rgba(255,79,35,1);
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    background: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    text-shadow: 0 0 11px rgb(254,252,201) , 2px -4px 7px rgb(254,236,133) , -1px -3px 12px rgb(255,174,52) , 7px -6px 29px rgba(214,152,98,1) , -5px -8px 47px rgba(181,75,27,1) , 0 -6px 50px rgba(244,70,12,1) , 6px -9px 54px rgba(224,73,26,1);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+    -webkit-transform-origin: 50% 50% 0;
+    transform-origin: 50% 50% 0;
 }
