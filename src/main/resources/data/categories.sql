@@ -2,21 +2,6 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.2
--- Dumped by pg_dump version 9.5.2
-
--- Started on 2016-05-24 16:37:11
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET search_path = public, pg_catalog;
-
 --
 -- TOC entry 2249 (class 0 OID 25416)
 -- Dependencies: 182
@@ -348,7 +333,7 @@ INSERT INTO gl_category_entity (id, category_id, name_en, name_kz, name_ru, gl_s
 INSERT INTO gl_category_entity (id, category_id, name_en, name_kz, name_ru, gl_sport_id) VALUES (372, 502, NULL, NULL, 'Ямайка', 50);
 INSERT INTO gl_category_entity (id, category_id, name_en, name_kz, name_ru, gl_sport_id) VALUES (373, 510, NULL, NULL, 'Италия', 52);
 
-
+ALTER SEQUENCE gl_category_id_seq RESTART WITH 374;
 -- Completed on 2016-05-24 16:37:11
 
 --

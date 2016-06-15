@@ -32,7 +32,7 @@ public class GlMatchEntity {
 	
 	private Boolean liveStoped;
 
-	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<GlCompetitorEntity> competitors;
 
 	@OneToMany(mappedBy = "match", cascade = CascadeType.ALL, orphanRemoval = true)

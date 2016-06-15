@@ -1,23 +1,4 @@
 --
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.5.2
--- Dumped by pg_dump version 9.5.2
-
--- Started on 2016-05-24 16:36:40
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET search_path = public, pg_catalog;
-
---
 -- TOC entry 2248 (class 0 OID 25533)
 -- Dependencies: 197
 -- Data for Name: gl_sport_entity; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -60,7 +41,7 @@ INSERT INTO gl_sport_entity (id, name_en, name_kz, name_ru, sport_id) VALUES (83
 INSERT INTO gl_sport_entity (id, name_en, name_kz, name_ru, sport_id) VALUES (84, NULL, NULL, 'Пляжный футбол', 60);
 INSERT INTO gl_sport_entity (id, name_en, name_kz, name_ru, sport_id) VALUES (85, NULL, NULL, 'Песапалло', 61);
 
-
+ALTER SEQUENCE gl_sport_id_seq RESTART WITH 86;
 -- Completed on 2016-05-24 16:36:40
 
 --

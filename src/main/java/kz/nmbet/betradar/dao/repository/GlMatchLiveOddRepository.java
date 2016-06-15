@@ -24,6 +24,9 @@ public interface GlMatchLiveOddRepository extends JpaRepository<GlMatchLiveOdd, 
 	@Fetch(FetchMode.SUBSELECT)
 	@Query("select r from GlMatchLiveOdd r left join fetch r.oddFields where r.match.id = :id ")
 	List<GlMatchLiveOdd> getByMatchId(@Param("id") Integer id);
+	
+	@Query("select r from GlMatchLiveOdd r left join fetch r.oddFields where r.match.matchId = :id ")
+	List<GlMatchLiveOdd> getByRemoteMatchId(@Param("id") Long id);
 
 	@Fetch(FetchMode.SUBSELECT)
 	@Query("select r from GlMatchLiveOdd r  left join fetch r.oddFields where r.match.id = :id and r.active=true")

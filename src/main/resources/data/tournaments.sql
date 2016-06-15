@@ -1,23 +1,4 @@
 --
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.5.2
--- Dumped by pg_dump version 9.5.2
-
--- Started on 2016-05-24 16:37:45
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET search_path = public, pg_catalog;
-
---
 -- TOC entry 2249 (class 0 OID 25549)
 -- Dependencies: 199
 -- Data for Name: gl_tournament_entity; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2827,7 +2808,7 @@ INSERT INTO gl_tournament_entity (id, name_en, name_kz, name_ru, tournament_id, 
 INSERT INTO gl_tournament_entity (id, name_en, name_kz, name_ru, tournament_id, gl_category_id) VALUES (2865, 'Czech Republic F3, Singles', NULL, NULL, 52336, 272);
 INSERT INTO gl_tournament_entity (id, name_en, name_kz, name_ru, tournament_id, gl_category_id) VALUES (2866, 'Czech Republic F3, Doubles', NULL, NULL, 52337, 272);
 
-
+ALTER SEQUENCE gl_tournament_id_seq RESTART WITH 2867;
 -- Completed on 2016-05-24 16:37:45
 
 --

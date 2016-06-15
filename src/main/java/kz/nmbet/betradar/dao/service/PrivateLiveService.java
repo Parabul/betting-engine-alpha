@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -113,8 +114,8 @@ public class PrivateLiveService {
 		return competitor;
 	}
 
-	private GlMatchLiveOdd findOdd(GlMatchEntity glMatchEntity, Long betradarId) {
-		for (GlMatchLiveOdd odd : glMatchEntity.getLiveOdds()) {
+	private GlMatchLiveOdd findOdd(List<GlMatchLiveOdd> odds, Long betradarId) {
+		for (GlMatchLiveOdd odd : odds) {
 			if (betradarId.equals(odd.getBetradarId())) {
 				return odd;
 			}
@@ -146,6 +147,7 @@ public class PrivateLiveService {
 	@Transactional
 	public void save(OddsChangeEntity entity) {
 		GlMatchEntity match = matchEntityRepository.findByMatchId(entity.getEventId().getEventId());
+		List<GlMatchLiveOdd> odds = liveOddRepository.getByRemoteMatchId(entity.getEventId().getEventId());
 		if (match == null) {
 			match = new GlMatchEntity();
 			match.setActive(true);
@@ -158,7 +160,7 @@ public class PrivateLiveService {
 		}
 
 		for (OddsEntity odd : entity.getEventOdds()) {
-			GlMatchLiveOdd matchOddEntity = findOdd(match, odd.getId());
+			GlMatchLiveOdd matchOddEntity = findOdd(odds, odd.getId());
 
 			if (matchOddEntity == null) {
 
@@ -229,10 +231,11 @@ public class PrivateLiveService {
 	@Transactional
 	public void betClear(BetClearEntity entity) {
 		GlMatchEntity match = matchEntityRepository.findByMatchId(entity.getEventId().getEventId());
+		List<GlMatchLiveOdd> odds = liveOddRepository.getByRemoteMatchId(entity.getEventId().getEventId());
 		if (match == null)
 			return;
 		for (OddsEntity odd : entity.getEventOdds()) {
-			GlMatchLiveOdd matchOdd = findOdd(match, odd.getId());
+			GlMatchLiveOdd matchOdd = findOdd(odds, odd.getId());
 			if (matchOdd == null)
 				continue;
 			for (Entry<String, OddsFieldEntity> oddFieldEntrySet : odd.getOddFields().entrySet()) {

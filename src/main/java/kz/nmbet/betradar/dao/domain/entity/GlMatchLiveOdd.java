@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +18,9 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.sportradar.sdk.feed.liveodds.entities.common.OddsEntity;
 import com.sportradar.sdk.feed.liveodds.enums.OddsType;
 
@@ -24,8 +28,8 @@ import com.sportradar.sdk.feed.liveodds.enums.OddsType;
 public class GlMatchLiveOdd implements Comparable<GlMatchLiveOdd> {
 
 	@Id
-	@SequenceGenerator(name="GL_MATCH_LIVE_ODD_ID_GENERATOR", sequenceName="GL_MATCH_LIVE_ODD_ID_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="GL_MATCH_LIVE_ODD_ID_GENERATOR")
+	@SequenceGenerator(name = "GL_MATCH_LIVE_ODD_ID_GENERATOR", sequenceName = "GL_MATCH_LIVE_ODD_ID_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GL_MATCH_LIVE_ODD_ID_GENERATOR")
 	private Integer id;
 
 	private Long betradarId;
@@ -59,7 +63,8 @@ public class GlMatchLiveOdd implements Comparable<GlMatchLiveOdd> {
 	@JoinColumn(name = "gl_match_id")
 	private GlMatchEntity match;
 
-	@OneToMany(mappedBy = "liveOdd", cascade = CascadeType.ALL, orphanRemoval = true)
+	@Fetch(FetchMode.SUBSELECT)
+	@OneToMany(mappedBy = "liveOdd", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<GlMatchLiveOddField> oddFields;
 
 	@Temporal(TemporalType.TIMESTAMP)
