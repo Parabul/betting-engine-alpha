@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>NMSport - Список спортивных событий</title>
+
+
+
+
+<link type="text/css" rel="stylesheet" th:href="@{/css/olimp/style.css}" />
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$('.sportParent').change(
+				function() {
+					var trigger = $(this);
+					var triggerId = $(this).attr('id');
+					$('.sport-group-item[sport="' + triggerId + '"]').prop(
+							'checked', trigger.is(":checked"));
+				});
+		$('#select-all').click(function(e) {
+			e.preventDefault();
+			$('.sport-group-item').prop('checked', true);
+		});
+		$('#select-none').click(function(e) {
+			e.preventDefault();
+			$('.sport-group-item').prop('checked', false);
+		});
+	});
+</script>
+</head>
+<body>
+
+
+	<div class="row-fluid" th:replace="/fragments/header :: header">&nbsp;</div>
+	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tbody>
+			<tr>
+				<td class="col_td" valign="top">
+
+					<div class="row-fluid" th:replace="/fragments/sidebar :: sidebar">&nbsp;</div>
+				</td>
+				<td class="central_td" valign="top">
+
+					<h1 style="text-align: center;">Live-Ставки</h1>
+					<form name="BetLine" th:action="@{/nm/live/odds/}" method="get">
+						<table class="smallwnd3" style="width: 99%;">
+							<tbody>
+
+
+								<tr class="m_c" align="middle" th:each="sport : ${matches}">
+									<td align="center" valign="middle" width="1%"><input
+										type="checkbox" class="sportParent" th:id="${sport.key}" /></td>
+									<td class="smwndcap" align="center" valign="middle" width="99%"
+										th:text="${sport.key}">Песапалло</td>
+								<tr class="bg" th:each="match : ${sport.value}">
+									<td align="center" valign="middle" width="1%"><input
+										type="checkbox" name="matchIds" class="sport-group-item"
+										th:value="${match.matchId}" th:attr="sport=${sport.key}" /></td>
+									<td valign="middle" align="left" width="99%">[<i><span
+											th:text="${match.matchId}"></span></i>] <span
+										th:text="${match.sport}"></span>, <span
+										th:text="${match.category}"></span>, <span
+										th:text="${match.tournament}"></span> <b><span
+											th:text="${match.homeTeam}"></span> - <span
+											th:text="${match.awayTeam}"></span></b></td>
+								</tr>
+
+								</tr>
+
+								<tr class="m_c" align="middle">
+									<td colspan="2" class="smwndcap" align="center" valign="middle"
+										width="99%">Планируются <font class="g">Live</font>-Ставки<br />
+										Начало <select class="loginbox" name="ltime"
+										onchange="javascript:change_list();">
+											<option value="7201" selected="">в ближайшие 2 часа</option>
+											<option value="21600">в ближайшие 6 часов</option>
+											<option value="86400">в ближайшие сутки</option>
+											<option value="0">в любое время</option>
+									</select> &nbsp; &nbsp; Вид спорта <select class="loginbox"
+										name="sportid" onchange="javascript:change_list();">
+											<option value="-1" selected="">- - - Все виды - - -</option>
+											<option value="3">Баскетбол</option>
+											<option value="14">Настольный теннис</option>
+											<option value="28">Регби-Союз</option>
+											<option value="2">Теннис</option>
+											<option value="1">Футбол</option>
+									</select></td>
+								</tr>
+							</tbody>
+						</table>
+						<table style="width: 100%">
+							<tr>
+								<td align="center"><br /> <font class="txtmed"><b>Выбор
+											большого количества матчей и доп. ставок приведет к
+											замедлению загрузки линии</b></font> <br /> <br /> <input
+									type="button" class="msbtn1" id="select-all"
+									value="Выделить все" style="width: 120px;" /> <input
+									class="msbtn1" type="reset" value="Отменить все"
+									id="select-none" style="width: 120px;" /> <input
+									class="msbtn1" type="submit" value="Далее"
+									style="width: 120px;" /> <br /> <br /></td>
+							</tr>
+						</table>
+
+
+
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr class="hr1" />
+
+</body>
+</html>

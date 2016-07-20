@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>NMSport - Список спортивных событий</title>
+
+
+
+
+<link type="text/css" rel="stylesheet" th:href="@{/css/olimp/style.css}" />
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<title>Олимп - Список спортивных событий</title>
+<script type="text/javascript">
+	$(function() {
+		$('.plus-trigger').click(function(e) {
+			e.preventDefault();
+			$(this).closest('.match-item-wrapper').find('.extra').toggle();
+
+		});
+
+		$('.tournament-extra-trigger').click(
+				function(e) {
+					e.preventDefault();
+					$(this).closest('.tournament-item-wrapper').find('.extra')
+							.toggle();
+
+				});
+	});
+</script>
+<script type="text/javascript" th:src="@{/js/live-update.js}"></script>
+</head>
+<body>
+	<div class="row-fluid" th:replace="/fragments/header :: header">&nbsp;</div>
+
+	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tbody>
+			<tr>
+				<td class="col_td" valign="top">
+
+					<div class="row-fluid" th:replace="/fragments/sidebar :: sidebar">&nbsp;</div>
+				</td>
+				<td class="central_td" valign="top">
+					<h1 style="text-align: center;">Live-Ставки</h1>
+					<div>
+						<table class="koeftable2 match-wrapper" cellspacing="3"
+							cellpadding="3" th:id="${match.key}" th:each="match : ${matches}">
+							<tbody>
+								<tr class="hi">
+									<td width="20%" align="center"><span
+										th:text="${#dates.format(match.value.matchDate, 'dd.MM.yyyy HH:mm')}">matchDate</span><br />
+										<i><font class="m">Онлайн</font></i></td>
+									<td width="80%"><font class="m"><b>[<i><span
+													th:text="${match.key}"></span></i>] <span
+												th:text="${match.value.homeTeamName}"></span> - <span
+												th:text="${match.value.awayTeamName}"></span> <br /> <font
+												class="txtmed" style="color: red; display: none;">0:1
+													(4:6, 0:0) 15:15</font>
+										</b></font></td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div class="odd-group"
+											th:each="liveOddGroup : ${match.value.liveOdds}"
+											th:if="${not #lists.isEmpty(liveOddGroup.oddFields)}">
+											<b><span th:text="${liveOddGroup.name}"></span><span
+												th:if="${liveOddGroup.specialOddsValue != null}"
+												th:text="${'('+liveOddGroup.specialOddsValue+')'}"></span>:</b><br />
+											<div class="odd-item"
+												th:each="extraOdd : ${liveOddGroup.oddFields}"
+												th:if="${extraOdd.value !=null}">
+												<span th:text="${extraOdd.type}"></span> - <i><span
+													th:text="${extraOdd.value}"></span></i>
+												<div th:if="${extraOdd.value &lt; extraOdd.oldValue}"
+													class="todown"></div>
+												<div th:if="${extraOdd.value &gt; extraOdd.oldValue}"
+													class="toup"></div>
+											</div>
+											<br /> <br />
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<hr class="hr1" />
+</body>
+</html>
