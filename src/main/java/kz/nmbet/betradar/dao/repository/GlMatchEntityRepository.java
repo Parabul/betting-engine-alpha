@@ -23,11 +23,11 @@ public interface GlMatchEntityRepository extends JpaRepository<GlMatchEntity, In
 	List<GlMatchEntity> getByCategoryId(@Param("id") Integer id);
 
 	@Fetch(FetchMode.SUBSELECT)
-	@Query("select r from GlMatchEntity r left join fetch r.odds  left join fetch r.competitors where r.tournament.id = :id")
+	@Query("select r from GlMatchEntity r left join fetch r.odds  left join fetch r.competitors where r.tournament.id = :id and r.eventDate >= CURRENT_TIMESTAMP order by  r.eventDate  ")
 	List<GlMatchEntity> getByTournamentId(@Param("id") Integer id);
 
 	@Fetch(FetchMode.SUBSELECT)
-	@Query("select r from GlMatchEntity r left join fetch r.odds  left join fetch r.competitors where r.tournament.id in :ids")
+	@Query("select r from GlMatchEntity r left join fetch r.odds  left join fetch r.competitors where r.tournament.id in :ids and r.eventDate >= CURRENT_TIMESTAMP order by  r.eventDate ")
 	List<GlMatchEntity> getByTournamentIds(@Param("ids") Integer[] ids);
 
 	@Fetch(FetchMode.SUBSELECT)

@@ -27,42 +27,11 @@ public class IndexController {
 	@Autowired
 	private MatchResultService matchResultService;
 
-	@RequestMapping("/login")
-	public String login(Model model) {
-		return "index";
-	}
-	
-	@RequestMapping("/nm/bonus")
-	public String bonus(Model model) {
-		return "bonus";
-	}
-	
-	@RequestMapping("/nm/support")
-	public String support(Model model) {
-		return "support";
-	}
 
-	
-	@RequestMapping("/nm/liveresults")
-	public String liveresults(Model model) {
-		return "liveresults";
-	}
-	
-	@RequestMapping("/nm/rules")
-	public String rules(Model model) {
-		return "rules";
-	}
-	
-	@RequestMapping("/nm/about")
-	public String about(Model model) {
-		return "about";
-	}
-	
 	@RequestMapping({ "/" })
 	public String home(Model model) {
-		// remoteStoreService.chech();
-		// model.addAttribute("content", "index");
-		return "index";
+		model.addAttribute("content", "index");
+		return "olimp";
 	}
 
 	@RequestMapping(value = "/changelang/ru")
@@ -75,5 +44,35 @@ public class IndexController {
 	public String changelangEn(HttpServletRequest request, HttpServletResponse response) {
 		localeResolver.setLocale(request, response, new Locale("en_US"));
 		return "redirect:/";
+	}
+
+	@RequestMapping("/nm/bonus")
+	public String bonus(Model model) {
+		model.addAttribute("content", "static/bonus");
+		return "olimp";
+	}
+
+	@RequestMapping("/nm/support")
+	public String support(Model model) {
+		model.addAttribute("content", "static/support");
+		return "olimp";
+	}
+
+	@RequestMapping("/nm/liveresults")
+	public String liveresults(Model model) {
+		model.addAttribute("content", "static/liveresults");
+		return "olimp";
+	}
+
+	@RequestMapping("/nm/rules")
+	public String rules(Model model) {
+		model.addAttribute("content", "static/rules");
+		return "olimp";
+	}
+
+	@RequestMapping("/nm/about")
+	public String about(Model model) {
+		model.addAttribute("content", "static/about");
+		return "olimp";
 	}
 }

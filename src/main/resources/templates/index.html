@@ -3,64 +3,30 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>NMSport - Список спортивных событий</title>
-
-
-
-
-<link type="text/css" rel="stylesheet" th:href="@{/css/olimp/style.css}" />
-
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body>
-	<div class="row-fluid" th:replace="/fragments/header :: header">&nbsp;</div>
-
-
-	<table width="100%" cellspacing="0" cellpadding="0" border="0">
-		<tbody>
+	<div th:fragment="content">
+		<h1 style="text-align: center;">Главная</h1>
+		<table width="100%">
 			<tr>
-				<td class="col_td" valign="top">
-					<div class="row-fluid" th:replace="/fragments/sidebar :: sidebar">&nbsp;</div>
-				</td>
-				<td class="central_td" valign="top">
+				<td width="25%"><a th:href="@{/nm/prematch/sport?sportId=50}"><img
+						width="100%" th:src="@{/css/olimp/sports/soccer.jpg}" /></a></td>
+				<td width="25%"><a th:href="@{/nm/prematch/sport?sportId=52}"><img
+						width="100%" th:src="@{/css/olimp/sports/baseball.jpg}" /></a></td>
+				<td width="25%"><a th:href="@{/nm/prematch/sport?sportId=54}"><img
+						width="100%" th:src="@{/css/olimp/sports/tennis.jpg}" /></a></td>
 
-					<h1 style="text-align: center;">Главная</h1>
-					<table width="100%">
-						<tr>
-							<td width="25%"><a
-								th:href="@{/nm/prematch/sport?sportId=50}"><img
-									width="100%" th:src="@{/css/olimp/sports/soccer.jpg}" /></a></td>
-							<td width="25%"><a
-								th:href="@{/nm/prematch/sport?sportId=52}"><img
-									width="100%" th:src="@{/css/olimp/sports/baseball.jpg}" /></a></td>
-							<td width="25%"><a
-								th:href="@{/nm/prematch/sport?sportId=54}"><img
-									width="100%" th:src="@{/css/olimp/sports/tennis.jpg}" /></a></td>
-							
-							
-						</tr>
-						<tr>
-							<td width="25%"><a
-								th:href="@{/nm/prematch/sport?sportId=51}"><img
-									width="100%" th:src="@{/css/olimp/sports/basketball.jpg}" /></a></td>
-							<td width="25%"><a
-								th:href="@{/nm/prematch/sport?sportId=58}"><img
-									width="100%" th:src="@{/css/olimp/sports/boxing.jpg}" /></a></td>
-							<td width="25%"><a
-								th:href="@{/nm/prematch/sport?sportId=53}"><img
-									width="100%" th:src="@{/css/olimp/sports/hockey.jpg}" /></a></td>
-						</tr>
-					</table>
-				</td>
+
 			</tr>
-		</tbody>
-	</table>
-	<hr class="hr1" />
-
+			<tr>
+				<td width="25%"><a th:href="@{/nm/prematch/sport?sportId=51}"><img
+						width="100%" th:src="@{/css/olimp/sports/basketball.jpg}" /></a></td>
+				<td width="25%"><a th:href="@{/nm/prematch/sport?sportId=58}"><img
+						width="100%" th:src="@{/css/olimp/sports/boxing.jpg}" /></a></td>
+				<td width="25%"><a th:href="@{/nm/prematch/sport?sportId=53}"><img
+						width="100%" th:src="@{/css/olimp/sports/hockey.jpg}" /></a></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

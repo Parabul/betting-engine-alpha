@@ -78,7 +78,37 @@
 			</tr>
 		</tbody>
 	</table>
-	<form th:action="@{/login}" method="post">
+	<table class="smallwnd" sec:authorize="isAnonymous()">
+		<tbody>
+			<tr>
+				<td align="middle"><br /> <a id="regl"
+					th:href="@{/nm/registration}"><h1 class="fontshadcas">
+							Регистрация</h1> </a> <br /></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<table class="smallwnd" sec:authorize="isAuthenticated()">
+		<tbody>
+			<tr class="m_c" align="middle">
+				<td colspan="2" class="smwndcap">Информация о счете</td>
+			</tr>
+			<tr>
+				<td align="right" width="50%"><b>Логин:</b></td>
+				<td align="left" width="50%"><span sec:authentication="name"></span></td>
+			</tr>
+			<tr>
+				<td align="right" nowrap="" valign="top"><b>Сумма на счету:</b></td>
+				<td align="left"><span th:text="${userAmount}"></span> <i>Тенге</i></td>
+			</tr>
+			<tr>
+				<td align="right" width="25%"></td>
+				<td><a th:href="@{/logout}">Выход</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<form th:action="@{/login}" method="post" sec:authorize="isAnonymous()">
 		<table class="smallwnd">
 			<tbody>
 				<tr class="m_c" align="middle">
@@ -87,18 +117,7 @@
 				<tr>
 					<td align="middle">
 						<table style="width: 96%;">
-
-
-							<tbody sec:authorize="isAuthenticated()">
-								<tr>
-									<td><b><span sec:authentication="name"></span>(0.00
-											тг)</b></td>
-								</tr>
-								<tr>
-									<td><a th:href="@{/logout}">Выход</a></td>
-								</tr>
-							</tbody>
-							<tbody sec:authorize="isAnonymous()">
+							<tbody>
 								<tr>
 									<td align="left">Введите Ваши данные:</td>
 								</tr>
@@ -138,13 +157,13 @@
 					<table width="90%">
 						<tbody>
 							<tr style="display: none;">
-								<td class="ns" colspan="2"><a th:href="@{/nm/prematch}" >Линия
+								<td class="ns" colspan="2"><a th:href="@{/nm/prematch}">Линия
 								</a></td>
 
 							</tr>
 							<tr>
-								<td class="ns" colspan="2"><a th:href="@{/nm/live/}" id="live">Live
-								</a></td>
+								<td class="ns" colspan="2"><a th:href="@{/nm/live/}"
+									id="live">Live </a></td>
 							</tr>
 
 							<tr>

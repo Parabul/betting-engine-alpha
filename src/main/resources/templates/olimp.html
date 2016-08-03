@@ -7,6 +7,7 @@
 <title>NMSport - Список спортивных событий</title>
 
 
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
 
 
 <link type="text/css" rel="stylesheet" th:href="@{/css/olimp/style.css}" />
@@ -28,9 +29,10 @@
 					<div class="row-fluid" th:replace="/fragments/sidebar :: sidebar">&nbsp;</div>
 				</td>
 				<td class="central_td" valign="top">
-
-					<h1 style="text-align: center;">О нас</h1>
-
+					<div class="row-fluid" th:replace="${content} :: content">&nbsp;</div>
+				</td>
+				<td class="col_td"  valign="top" sec:authorize="isAuthenticated()">
+					<div class="row-fluid" th:replace="/fragments/basket :: basket">&nbsp;</div>
 				</td>
 			</tr>
 		</tbody>

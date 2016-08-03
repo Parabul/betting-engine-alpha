@@ -9,9 +9,10 @@ CREATE OR REPLACE VIEW v_active_categories AS
      LEFT JOIN gl_category_entity category ON category.gl_sport_id = sport.id
      LEFT JOIN gl_tournament_entity tournament ON tournament.gl_category_id = category.id
      LEFT JOIN gl_match_entity match ON match.gl_tournament_id = tournament.id
-  WHERE match.event_date > current_timestamp
+  WHERE match.event_date > current_timestamp and exists(select id from gl_match_odd_entity where gl_match_id = match.id)
   GROUP BY sport.id, category.id, tournament.id
  HAVING count(match.id) > 0;
+
  
  
 create or replace view v_active_outrights as

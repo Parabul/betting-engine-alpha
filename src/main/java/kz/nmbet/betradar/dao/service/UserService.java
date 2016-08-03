@@ -1,9 +1,11 @@
 package kz.nmbet.betradar.dao.service;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
 import kz.nmbet.betradar.dao.repository.UserRepository;
+import kz.nmbet.betradar.web.beans.UserException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +20,7 @@ public class UserService {
 
 	public static final String ADMIN_ROLES = "USER, ADMIN";
 	public static final String CASHIER_ROLES = "USER, CASHIER";
-
+	public static final String CLIENT_ROLES = "USER, CLIENT";
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
@@ -27,6 +29,7 @@ public class UserService {
 	public GlUser findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+
 	public GlUser findByCashierId(Integer cashierId) {
 		return userRepository.findByCashierId(cashierId);
 	}
@@ -35,13 +38,16 @@ public class UserService {
 		return DigestUtils.md5DigestAsHex(email.getBytes()).substring(0, 6);
 	}
 
-	public GlUser create(String email, String password, String roles, Integer cashierId) {
+	public GlUser create(String email, String password, String roles, Integer cashierId) throws UserException {
+		GlUser puser = findByEmail(email);
+		if (puser != null)
+			throw new UserException("Недоспустимый номер телефона");
 		GlUser user = new GlUser();
 		user.setEmail(email);
 		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		if (password == null)
 			password = getCashierDefaultPassword(email);
-		logger.info("new user {1} with password {2}", email, password);
+		logger.info(MessageFormat.format("new user {0} with password {1}", email, password));
 		user.setPassword(passwordEncoder.encode(password));
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);
@@ -49,6 +55,7 @@ public class UserService {
 		user.setEnabled(true);
 		user.setRoles(Arrays.asList(roles));
 		user.setCashierId(cashierId);
+		user.setAmount(0.0d);
 		return userRepository.save(user);
 	}
 }

@@ -40,6 +40,7 @@ import kz.nmbet.betradar.dao.repository.GlSportEntityRepository;
 import kz.nmbet.betradar.utils.MessageByLocaleService;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 import kz.nmbet.betradar.web.beans.ShortOdd;
+import kz.nmbet.betradar.web.beans.UserException;
 
 @Service
 public class CashierService {
@@ -198,7 +199,7 @@ public class CashierService {
 	}
 
 	@Transactional
-	public GlUser autologin(String login, Integer cashierId, String hash) {
+	public GlUser autologin(String login, Integer cashierId, String hash) throws UserException {
 //		if (!checkHash(login, cashierId, hash)) {
 //			throw new BadCredentialsException(
 //					MessageFormat.format("Wrong hash: {0} for ({1}, {2})", hash, login, cashierId+""));

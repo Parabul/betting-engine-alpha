@@ -3,114 +3,83 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>NMSport - Список спортивных событий</title>
-
-
-
-
-<link type="text/css" rel="stylesheet" th:href="@{/css/olimp/style.css}" />
-
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-<script type="text/javascript">
-	$(function() {
-		$('.sportParent').change(
-				function() {
-					var trigger = $(this);
-					var triggerId = $(this).attr('id');
-					$('.sport-group-item[sport="' + triggerId + '"]').prop(
-							'checked', trigger.is(":checked"));
-				});
-		$('#select-all').click(function(e) {
-			e.preventDefault();
-			$('.sport-group-item').prop('checked', true);
-		});
-		$('#select-none').click(function(e) {
-			e.preventDefault();
-			$('.sport-group-item').prop('checked', false);
-		});
-	});
-</script>
 </head>
 <body>
+	<div th:fragment="content">
+		<script type="text/javascript">
+			$(function() {
+				$('.sportParent').change(
+						function() {
+							var trigger = $(this);
+							var triggerId = $(this).attr('id');
+							$('.sport-group-item[sport="' + triggerId + '"]')
+									.prop('checked', trigger.is(":checked"));
+						});
+				$('#select-all').click(function(e) {
+					e.preventDefault();
+					$('.sport-group-item').prop('checked', true);
+				});
+				$('#select-none').click(function(e) {
+					e.preventDefault();
+					$('.sport-group-item').prop('checked', false);
+				});
+			});
+		</script>
+
+		<h1 style="text-align: center;">
+			Линия на <span
+				th:text="${#dates.format(#dates.createNow(), 'dd.MM.yyyy')}"></span>
+		</h1>
+		<form name="BetLine" th:action="@{/nm/selected}" method="get">
+			<table class="smallwnd3" style="width: 99%;">
+				<tbody>
 
 
-	<div class="row-fluid" th:replace="/fragments/header :: header">&nbsp;</div>
-	<table width="100%" cellspacing="0" cellpadding="0" border="0">
-		<tbody>
-			<tr>
-				<td class="col_td" valign="top">
+					<tr class="m_c" align="middle" th:each="sport : ${sports}">
+						<td align="center" valign="middle" width="1%"><input
+							type="checkbox" class="sportParent" th:id="${sport.key}" /></td>
+						<td class="smwndcap" align="center" valign="middle" width="99%"
+							th:text="${sport.key}">Песапалло</td>
+					<tr class="bg" th:each="category : ${sport.value}">
+						<td align="center" valign="middle" width="1%"><input
+							type="checkbox" name="tournamentIds" class="sport-group-item"
+							th:attr="sport=${sport.key}" th:value="${category.tournamentId}" /></td>
+						<td valign="middle" align="left" width="99%"><a
+							th:href="@{|/nm/selected?tournamentIds=${category.tournamentId}|}"
+							th:text="${category.groupName}"></a></td>
+					</tr>
 
-					<div class="row-fluid" th:replace="/fragments/sidebar :: sidebar">&nbsp;</div>
-				</td>
-				<td class="central_td" valign="top">
+					</tr>
 
-					<h1 style="text-align: center;">
-						Линия на <span
-							th:text="${#dates.format(#dates.createNow(), 'dd.MM.yyyy')}"></span>
-					</h1>
-					<form name="BetLine" th:action="@{/nm/selected}" method="get">
-						<table class="smallwnd3" style="width: 99%;">
-							<tbody>
-
-
-								<tr class="m_c" align="middle" th:each="sport : ${sports}">
-									<td align="center" valign="middle" width="1%"><input
-										type="checkbox" class="sportParent" th:id="${sport.key}" /></td>
-									<td class="smwndcap" align="center" valign="middle" width="99%"
-										th:text="${sport.key}">Песапалло</td>
-								<tr class="bg" th:each="category : ${sport.value}">
-									<td align="center" valign="middle" width="1%"><input
-										type="checkbox" name="tournamentIds" class="sport-group-item"
-										th:attr="sport=${sport.key}"
-										th:value="${category.tournamentId}" /></td>
-									<td valign="middle" align="left" width="99%"><a
-										th:href="@{|/nm/selected?tournamentIds=${category.tournamentId}|}"
-										th:text="${category.groupName}"></a></td>
-								</tr>
-
-								</tr>
-
-								<tr class="m_c">
-									<td class="smwndcap" align="center" valign="middle"
-										width="100%" colspan="2">Показать матчи, начинающиеся <select
-										class="loginbox">
-											<option value="0" selected="selected">в любое время</option>
-											<option value="2">в ближайшие 2 часа</option>
-											<option value="6">в ближайшие 6 часов</option>
-											<option value="12">в ближайшие 12 часов</option>
-											<option value="24">в ближайшие сутки</option>
-									</select>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<table style="width: 100%">
-							<tr>
-								<td align="center"><br /> <font class="txtmed"><b>Выбор
-											большого количества матчей и доп. ставок приведет к
-											замедлению загрузки линии</b></font> <br /> <br /> <input
-									type="button" class="msbtn1" id="select-all"
-									value="Выделить все" style="width: 120px;" /> <input
-									class="msbtn1" type="reset" value="Отменить все"
-									id="select-none" style="width: 120px;" /> <input
-									class="msbtn1" type="submit" value="Далее"
-									style="width: 120px;" /> <br /> <br /></td>
-							</tr>
-						</table>
+					<tr class="m_c">
+						<td class="smwndcap" align="center" valign="middle" width="100%"
+							colspan="2">Показать матчи, начинающиеся <select
+							class="loginbox">
+								<option value="0" selected="selected">в любое время</option>
+								<option value="2">в ближайшие 2 часа</option>
+								<option value="6">в ближайшие 6 часов</option>
+								<option value="12">в ближайшие 12 часов</option>
+								<option value="24">в ближайшие сутки</option>
+						</select>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<table style="width: 100%">
+				<tr>
+					<td align="center"><br /> <font class="txtmed"><b>Выбор
+								большого количества матчей и доп. ставок приведет к замедлению
+								загрузки линии</b></font> <br /> <br /> <input type="button"
+						class="msbtn1" id="select-all" value="Выделить все"
+						style="width: 120px;" /> <input class="msbtn1" type="reset"
+						value="Отменить все" id="select-none" style="width: 120px;" /> <input
+						class="msbtn1" type="submit" value="Далее" style="width: 120px;" />
+						<br /> <br /></td>
+				</tr>
+			</table>
 
 
-			</form>
-			</td>
-			</tr>
-		</tbody>
-	</table>
-	<hr class="hr1" />
-
+		</form>
+	</div>
 </body>
 </html>

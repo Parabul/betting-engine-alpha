@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+	<div th:fragment="content">
+		<h1 style="text-align: center;">Регистрация</h1>
+		<form th:action="@{/nm/createuser}" method="post">
+			<table class="smallwnd" style="margin: 0 auto; width: 50px;">
+				<tbody>
+					<tr class="m_c" align="middle">
+						<td class="smwndcap">Регистрация в системе</td>
+					</tr>
+					<tr>
+						<td align="middle">
+							<table style="width: 96%;">
+								<tbody sec:authorize="isAnonymous()">
+									<tr>
+										<td align="left">Введите Ваши данные:</td>
+									</tr>
+									<tr>
+										<td nowrap=""><input type="text" name="email"
+											placeholder="Телефон" /></td>
+									</tr>
+									<tr>
+										<td><input type="password" name="password"
+											placeholder="Пароль" /></td>
+									</tr>
+									<tr>
+										<td><input type="password" name="password2"
+											placeholder="Повторите пароль" /></td>
+									</tr>
+
+
+									<tr>
+										<td align="middle"><input type="submit"
+											value="Регистрация" class="msbtn1" /></td>
+									</tr>
+									<tr>
+										<td><em style="color: red;" th:if="${errorMsg !=null}"
+											th:text="${errorMsg}"></em></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</form>
+	</div>
+</body>
+</html>

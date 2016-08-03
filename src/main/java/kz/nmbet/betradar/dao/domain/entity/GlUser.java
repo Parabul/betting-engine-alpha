@@ -41,6 +41,8 @@ public class GlUser {
 	private boolean accountNonLocked;
 
 	private Integer cashierId;
+	
+	private Double amount;
 
 	public Integer getId() {
 		return id;
@@ -112,6 +114,14 @@ public class GlUser {
 
 	public void setCashierId(Integer cashierId) {
 		this.cashierId = cashierId;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
 	}
 
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+	<div th:fragment="content">
+		<h1 style="text-align: center;">Вход</h1>
+		<form th:action="@{/login}" method="post">
+			<table class="smallwnd" style="margin: 0 auto;width: 50px;">
+				<tbody>
+					<tr class="m_c" align="middle">
+						<td class="smwndcap">Вход в систему</td>
+					</tr>
+					<tr>
+						<td align="middle">
+							<table style="width: 96%;">
+
+
+								<tbody sec:authorize="isAuthenticated()">
+									<tr>
+										<td><b><span sec:authentication="name"></span>(0.00
+												тг)</b></td>
+									</tr>
+									<tr>
+										<td><a th:href="@{/logout}">Выход</a></td>
+									</tr>
+								</tbody>
+								<tbody sec:authorize="isAnonymous()">
+									<tr>
+										<td align="left">Введите Ваши данные:</td>
+									</tr>
+									<tr>
+										<td nowrap=""><input type="text" name="username"
+											placeholder="Телефон" /></td>
+									</tr>
+									<tr>
+										<td><input type="password" name="password"
+											placeholder="Пароль" /></td>
+									</tr>
+									<tr>
+										<td nowrap="" align="middle"><a id="recl"
+											href="?page=recover">Забыли данные?</a></td>
+									</tr>
+
+									<tr>
+										<td align="middle"><input type="submit" value="Вход"
+											class="msbtn1" /></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
