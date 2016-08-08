@@ -80,41 +80,44 @@
 											<div class="tab">
 												<div class="odd-group" th:if="${match.threeWayOdds != null}">
 													<div class="odd-item">
-														П1 - <b><span th:text="${match.threeWayOdds.homeOdd}">
-														</span></b>
+														П1 - <b><span class="prematch-odd"
+															th:id="${match.threeWayOdds.homeOddId}"
+															th:text="${match.threeWayOdds.homeOdd}"> </span></b>
 													</div>
 													<div class="odd-item">
-														X - <b><span th:text="${match.threeWayOdds.drawOdd}"></span></b>
+														X - <b><span class="prematch-odd"
+															th:id="${match.threeWayOdds.drawOddId}"
+															th:text="${match.threeWayOdds.drawOdd}"></span></b>
 													</div>
 													<div class="odd-item">
-														П2 - <b><span th:text="${match.threeWayOdds.awayOdd}"></span></b>
+														П2 - <b><span class="prematch-odd"
+															th:id="${match.threeWayOdds.awayOddId}"
+															th:text="${match.threeWayOdds.awayOdd}"></span></b>
 													</div>
 												</div>
 												<div class="odd-group" th:if="${match.twoWayOdds != null}">
 													<div class="odd-item">
-														П1 - <b><span th:text="${match.twoWayOdds.homeOdd}">
-														</span></b>
+														П1 - <b><span class="prematch-odd"
+															th:id="${match.twoWayOdds.homeOddId}"
+															th:text="${match.twoWayOdds.homeOdd}"> </span></b>
 													</div>
 													<div class="odd-item">
-														П2 - <b><span th:text="${match.twoWayOdds.awayOdd}"></span></b>
+														П2 - <b><span class="prematch-odd"
+															th:id="${match.twoWayOdds.awayOddId}"
+															th:text="${match.twoWayOdds.awayOdd}"></span></b>
 													</div>
 												</div>
 
-												<div class="odd-group"
-													th:if="${match.correctScoreOdds != null}">
-													<div class="odd-item"
-														th:each="correctScoreOdd : ${match.correctScoreOdds}">
-														<span th:text="${correctScoreOdd.key}"></span> - <b><span
-															th:text="${correctScoreOdd.value}"></span></b>
-													</div>
-												</div>
 												<div class="odd-group" th:if="${match.totalsOdds != null}">
 
 													<div class="odd-item"
 														th:each="totalsOdd : ${match.totalsOdds}">
 														Тот (<span th:text="${totalsOdd.value.specialValue}"></span>)
-														М - <b><span th:text="${totalsOdd.value.underValue}"></span></b>
-														Б - <b><span th:text="${totalsOdd.value.overValue}"></span></b>
+														М - <b><span class="prematch-odd"
+															th:id="${totalsOdd.value.underId}"
+															th:text="${totalsOdd.value.underValue}"></span></b> Б - <b><span
+															class="prematch-odd" th:id="${totalsOdd.value.overId}"
+															th:text="${totalsOdd.value.overValue}"></span></b>
 													</div>
 												</div>
 												<div class="odd-group" th:if="${match.handicapOdds != null}">
@@ -123,6 +126,7 @@
 														th:each="handicapOdd : ${match.handicapOdds}">
 														Ф(<span th:text="${handicapOdd.label}"></span>) <span
 															th:text="${handicapOdd.team}"></span> - <b><span
+															class="prematch-odd" th:id="${handicapOdd.id}"
 															th:text="${handicapOdd.value}"></span></b>
 													</div>
 												</div>
@@ -149,7 +153,8 @@
 																	<span th:text="${extraOdd.outCome}"></span> <span
 																		th:if="${extraOdd.specialBetValue != null}"
 																		th:text="${'('+extraOdd.specialBetValue+')'}"></span>
-																	- <i><b><span th:text="${extraOdd.value}"></span></b></i>
+																	- <b><span class="prematch-odd"
+																		th:id="${extraOdd.id}" th:text="${extraOdd.value}"></span></b>
 																</div>
 																<br /> <br />
 															</div>

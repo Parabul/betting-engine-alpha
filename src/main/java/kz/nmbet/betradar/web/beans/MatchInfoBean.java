@@ -17,6 +17,7 @@ import kz.nmbet.betradar.dao.domain.entity.GlCompetitorEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchEntity;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchLiveOdd;
 import kz.nmbet.betradar.dao.domain.entity.GlMatchOddEntity;
+import kz.nmbet.betradar.dao.domain.types.MatchOddsType;
 import kz.nmbet.betradar.utils.TextsEntityUtils;
 
 public class MatchInfoBean {
@@ -31,11 +32,10 @@ public class MatchInfoBean {
 
 	private ThreeWayOdds threeWayOdds;
 	private TwoWayOdds twoWayOdds;
-	private Map<String, Double> correctScoreOdds;
 	private List<HandicapOdd> handicapOdds;
 	private Map<String, TotalOdd> totalsOdds;
 	private Map<Integer, List<GlMatchOddEntity>> extraOdds;
-	
+
 	private Set<GlMatchLiveOdd> liveOdds;
 
 	public MatchInfoBean(GlMatchEntity matchEntity, boolean key) {
@@ -74,7 +74,7 @@ public class MatchInfoBean {
 		}
 
 		for (GlMatchOddEntity oddEntity : matchEntity.getOdds()) {
-			if (oddEntity.getOddsType() != null) {
+			if (oddEntity.getOddsType() != null && !oddEntity.getOddsType().equals(MatchOddsType.correct_score)) {
 				switch (oddEntity.getOddsType()) {
 				case three_way:
 					if (threeWayOdds == null)
@@ -88,12 +88,7 @@ public class MatchInfoBean {
 					else
 						twoWayOdds.fill(oddEntity);
 					break;
-				case correct_score:
-					if (correctScoreOdds == null) {
-						correctScoreOdds = new TreeMap<String, Double>();
-					}
-					correctScoreOdds.put(oddEntity.getOutCome(), oddEntity.getValue());
-					break;
+
 				case handicap:
 					if (handicapOdds == null)
 						handicapOdds = new ArrayList<HandicapOdd>();
@@ -112,6 +107,8 @@ public class MatchInfoBean {
 						totalsOdds.put(key, new TotalOdd(oddEntity));
 					}
 					break;
+				default:
+					break;
 				}
 			} else {
 				if (extraOdds == null)
@@ -126,8 +123,7 @@ public class MatchInfoBean {
 	}
 
 	public boolean isEmpty() {
-		return threeWayOdds == null && twoWayOdds == null && correctScoreOdds == null && handicapOdds == null
-				&& totalsOdds == null;
+		return threeWayOdds == null && twoWayOdds == null && handicapOdds == null && totalsOdds == null;
 	}
 
 	public Map<Integer, List<GlMatchOddEntity>> getExtraOdds() {
@@ -172,14 +168,6 @@ public class MatchInfoBean {
 
 	public void setTwoWayOdds(TwoWayOdds twoWayOdds) {
 		this.twoWayOdds = twoWayOdds;
-	}
-
-	public Map<String, Double> getCorrectScoreOdds() {
-		return correctScoreOdds;
-	}
-
-	public void setCorrectScoreOdds(Map<String, Double> correctScoreOdds) {
-		this.correctScoreOdds = correctScoreOdds;
 	}
 
 	public Integer getMatchId() {

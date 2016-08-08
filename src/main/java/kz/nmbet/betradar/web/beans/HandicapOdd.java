@@ -7,11 +7,13 @@ public class HandicapOdd {
 	private String label;
 	private String team;
 	private Double value;
+	private Integer id;
 
 	public HandicapOdd(GlMatchOddEntity oddEntity) {
 		label = oddEntity.getSpecialBetValue();
 		team = oddEntity.getOutCome();
 		value = oddEntity.getValue();
+		id = oddEntity.getId();
 	}
 
 	public String getLabel() {
@@ -36,6 +38,14 @@ public class HandicapOdd {
 
 	public void setValue(Double value) {
 		this.value = value;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }

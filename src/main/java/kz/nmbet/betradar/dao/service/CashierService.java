@@ -138,7 +138,7 @@ public class CashierService {
 		return result;
 	}
 
-	private ShortOdd getOddInfo(GlMatchOddEntity matchOdd) {
+	public ShortOdd getOddInfo(GlMatchOddEntity matchOdd) {
 		StringBuilder builder = new StringBuilder();
 		try {
 			String type = messageByLocaleService.getMessage("match.odds.types.type" + matchOdd.getMatchOddsType());

@@ -173,9 +173,9 @@ public class LiveOddsMatchFeedListenerImpl extends LiveOddsMatchBaseListener<Liv
 	@Override
 	public void onOddsChange(LiveOddsFeed sender, OddsChangeEntity entity) {
 		Long matchTime = ((MatchHeaderEntity) entity.getEventHeader()).getMatchTime();
-		logger.info("---------On start odds change  match id : {} with match time: {}", entity.getEventId(), matchTime);
+//		logger.info("---------On start odds change  match id : {} with match time: {}", entity.getEventId(), matchTime);
 		privateLiveService.save(entity);
-		logger.info("-------- On end odds change match id : {} with match time: {}", entity.getEventId(), matchTime);
+//		logger.info("-------- On end odds change match id : {} with match time: {}", entity.getEventId(), matchTime);
 	}
 
 }

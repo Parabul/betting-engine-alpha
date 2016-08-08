@@ -1,32 +1,32 @@
-var max_calc = 500000000;
-var MaxKoef = 1000;
-var basket_divider = 1;
-var alldevider = 0;
-var offsetTop = 0;
-function offsetPosition(e) {
-	offsetTop = 0;
-	do {
-		offsetTop += e.offsetTop;
-	} while (e = e.offsetParent);
-	return offsetTop;
-}
-var bs = document.getElementById('betslip1'), offset = offsetPosition(bs);
-var $widgetBetradar = $('#scroll_block');
-window.onscroll = function() {
-	if ((bs.offsetHeight + 10) >= document.body.clientHeight) {
-		bs.className = '';
-		return;
-	}
+$(function() {
 
-	if ($widgetBetradar.length > 0) {
-		if (offset < window.pageYOffset) {
-			$widgetBetradar.addClass('fcl').css({
-				top : ($(window).scrollTop() - 85) + 'px'
-			});
-		} else {
-			$widgetBetradar.removeClass('fcl').css({
-				top : 0
+	console.log('basket loaded');
+
+	$('.prematch-odd').css('cursor', 'pointer');
+	$('.prematch-odd').click(function() {
+		console.log("click");
+		fastModeOn = $("#myonoffswitch").is(':checked');
+		var oddId = $(this).prop('id');
+		var amount = $("#oc_summ").val();
+		var props = {
+			oddId : oddId,
+			amount : amount
+		};
+		console.log(props);
+		$.ajax({
+			url : "/betting-engine/client/prematch/oddInfo?oddId=" + oddId
+		}).done(function(data) {
+			console.log(data);
+			$("#fastrezult").html(data);
+		});
+		if (fastModeOn) {
+			$.ajax({
+				url : "/betting-engine/client/prematch/bet/create",
+				data : props
+			}).done(function(data) {
+				console.log(data);
 			});
 		}
-	}
-}
+
+	});
+})

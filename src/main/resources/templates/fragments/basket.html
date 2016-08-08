@@ -7,6 +7,7 @@
 </head>
 <div th:fragment="basket">
 	<link type="text/css" rel="stylesheet" th:href="@{/css/basket.css}" />
+	
 	<script th:src="@{/js/basket.js}"></script>
 	<div id="betslip1" style="" class="">
 
@@ -43,7 +44,7 @@
 					</div>
 					<input type="hidden" id="busket-nav" value="1" />
 					<div class="clear"></div>
-					<div id="error-wraper">
+					<div id="error-wraper"  style="display:none;">
 						<div class="rekoeff-infoblock">
 							<div>
 								<table>
@@ -73,7 +74,7 @@
 													<td><span class="summ-basket"><input
 															class="loginbox" name="oc_summ" id="oc_summ"
 															type="number" value="50"
-															onkeypress="return runScript(event)" placeholder="Сумма"
+															 placeholder="Сумма"
 															step="10" min="0" /></span></td>
 													<td><span><input id="save-oc-button"
 															type="button" class="enabled2 msbtn_basket" data-sum="50"
@@ -119,9 +120,7 @@
 									</div>
 									<div class="bet-infoblock">
 										<div id="fastrezult">
-											Ваша ставка: <span id="fbetchname">Боруссия Д -
-												Бавария</span> <br /> <span id="fbetkname">Победа первой</span> -
-											<b><span id="fbetvalue">3.1</span></b>
+											
 										</div>
 									</div>
 									<div class="alert-infoblock">

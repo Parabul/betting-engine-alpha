@@ -97,13 +97,32 @@
 				<td align="right" width="50%"><b>Логин:</b></td>
 				<td align="left" width="50%"><span sec:authentication="name"></span></td>
 			</tr>
+
 			<tr>
 				<td align="right" nowrap="" valign="top"><b>Сумма на счету:</b></td>
 				<td align="left"><span th:text="${userAmount}"></span> <i>Тенге</i></td>
 			</tr>
+			
+		</tbody>
+	</table>
+
+	<table class="smallwnd">
+		<tbody>
+			<tr class="m_c" align="middle">
+				<td class="smwndcap">Операции со счетом</td>
+			</tr>
 			<tr>
-				<td align="right" width="25%"></td>
-				<td><a th:href="@{/logout}">Выход</a></td>
+				<td align="left">
+					<ul class="ulmnu">
+						<li><a th:href="@{/client/history}">История ставок</a></li>
+						<li><a th:href="@{/client/account}">Пополнение
+								счета</a></li>
+						<li><a th:href="@{/client/withdrawal}">Снятие
+								денег</a></li>
+						<li><a th:href="@{/client/settings}">Настройки счета</a></li>
+						<li><a th:href="@{/logout}">Выход</a></li>
+					</ul>
+				</td>
 			</tr>
 		</tbody>
 	</table>

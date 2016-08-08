@@ -7,9 +7,12 @@ import kz.nmbet.betradar.dao.domain.types.ThreeWaysOutComeType;
 public class ThreeWayOdds {
 
 	private Double homeOdd;
+	private Integer homeOddId;
 	private Double drawOdd;
+	private Integer drawOddId;
 	private Double awayOdd;
-
+	private Integer awayOddId;
+	
 	public ThreeWayOdds(GlMatchOddEntity oddEntity) {
 		fill(oddEntity);
 	}
@@ -19,12 +22,15 @@ public class ThreeWayOdds {
 			switch (ThreeWaysOutComeType.find(oddEntity.getOutCome())) {
 				case HOME :
 					homeOdd = oddEntity.getValue();
+					homeOddId=oddEntity.getId();
 					break;
 				case DRAW :
 					drawOdd = oddEntity.getValue();
+					drawOddId=oddEntity.getId();					
 					break;
 				case AWAY :
 					awayOdd = oddEntity.getValue();
+					awayOddId=oddEntity.getId();
 					break;
 
 			}
@@ -48,6 +54,30 @@ public class ThreeWayOdds {
 	}
 	public void setAwayOdd(Double awayOdd) {
 		this.awayOdd = awayOdd;
+	}
+
+	public Integer getHomeOddId() {
+		return homeOddId;
+	}
+
+	public void setHomeOddId(Integer homeOddId) {
+		this.homeOddId = homeOddId;
+	}
+
+	public Integer getDrawOddId() {
+		return drawOddId;
+	}
+
+	public void setDrawOddId(Integer drawOddId) {
+		this.drawOddId = drawOddId;
+	}
+
+	public Integer getAwayOddId() {
+		return awayOddId;
+	}
+
+	public void setAwayOddId(Integer awayOddId) {
+		this.awayOddId = awayOddId;
 	}
 
 }

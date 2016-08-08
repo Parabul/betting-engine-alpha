@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+</head>
+<body>
+	<div th:fragment="content">
+		<h1 style="text-align: center;">История</h1>
+
+		<table class="smallwnd2" style="WIDTH: 96%;">
+			<tbody>
+				<tr class="m_c" align="middle">
+					<td class="smwndcap" valign="middle" width="10%">Дата</td>
+					<td class="smwndcap" valign="middle" width="80%">Данные ставки</td>
+					<td class="smwndcap" valign="middle" width="10%">Сумма</td>
+				</tr>
+				<tr valign="top"  th:each="bet : ${bets}">
+					<td class="txtmed" ><span th:text="${#dates.format(bet.createDate, 'dd.MM.yyyy HH:mm')}"></span></td>
+					<td><b>#<span th:text="${bet.id}"></span>. Ординар. <i>Выплата: 51</i></b>
+						<table class="bettable">
+							<tbody>
+								<tr class="kh">
+									<td width="15%">Дата</td>
+									<td width="61%">Команда 1 - Команда 2: Исход</td>
+									<td width="5%">Коэф.</td>
+									<td width="19%">Статус</td>
+								</tr>
+								<tr class="hi">
+									<td>Линия</td>
+									<td><a href="index.php?page=small_res&amp;id=25940635"
+										target="_blank">Теннис. Мужчины. Турнир ITF. Пьештяны.
+											Грунт. Игнатик В. - Мичнев П.</a>: <br/>Основные. Победа
+										первой</td>
+									<td align="middle"><span th:text="${bet.oddValue}"></span></td>
+									<td ><span th:if="${bet.wins == null}">Нерассчитанные</span><span th:if="${bet.wins}">Выйграло</span><span th:if="${bet.wins == false}">Проиграло</span></td>
+								</tr>
+							</tbody>
+						</table></td>
+					<td><b><span th:text="${bet.betAmount}"></span></b></td>
+				</tr>
+				
+
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
