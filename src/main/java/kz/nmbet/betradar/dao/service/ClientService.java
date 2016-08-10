@@ -25,6 +25,7 @@ import kz.nmbet.betradar.dao.domain.types.BetType;
 import kz.nmbet.betradar.dao.repository.GlBetRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchLiveOddFieldRepository;
 import kz.nmbet.betradar.dao.repository.GlMatchOddEntityRepository;
+import kz.nmbet.betradar.dao.repository.UserRepository;
 import kz.nmbet.betradar.utils.MessageByLocaleService;
 import kz.nmbet.betradar.web.beans.MatchInfoBean;
 import kz.nmbet.betradar.web.beans.ShortBetInfo;
@@ -68,6 +69,21 @@ public class ClientService {
 	}
 
 	@Transactional
+	private void papulateWithOddsInfo(GlBet bet, ShortBetInfo betInfo) {
+		if (bet.getLiveOdds() != null) {
+			for (GlMatchLiveOddField oddField : bet.getLiveOdds()) {
+
+				betInfo.getLiveOddInfos().add(new ShortOdd(oddField));
+			}
+		}
+		if (bet.getMatchOddEntity() != null) {
+			for (GlMatchOddEntity odd : bet.getMatchOddEntity()) {
+				betInfo.getPrematchOddInfos().add(cashierService.getOddInfo(odd));
+			}
+		}
+	}
+
+	@Transactional
 	public String getLiveOddInfo(Integer oddId) {
 		GlMatchLiveOddField odd = liveOddFieldRepository.findOne(oddId);
 
@@ -84,6 +100,8 @@ public class ClientService {
 
 	@Transactional
 	public ShortBetInfo createLiveBet(Integer oddId, double amount, GlUser user) {
+
+		userService.withdraw(amount,  user);
 		List<GlMatchLiveOddField> odds = liveOddFieldRepository.findByIdAndActiveTrue(oddId);
 		double oddValue = 1.0d;
 		for (GlMatchLiveOddField odd : odds) {
@@ -105,6 +123,7 @@ public class ClientService {
 
 	@Transactional
 	public ShortBetInfo createMatchBet(Integer oddId, double amount, GlUser user) {
+		userService.withdraw(amount,  user);
 		List<GlMatchOddEntity> odds = new ArrayList<GlMatchOddEntity>();
 		odds.add(matchOddEntityRepository.findOne(oddId));
 		double oddValue = 1.0d;
@@ -127,11 +146,12 @@ public class ClientService {
 
 	@Transactional(readOnly = true)
 	public List<ShortBetInfo> getHistory(GlUser user, Pageable page) {
-		
+
 		List<ShortBetInfo> betInfos = new ArrayList<>();
 		for (GlBet bet : betRepository.findByOwnerOrderByIdDesc(user, page)) {
-			
-			betInfos.add(new ShortBetInfo(bet));
+			ShortBetInfo betInfo = new ShortBetInfo(bet);
+			papulateWithOddsInfo(bet, betInfo);
+			betInfos.add(betInfo);
 		}
 		return betInfos;
 

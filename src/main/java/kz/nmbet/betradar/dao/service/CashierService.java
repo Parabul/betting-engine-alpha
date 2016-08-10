@@ -139,26 +139,16 @@ public class CashierService {
 	}
 
 	public ShortOdd getOddInfo(GlMatchOddEntity matchOdd) {
-		StringBuilder builder = new StringBuilder();
+		String type;
 		try {
-			String type = messageByLocaleService.getMessage("match.odds.types.type" + matchOdd.getMatchOddsType());
-			builder.append(type);
+
+			type = messageByLocaleService.getMessage("match.odds.types.type" + matchOdd.getMatchOddsType());
+
 		} catch (NoSuchMessageException e) {
-			builder.append(matchOdd.getMatchOddsType());
-			logger.error(e.getMessage(), e);
-		}
-		builder.append(": ");
-		builder.append(matchOdd.getOutCome());
+			type = matchOdd.getMatchOddsType() + "";
 
-		if (StringUtils.isNotBlank(matchOdd.getSpecialBetValue())) {
-			builder.append(" (");
-			builder.append(matchOdd.getSpecialBetValue());
-			builder.append(")");
 		}
-		builder.append(" - ");
-		builder.append(matchOdd.getValue());
-
-		return new ShortOdd(matchOdd.getId(), builder.toString());
+		return new ShortOdd(matchOdd, type);
 	}
 
 	@Transactional(readOnly = true)
@@ -172,25 +162,8 @@ public class CashierService {
 	public List<ShortOdd> getMatchLiveOdds(Integer matchId) {
 		return liveOddFieldRepository
 				.findByLiveOddMatchIdAndActiveTrueAndLiveOddActiveTrueOrderByLiveOddIdAscViewIndexAsc(matchId).stream()
-				.map(item -> getOddInfo(item)).collect(Collectors.toList());
+				.map(item -> new ShortOdd(item)).collect(Collectors.toList());
 
-	}
-
-	private ShortOdd getOddInfo(GlMatchLiveOddField item) {
-		StringBuilder builder = new StringBuilder();
-		builder.append(item.getLiveOdd().getName());
-		builder.append(": ");
-		builder.append(item.getType());
-
-		if (StringUtils.isNotBlank(item.getLiveOdd().getSpecialOddsValue())) {
-			builder.append(" (");
-			builder.append(item.getLiveOdd().getSpecialOddsValue());
-			builder.append(")");
-		}
-		builder.append(" - ");
-		builder.append(item.getValue());
-
-		return new ShortOdd(item.getId(), builder.toString());
 	}
 
 	private boolean checkHash(String login, Integer cashierId, String hash) {
@@ -200,10 +173,11 @@ public class CashierService {
 
 	@Transactional
 	public GlUser autologin(String login, Integer cashierId, String hash) throws UserException {
-//		if (!checkHash(login, cashierId, hash)) {
-//			throw new BadCredentialsException(
-//					MessageFormat.format("Wrong hash: {0} for ({1}, {2})", hash, login, cashierId+""));
-//		}
+		// if (!checkHash(login, cashierId, hash)) {
+		// throw new BadCredentialsException(
+		// MessageFormat.format("Wrong hash: {0} for ({1}, {2})", hash, login,
+		// cashierId+""));
+		// }
 		GlUser cashier = userService.findByCashierId(cashierId);
 		if (cashier == null)
 			cashier = userService.create(login, null, UserService.CASHIER_ROLES, cashierId);

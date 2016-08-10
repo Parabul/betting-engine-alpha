@@ -2,8 +2,20 @@
 <application generated-by="eclipse" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
-		<dir name="C:/work/projects/nmbet/src/betting-engine-alpha/target/classes">
+		<dir name="/home/anarbek/work/nm/betting-engine-alpha/target/classes">
 		</dir>
 	</classpath>
+
+	<web>
+		<link target="/">
+			<dir name="/home/anarbek/work/nm/betting-engine-alpha/target/m2e-wtp/web-resources">
+				<exclude name="/"/>
+			</dir>
+		</link>
+		<link target="/">
+			<dir name="/home/anarbek/work/nm/betting-engine-alpha/src/main/webapp">
+			</dir>
+		</link>
+	</web>
 
 </application>

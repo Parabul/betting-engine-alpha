@@ -10,12 +10,14 @@
 	
 	<script th:src="@{/js/basket.js}"></script>
 	<div id="betslip1" style="" class="">
-
+			
+		<input type="hidden" id="liveBetAction" th:value="@{/client/live/bet/create}"/>
+		<input type="hidden" id="liveInfoAction" th:value="@{/client/live/oddInfo}"/>
+		<input type="hidden" id="prematchInfoAction" th:value="@{/client/prematch/oddInfo}"/>
+		<input type="hidden" id="prematchBetAction" th:value="@{/client/prematch/bet/create}"/>
 		
-
-		<input type="hidden" value="393" name="usersumm" id="usersumm" />
 		<div>
-			<div class="busket">
+			<div id="nm-basket" class="busket">
 				<div class="busket-header">
 					<div class="busket-title">КУПОН</div>
 				</div>

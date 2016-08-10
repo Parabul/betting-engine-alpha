@@ -15,31 +15,41 @@
 					<td class="smwndcap" valign="middle" width="80%">Данные ставки</td>
 					<td class="smwndcap" valign="middle" width="10%">Сумма</td>
 				</tr>
-				<tr valign="top"  th:each="bet : ${bets}">
-					<td class="txtmed" ><span th:text="${#dates.format(bet.createDate, 'dd.MM.yyyy HH:mm')}"></span></td>
-					<td><b>#<span th:text="${bet.id}"></span>. Ординар. <i>Выплата: 51</i></b>
+				<tr valign="top" th:each="bet : ${bets}">
+					<td class="txtmed"><span
+						th:text="${#dates.format(bet.createDate, 'dd.MM.yyyy HH:mm')}"></span></td>
+					<td><b>#<span th:text="${bet.id}"></span>. Ординар. <i
+							th:if="${bet.winAmount !=null }">Выплата: <span
+								th:text="${bet.winAmount}"></span></i></b>
 						<table class="bettable">
 							<tbody>
 								<tr class="kh">
 									<td width="15%">Дата</td>
-									<td width="61%">Команда 1 - Команда 2: Исход</td>
-									<td width="5%">Коэф.</td>
+									<td width="41%">Матч</td>
+									<td width="25%">Ставка</td>
 									<td width="19%">Статус</td>
 								</tr>
-								<tr class="hi">
+								<tr class="hi" th:each="liveOddInfo : ${bet.liveOddInfos}">
+									<td>Live</td>
+									<td><span th:text="${liveOddInfo.info}"></span></td>
+									<td><span th:if="${liveOddInfo.wins == null}">Нерассчитанные</span><span
+										th:if="${liveOddInfo.wins}">Выйграло</span><span
+										th:if="${liveOddInfo.wins == false}">Проиграло</span></td>
+								</tr>
+								<tr class="hi" th:each="liveOddInfo : ${bet.prematchOddInfos}">
 									<td>Линия</td>
-									<td><a href="index.php?page=small_res&amp;id=25940635"
-										target="_blank">Теннис. Мужчины. Турнир ITF. Пьештяны.
-											Грунт. Игнатик В. - Мичнев П.</a>: <br/>Основные. Победа
-										первой</td>
-									<td align="middle"><span th:text="${bet.oddValue}"></span></td>
-									<td ><span th:if="${bet.wins == null}">Нерассчитанные</span><span th:if="${bet.wins}">Выйграло</span><span th:if="${bet.wins == false}">Проиграло</span></td>
+									
+									<td><span th:text="${liveOddInfo.matchInfoBean.shortInfo}"></span></td>
+									<td><span th:text="${liveOddInfo.info}"></span></td>
+									<td><span th:if="${liveOddInfo.wins == null}">Нерассчитанные</span><span
+										th:if="${liveOddInfo.wins}">Выйграло</span><span
+										th:if="${liveOddInfo.wins == false}">Проиграло</span></td>
 								</tr>
 							</tbody>
 						</table></td>
 					<td><b><span th:text="${bet.betAmount}"></span></b></td>
 				</tr>
-				
+
 
 			</tbody>
 		</table>

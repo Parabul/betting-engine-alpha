@@ -91,6 +91,7 @@
 			<groupId>com.betradar</groupId>
 			<artifactId>sdk</artifactId>
 			<version>1.6.0.0</version>
+			
 		</dependency>
 
 		<dependency>
@@ -131,6 +132,7 @@
 		<!-- <artifactId>spring-boot-starter-velocity</artifactId> -->
 		<!-- </dependency> -->
 	</dependencies>
+	
 
 	<build>
 		<plugins>
@@ -143,7 +145,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>ROOT</finalName>
+		<!-- <finalName>ROOT</finalName> -->
 	</build>
 
 

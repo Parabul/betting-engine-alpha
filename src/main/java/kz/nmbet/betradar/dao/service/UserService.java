@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 @Service
@@ -30,6 +31,7 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 
+	
 	public GlUser findByCashierId(Integer cashierId) {
 		return userRepository.findByCashierId(cashierId);
 	}
@@ -38,6 +40,7 @@ public class UserService {
 		return DigestUtils.md5DigestAsHex(email.getBytes()).substring(0, 6);
 	}
 
+	@Transactional
 	public GlUser create(String email, String password, String roles, Integer cashierId) throws UserException {
 		GlUser puser = findByEmail(email);
 		if (puser != null)
@@ -55,7 +58,17 @@ public class UserService {
 		user.setEnabled(true);
 		user.setRoles(Arrays.asList(roles));
 		user.setCashierId(cashierId);
-		user.setAmount(0.0d);
+		user.setAmount(500.0d);
 		return userRepository.save(user);
+	}
+
+	@Transactional
+	public void withdraw(double amount, GlUser user) {
+		if (user.getAmount() < amount) {
+			throw new IllegalArgumentException();
+		} else {
+			user.setAmount(user.getAmount() - amount);
+		}
+		userRepository.save(user);
 	}
 }

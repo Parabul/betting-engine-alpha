@@ -1,5 +1,7 @@
 package kz.nmbet.betradar.web.beans;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,19 +30,18 @@ public class ShortBetInfo {
 
 	private Date createDate;
 
+	private List<ShortOdd> liveOddInfos = new ArrayList<>();
+
+	private List<ShortOdd> prematchOddInfos = new ArrayList<>();
+
 	public ShortBetInfo(GlBet bet) {
 		this.id = bet.getId();
 		this.oddValue = bet.getOddValue();
 		this.betAmount = bet.getBetAmount();
 		this.winAmount = bet.getWinAmount();
 		this.wins = bet.getWins();
-		this.setCreateDate(bet.getCreateDate());
-		for (GlMatchLiveOddField odds : bet.getLiveOdds()) {
+		this.createDate = bet.getCreateDate();
 
-		}
-		for (GlMatchOddEntity odds : bet.getMatchOddEntity()) {
-
-		}
 	}
 
 	public Integer getId() {
@@ -89,6 +90,22 @@ public class ShortBetInfo {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	public List<ShortOdd> getPrematchOddInfos() {
+		return prematchOddInfos;
+	}
+
+	public void setPrematchOddInfos(List<ShortOdd> prematchOddInfos) {
+		this.prematchOddInfos = prematchOddInfos;
+	}
+
+	public List<ShortOdd> getLiveOddInfos() {
+		return liveOddInfos;
+	}
+
+	public void setLiveOddInfos(List<ShortOdd> liveOddInfos) {
+		this.liveOddInfos = liveOddInfos;
 	}
 
 }

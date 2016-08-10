@@ -1,6 +1,7 @@
 package kz.nmbet.betradar.web.beans;
 
 import java.text.MessageFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +38,8 @@ public class MatchInfoBean {
 	private Map<Integer, List<GlMatchOddEntity>> extraOdds;
 
 	private Set<GlMatchLiveOdd> liveOdds;
+	private String sport;
+	private String tournament;
 
 	public MatchInfoBean(GlMatchEntity matchEntity, boolean key) {
 		matchId = matchEntity.getId();
@@ -52,6 +55,9 @@ public class MatchInfoBean {
 				break;
 			}
 		}
+		tournament = matchEntity.getTournament().getNameRu();
+		sport = matchEntity.getTournament().getCategory().getSport().getNameRu();
+
 	}
 
 	public String getTitle() {
@@ -124,6 +130,10 @@ public class MatchInfoBean {
 
 	public boolean isEmpty() {
 		return threeWayOdds == null && twoWayOdds == null && handicapOdds == null && totalsOdds == null;
+	}
+
+	public String getShortInfo() {
+		return MessageFormat.format("[{0}] ({3} {4}) {1}-{2}", matchId + "", homeTeamName, awayTeamName, sport, tournament);
 	}
 
 	public Map<Integer, List<GlMatchOddEntity>> getExtraOdds() {
@@ -239,6 +249,22 @@ public class MatchInfoBean {
 
 	public void setLiveOdds(Set<GlMatchLiveOdd> liveOdds) {
 		this.liveOdds = liveOdds;
+	}
+
+	public String getSport() {
+		return sport;
+	}
+
+	public void setSport(String sport) {
+		this.sport = sport;
+	}
+
+	public String getTournament() {
+		return tournament;
+	}
+
+	public void setTournament(String tournament) {
+		this.tournament = tournament;
 	}
 
 }
