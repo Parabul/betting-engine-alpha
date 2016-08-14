@@ -7,15 +7,17 @@
 </head>
 <div th:fragment="basket">
 	<link type="text/css" rel="stylesheet" th:href="@{/css/basket.css}" />
-	
+
 	<script th:src="@{/js/basket.js}"></script>
 	<div id="betslip1" style="" class="">
-			
-		<input type="hidden" id="liveBetAction" th:value="@{/client/live/bet/create}"/>
-		<input type="hidden" id="liveInfoAction" th:value="@{/client/live/oddInfo}"/>
-		<input type="hidden" id="prematchInfoAction" th:value="@{/client/prematch/oddInfo}"/>
-		<input type="hidden" id="prematchBetAction" th:value="@{/client/prematch/bet/create}"/>
-		
+
+		<input type="hidden" id="liveBetAction"
+			th:value="@{/client/live/bet/create}" /> <input type="hidden"
+			id="liveInfoAction" th:value="@{/client/live/oddInfo}" /> <input
+			type="hidden" id="prematchInfoAction"
+			th:value="@{/client/prematch/oddInfo}" /> <input type="hidden"
+			id="prematchBetAction" th:value="@{/client/prematch/bet/create}" />
+
 		<div>
 			<div id="nm-basket" class="busket">
 				<div class="busket-header">
@@ -36,24 +38,26 @@
 					</div>
 				</div>
 				<div class="clear"></div>
-				
+
 				<div id="wraper_basket">
 					<div class="clear"></div>
-					<div class="busket-nav hide">
-						<a data-type="1" id="bn1" href="#" class="active">ОРДИНАР</a> <a
-							data-type="2" id="bn2" href="#">ЭКСПРЕСС </a> <a data-type="3"
-							id="bn3" href="#">СИСТЕМА</a>
+					<div class="busket-nav" style="display: none;">
+						<a data-type="1" id="bn1" style="width: 41%;" href="#"
+							class="active">ОРДИНАР</a> <a data-type="2" id="bn2"
+							style="width: 45%;" href="#">ЭКСПРЕСС </a>
 					</div>
 					<input type="hidden" id="busket-nav" value="1" />
 					<div class="clear"></div>
-					<div id="error-wraper"  style="display:none;">
+					<div id="error-wraper" style="display: none;">
 						<div class="rekoeff-infoblock">
 							<div>
 								<table>
 									<tbody>
 										<tr>
 											<td><img th:src="@{/img/warning.png}" alt="warning" /></td>
-											<td><span style="line-height: 12px;" th:if="${basketErrorMsg != null }" th:text="${basketErrorMsg}"></span></td>
+											<td><span style="line-height: 12px;"
+												th:if="${basketErrorMsg != null }"
+												th:text="${basketErrorMsg}"></span></td>
 										</tr>
 									</tbody>
 								</table>
@@ -61,10 +65,6 @@
 						</div>
 					</div>
 					<form name="F1" method="post" style="margin-bottom: 0;">
-						<input type="hidden" name="action" value="submit" /> <input
-							type="hidden" name="oc" value="0" /> <input type="hidden"
-							name="ocid" id="ocid" value="548288421.1" /> <input
-							type="hidden" value="line" name="bs_curpage" id="bs_curpage" />
 						<div class="busket-body">
 							<div class="busket-item"></div>
 							<div class="busket-item">
@@ -75,9 +75,8 @@
 												<tr class="second-line">
 													<td><span class="summ-basket"><input
 															class="loginbox" name="oc_summ" id="oc_summ"
-															type="number" value="50"
-															 placeholder="Сумма"
-															step="10" min="0" /></span></td>
+															type="number" value="50" placeholder="Сумма" step="10"
+															min="0" /></span></td>
 													<td><span><input id="save-oc-button"
 															type="button" class="enabled2 msbtn_basket" data-sum="50"
 															value="Сохранить" /></span></td>
@@ -121,78 +120,235 @@
 										<div class="clear"></div>
 									</div>
 									<div class="bet-infoblock">
-										<div id="fastrezult">
-											
-										</div>
+										<div id="fastrezult"></div>
 									</div>
-									<div class="alert-infoblock">
+									<div id="fastBetInfo" class="alert-infoblock">
 										Вы активировали режим быстрой ставки. Для ознакомления с
-										правилами, пожалуйста, нажмите <a
-											th:href="@{/nm/rules}">здесь</a>
+										правилами, пожалуйста, нажмите <a th:href="@{/nm/rules}">здесь</a>
 									</div>
 								</div>
+
+							</div>
+						</div>
+
+
+						<div class="busket-body hide">
+							<div class="busket-item">
+								<div class="busket-item-delete" data-currpage="line">
+									<img th:src="@{/img/delete-item-busket.png}" />
+								</div>
+								<div class="busket-item-body">
+									<table width="210">
+										<tbody>
+											<tr>
+												<td></td>
+												<td class="busket-item-name"><b>Аталанта - Лацио</b></td>
+											</tr>
+										</tbody>
+									</table>
+									<div>
+										<table width="245">
+											<tbody>
+												<tr class="first-line">
+													<td class="name" colspan="2" width="70">Основные.
+														Победа первой</td>
+													<td><span class="koef"><span class="koef value"
+															title="3.12">3.12</span></span></td>
+												</tr>
+
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="prise"></div>
+							<div class="busket-item">
+								<div class="busket-item-delete" data-id="551928904.1"
+									data-currpage="line">
+									<img th:src="@{/img/delete-item-busket.png}"  />
+								</div>
+								<div class="busket-item-body">
+									<table width="210">
+										<tbody>
+											<tr>
+												<td></td>
+												<td class="busket-item-name"><b>Милан - Торино</b></td>
+											</tr>
+										</tbody>
+									</table>
+									<div>
+
+										<table width="245">
+											<tbody>
+												<tr class="first-line">
+													<td class="name" colspan="2" width="70">Основные.
+														Победа первой</td>
+													<td><span class="koef"><span class="koef value"
+															title="1.87">1.87</span></span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="prise"></div>
+							<input name="cnt" type="hidden" value="2" id="bet_cnt"/>
+							<div class="clear"></div>
+							<div class="busket-pay">
+								<div class="busket-item-clear">
+									<span class="clearAllbasket">ОЧИСТИТЬ</span>
+								</div>
+								<div class="clear"></div>
+								<table width="245">
+									<tbody>
+										<tr height="25" class="first-line">
+											<td style="padding: 3px; width: 200px"><span>Общий
+													коэфициент</span></td>
+											<td><span class="koef" id="ex_kef_sum">5.95</span> <input
+												type="hidden" name="exp_koef" value="5.95" /></td>
+										</tr>
+									</tbody>
+								</table>
+								<table style="width: 98%;">
+									<tbody>
+										<tr id="max-err" style="display: none;">
+											<td colspan="3" width="92%"
+												style="background-color: #891221; color: #fff; font-size: 12px;">
+												<span
+												style="background-color: #891221; width: 100%; color: #fff;">Превышена
+													максимальная ставка на событие</span>
+											</td>
+										</tr>
+										<tr class="second-line">
+											<td width="67%"><span class="summ-basket"><input
+													name="expbet_sum" value="0" onkeyup="CalcMaxWin();"
+													id="ex_max_bet" type="text" data-min="10"
+													data-max="14000000" placeholder="Сумма"
+													style="color: rgb(132, 132, 132);" /></span></td>
+											<td margin="0" padding="0" width="38%" align="right"><span><input
+													type="button" id="btmax" class="kof msbtn_basket"
+													value="Макс.ставка" data-max="14000000" /></span></td>
+										</tr>
+									</tbody>
+								</table>
+
+								<table width="258">
+									<tbody>
+										<tr class="second-line">
+											<td nowrap="nowrap"
+												style="padding: 3px; text-align: left; width: 69%;"><span
+												style="font-weight: bold; font-size: 11px;">Потенциальный
+													выигрыш</span></td>
+											<td><span class="koef" id="ex_max_win"
+												style="font-size: 14px;">0</span> <input type="hidden"
+												name="max_win" id="max_win" value="0" /> <input
+												type="hidden" name="exp_max" id="exp_max" value="14000000" />
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<input type="hidden" value="0" name="setbonus" id="setbonus" />
+								<div class="clear"></div>
+								<div>Принимать с изменёнными коэффициентами:</div>
+								<div class="radio-item">
+									<div class="radio-box">
+										<input value="1" id="b_never" name="save_any" type="radio"
+											checked="" />
+									</div>
+									<div class="radio-text">
+										<label for="b_never" class="radio-label">никогда</label>
+									</div>
+								</div>
+								<div class="radio-item">
+									<div class="radio-box">
+										<label for="b_uper"><input value="2" id="b_uper"
+											name="save_any" type="radio" style="vertical-align: middle" />
+										</label>
+									</div>
+									<div class="radio-text">
+										<label for="b_uper" class="radio-label">при повышении</label>
+									</div>
+								</div>
+								<div class="radio-item">
+									<div class="radio-box">
+										<input value="3" id="b_ever" name="save_any" type="radio"
+											style="vertical-align: middle" />
+									</div>
+									<div class="radio-text">
+										<label for="b_ever" class="radio-label">всегда</label>
+									</div>
+								</div>
+								<div class="clear"></div>
+								<div class="rekoeff-infoblock_bt hide">
+									<div id="ischange" class="hide">
+										<table>
+											<tbody>
+												<tr>
+													<td><img th:src="@{/img/err.gif}" alt="warning" /></td>
+													<td><span style="line-height: 15px;"> Изменение
+															коэффициента </span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="isdep" class="hide">
+										<table>
+											<tbody>
+												<tr>
+													<td><img th:src="@{/img/err.gif}"  alt="warning" /></td>
+													<td><span style="line-height: 15px;"> В купоне
+															зависимые исходы </span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="isnomany" class="hide">
+										<table>
+											<tbody>
+												<tr>
+													<td><img th:src="@{/img/err.gif}"  alt="warning" /></td>
+													<td><span style="line-height: 15px;"> У Вас
+															недостаточно средств <a
+															href="/index.php?page=account&amp;action=in">Пополнить
+																счет</a>
+													</span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div id="istypeerror" class="hide">
+										<table>
+											<tbody>
+												<tr>
+													<td><img th:src="@{/img/err.gif}"  alt="warning" /></td>
+													<td><span style="line-height: 15px;">
+															Недостаточно событий для эксперсса </span></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="clear"></div>
+								<div>
+									<button name="formsubmit" type="button"
+										class="btn-clear-pay_busket submit">Сделать ставку</button>
+								</div>
+								<div class="clear"></div>
 							</div>
 						</div>
 					</form>
 					<div class="clear"></div>
 					<div id="betok" class="warning-infoblock hide">
 						<div>
-							<img th:src="@{/img/accept.png}" alt="warning" /> Ваша ставка была
-							принята
+							<img th:src="@{/img/accept.png}" alt="warning" /> Ваша ставка
+							была принята
 						</div>
 					</div>
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div class="modal" id="alertmodal" style="display: none;">
-				<div class="modal-header">
-					<span>Подтвердите действие</span> <a href="#" rel="modal:close">x</a>
-				</div>
-				<div class="modalBox">
-					<table cellspacing="0" cellpadding="0">
-						<tbody>
-							<tr>
-								<td style="vertical-align: top;">
-									<div>
-										<img th:src="@{/img/warning.png}" alt="warning" />
-									</div>
-								</td>
-								<td><span></span>Сменился коэффициент на событие
-									<table width="100%" cellspacing="0" cellpadding="0">
-										<tbody>
-											<tr id="alertChangeKoefs">
-												<td class="first-line"><span class="koef"
-													style="float: left !important;">0</span></td>
-												<td
-													style="text-align: center !important; padding: 0 !important">
-													=&gt;</td>
-												<td class="second-line"><span class="koef">0</span></td>
-											</tr>
-										</tbody>
-									</table></td>
-							</tr>
-						</tbody>
-					</table>
-					<table width="100%" cellspacing="0" cellpadding="0"
-						style="border-top: 1px solid #d4d4d4 !important; padding-top: 10px !important">
-						<tbody>
-							<tr>
-								<td width="45%">
-									<div>
-										<input type="button" class="btn-ok modal-ok" value="Принять" />
-									</div>
-								</td>
-								<td width="55%">
-									<div>
-										<input type="button" class="btn-cancel modal-cancel"
-											value="Отмена" />
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
+
 		</div>
 		<div class="bs-clear">
 			<br />

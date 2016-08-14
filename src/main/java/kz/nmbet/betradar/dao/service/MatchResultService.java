@@ -34,7 +34,7 @@ public class MatchResultService {
 	@Transactional
 	public void updateWithResult() {
 		oddEntityRepository.updateWithResult();
-		
+
 	}
 
 	@Scheduled(fixedRate = 30000)
@@ -55,7 +55,11 @@ public class MatchResultService {
 				if (wins != null) {
 					bet.setWins(wins);
 					if (wins) {
+
 						bet.setWinAmount(bet.getBetAmount() * bet.getOddValue());
+						if (bet.getOwner() != null) {
+							bet.getOwner().setAmount(bet.getOwner().getAmount() + bet.getWinAmount());
+						}
 					} else {
 						bet.setWinAmount(0.0d);
 					}
@@ -85,6 +89,9 @@ public class MatchResultService {
 					bet.setWins(wins);
 					if (wins) {
 						bet.setWinAmount(bet.getBetAmount() * bet.getOddValue());
+						if (bet.getOwner() != null) {
+							bet.getOwner().setAmount(bet.getOwner().getAmount() + bet.getWinAmount());
+						}
 					} else {
 						bet.setWinAmount(0.0d);
 					}

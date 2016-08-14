@@ -7,7 +7,70 @@
 <body>
 	<div th:fragment="content">
 		<h1 style="text-align: center;">Снятие денег со счета</h1>
+		<hr />
 
+		<div class="row">
+			<div class="col-md-5 col-md-5">
+				<form th:action="@{/client/create/withdrawal}"
+					class="form-horizontal">
+
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Адрес</label>
+						<div class="col-sm-9">
+							<div>
+								<select name="cashboxId">
+									<option th:each="cashbox : ${cashboxes}"
+										th:value="${cashbox.id}"><span
+											th:text="${cashbox.title}"></span> - <span
+											th:text="${cashbox.address}"></span></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Cумма</label>
+						<div class="col-sm-9">
+							<div>
+								<input name="amount" type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button type="submit" class="btn btn-success" style="margin-top:15px">Добавить</button>
+							<p style="color:red;">На ваш номер, указанный при регистрации будет отправлен код платежа!</p>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<h3>История обналичивания</h3>
+			<hr />
+			<div class="col-md-7 col-md-7">
+				<table class="table" width="100%">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Сумма</th>
+							<th>Дата создания</th>
+							<th>Адрес</th>
+							<th>Статус</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="paymentOrder : ${paymentOrders}">
+							<td style="text-align: center;" th:text="${paymentOrder.id}"></td>
+							<td style="text-align: center;" th:text="${paymentOrder.amount}"></td>
+							<td  style="text-align: center;"><span
+								th:text="${#dates.format(paymentOrder.createDate, 'dd.MM.yyyy HH:mm')}"></span></td>
+							<td  style="text-align: center;"><span th:text="${paymentOrder.cashbox.title}"></span> - <span th:text="${paymentOrder.cashbox.address}"></span></td>
+							<td  style="text-align: center;" th:text="#{${'paymentOrder.orderStatus.' + paymentOrder.orderStatus}}" ></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

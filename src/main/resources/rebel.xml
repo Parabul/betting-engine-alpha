@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<application generated-by="eclipse" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
+<application generated-by="eclipse"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com"
+	xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
 	<classpath>
 		<dir name="/home/anarbek/work/nm/betting-engine-alpha/target/classes">
 		</dir>
+		<dir name="/home/anarbek/work/nm/betting-engine-alpha/target/betting-engine-0.0.1-SNAPSHOT/WEB-INF/classes">
+		</dir>
+		<dir name="/home/anarbek/work/nm/betting-engine-alpha/target/betting-engine-0.0.1-SNAPSHOT/WEB-INF/classes/templates">
+		</dir>
+		<dir name="/home/anarbek/work/nm/betting-engine-alpha/src/main/resources/templates/">
+		</dir>
+		<dir name="/home/anarbek/work/nm/betting-engine-alpha/src/main/resources/templates/fragments/">
+		</dir>
+		
 	</classpath>
-
-	<web>
-		<link target="/">
-			<dir name="/home/anarbek/work/nm/betting-engine-alpha/target/m2e-wtp/web-resources">
-				<exclude name="/"/>
-			</dir>
-		</link>
-		<link target="/">
-			<dir name="/home/anarbek/work/nm/betting-engine-alpha/src/main/webapp">
-			</dir>
-		</link>
-	</web>
-
 </application>

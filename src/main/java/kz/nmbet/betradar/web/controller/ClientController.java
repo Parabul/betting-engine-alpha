@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
 import kz.nmbet.betradar.dao.service.ClientService;
+import kz.nmbet.betradar.dao.service.PaymentService;
 import kz.nmbet.betradar.dao.service.UserService;
 import kz.nmbet.betradar.web.beans.ShortBetInfo;
 
@@ -28,6 +29,9 @@ public class ClientController {
 
 	@Autowired
 	private ClientService clientService;
+
+	@Autowired
+	private PaymentService paymentService;
 
 	@Autowired
 	private UserService userService;
@@ -74,18 +78,28 @@ public class ClientController {
 		model.addAttribute("content", "client/account");
 		return "olimp";
 	}
-	
+
 	@RequestMapping("/settings")
 	public String settings(Model model, Principal principal) {
 		model.addAttribute("content", "client/settings");
 		return "olimp";
 	}
 
-	
 	@RequestMapping("/withdrawal")
 	public String withdrawal(Model model, Principal principal) {
+		model.addAttribute("paymentOrders",
+				paymentService.findPaymentOrders(userService.findByEmail(principal.getName())));
+		model.addAttribute("cashboxes", paymentService.findAllCashboxs());
+
 		model.addAttribute("content", "client/withdrawal");
 		return "olimp";
+	}
+
+	@RequestMapping("/create/withdrawal")
+	public String createwithdrawal(Model model, @RequestParam(name = "amount") double amount,
+			@RequestParam(name = "cashboxId") Integer cashboxId, Principal principal) {
+		paymentService.createPaymentOrder(userService.findByEmail(principal.getName()), amount, cashboxId);
+		return "redirect:/client/withdrawal";
 	}
 
 }

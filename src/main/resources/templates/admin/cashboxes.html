@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>Live</title>
+
+<!-- Bootstrap -->
+<link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+	<div th:fragment="content">
+		<h1>Управление кассами обналичивания</h1>
+		<hr />
+		<div class="row">
+			<div class="col-md-5 col-md-5">
+				<form th:action="@{/admin/create/cashbox}" class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Название</label>
+						<div class="col-sm-9">
+							<div>
+								<input name="title" type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Адрес</label>
+						<div class="col-sm-9">
+							<div>
+								<textarea rows="3" class="form-control" name="address"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Максимальная сумма</label>
+						<div class="col-sm-9">
+							<div>
+								<input name="amount" type="text" class="form-control" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<button type="submit" class="btn btn-success">Добавить</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-7 col-md-7">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Название</th>
+							<th>Адрес</th>
+							<th>Максимальная сумма</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cashbox : ${cashboxes}">
+							<td th:text="${cashbox.id}"></td>							
+							<td th:text="${cashbox.title}"></td>
+							<td th:text="${cashbox.address}"></td>
+							<td th:text="${cashbox.maxAmount}"></td>
+							<td> <a th:href="@{/admin/delete/cashbox(id=${cashbox.id})}" class="btn btn-danger">Удалить</a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+
+
+</body>
+</html>
