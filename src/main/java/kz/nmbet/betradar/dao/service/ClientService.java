@@ -12,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -55,17 +57,9 @@ public class ClientService {
 	private CashierService cashierService;
 
 	@Transactional
-	public String getPrematchOddInfo(Integer oddId) {
+	public ShortOdd getPrematchOddInfo(Integer oddId) {
 		GlMatchOddEntity odd = oddRepository.findOne(oddId);
-
-		ShortOdd oddInfo = cashierService.getOddInfo(odd);
-
-		MatchInfoBean matchInfoBean = new MatchInfoBean(odd.getMatch(), true);
-		String homeTeam = matchInfoBean.getHomeTeamName();
-		String awayTeam = matchInfoBean.getAwayTeamName();
-
-		return MessageFormat.format("[{0}] {1}-{2} : {3}", matchInfoBean.getMatchId() + "", homeTeam, awayTeam,
-				oddInfo.getInfo());
+		return cashierService.getOddInfo(odd);
 	}
 
 	@Transactional
@@ -101,7 +95,7 @@ public class ClientService {
 	@Transactional
 	public ShortBetInfo createLiveBet(Integer oddId, double amount, GlUser user) {
 
-		userService.withdraw(amount,  user);
+		userService.withdraw(amount, user);
 		List<GlMatchLiveOddField> odds = liveOddFieldRepository.findByIdAndActiveTrue(oddId);
 		double oddValue = 1.0d;
 		for (GlMatchLiveOddField odd : odds) {
@@ -123,7 +117,7 @@ public class ClientService {
 
 	@Transactional
 	public ShortBetInfo createMatchBet(Integer oddId, double amount, GlUser user) {
-		userService.withdraw(amount,  user);
+		userService.withdraw(amount, user);
 		List<GlMatchOddEntity> odds = new ArrayList<GlMatchOddEntity>();
 		odds.add(matchOddEntityRepository.findOne(oddId));
 		double oddValue = 1.0d;
@@ -144,16 +138,40 @@ public class ClientService {
 			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
 	}
 
-	@Transactional(readOnly = true)
-	public List<ShortBetInfo> getHistory(GlUser user, Pageable page) {
+	@Transactional
+	public ShortBetInfo createMatchBet(List<Integer> oddIds, double amount, GlUser user) {
+		userService.withdraw(amount, user);
 
-		List<ShortBetInfo> betInfos = new ArrayList<>();
-		for (GlBet bet : betRepository.findByOwnerOrderByIdDesc(user, page)) {
-			ShortBetInfo betInfo = new ShortBetInfo(bet);
-			papulateWithOddsInfo(bet, betInfo);
-			betInfos.add(betInfo);
+		List<GlMatchOddEntity> odds = matchOddEntityRepository.findByIdIn(oddIds);
+		double oddValue = 1.0d;
+		for (GlMatchOddEntity odd : odds) {
+			oddValue = oddValue * odd.getValue();
 		}
-		return betInfos;
+		if (odds != null && odds.size() > 0) {
+			GlBet bet = new GlBet();
+			bet.setMatchOddEntity(odds);
+			bet.setBetAmount(amount);
+			bet.setCreateDate(new Date());
+			bet.setOddValue(oddValue);
+			bet.setOwner(user);
+			bet.setBetType(BetType.PREMATCH);
+			bet = betRepository.save(bet);
+			return new ShortBetInfo(bet);
+		} else
+			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
+	}
+
+	@Transactional(readOnly = true)
+	public Page<ShortBetInfo> getHistory(GlUser user, Pageable page) {
+		Integer total = betRepository.countByOwner(user);
+		List<ShortBetInfo> betInfos = new ArrayList<>();
+		if (total > 0)
+			for (GlBet bet : betRepository.findByOwnerOrderByIdDesc(user, page)) {
+				ShortBetInfo betInfo = new ShortBetInfo(bet);
+				papulateWithOddsInfo(bet, betInfo);
+				betInfos.add(betInfo);
+			}
+		return new PageImpl<ShortBetInfo>(betInfos, page, total);
 
 	}
 

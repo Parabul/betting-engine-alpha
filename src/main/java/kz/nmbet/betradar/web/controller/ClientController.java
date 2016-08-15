@@ -1,6 +1,7 @@
 package kz.nmbet.betradar.web.controller;
 
 import java.security.Principal;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kz.nmbet.betradar.dao.domain.entity.GlBet;
 import kz.nmbet.betradar.dao.service.ClientService;
 import kz.nmbet.betradar.dao.service.PaymentService;
 import kz.nmbet.betradar.dao.service.UserService;
 import kz.nmbet.betradar.web.beans.ShortBetInfo;
+import kz.nmbet.betradar.web.beans.ShortOdd;
 
 @Controller
 @RequestMapping(path = "/client")
@@ -51,7 +52,7 @@ public class ClientController {
 
 	@RequestMapping("/prematch/oddInfo")
 	@ResponseBody
-	public String getPrematchOddInfo(Model model, @RequestParam(name = "oddId") Integer oddId) {
+	public  ShortOdd getPrematchOddInfo(Model model, @RequestParam(name = "oddId") Integer oddId) {
 		return clientService.getPrematchOddInfo(oddId);
 	}
 
@@ -60,6 +61,13 @@ public class ClientController {
 	public ShortBetInfo createMatchBet(Model model, @RequestParam(name = "amount") double amount,
 			@RequestParam(name = "oddId") Integer oddId, Principal principal) {
 		return clientService.createMatchBet(oddId, amount, userService.findByEmail(principal.getName()));
+	}
+	
+	@RequestMapping("/prematch/bets/create")
+	@ResponseBody
+	public ShortBetInfo createMatchBets(Model model, @RequestParam(name = "amount") double amount,
+			@RequestParam(name = "oddId") Integer[] oddIds, Principal principal) {
+		return clientService.createMatchBet(Arrays.asList(oddIds), amount, userService.findByEmail(principal.getName()));
 	}
 
 	@RequestMapping("/history")

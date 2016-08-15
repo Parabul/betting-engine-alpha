@@ -17,7 +17,8 @@
 			type="hidden" id="prematchInfoAction"
 			th:value="@{/client/prematch/oddInfo}" /> <input type="hidden"
 			id="prematchBetAction" th:value="@{/client/prematch/bet/create}" />
-
+		<input type="hidden" id="prematchBetsAction"
+			th:value="@{/client/prematch/bets/create}" />
 		<div>
 			<div id="nm-basket" class="busket">
 				<div class="busket-header">
@@ -132,68 +133,7 @@
 						</div>
 
 
-						<div class="busket-body hide">
-							<div class="busket-item">
-								<div class="busket-item-delete" data-currpage="line">
-									<img th:src="@{/img/delete-item-busket.png}" />
-								</div>
-								<div class="busket-item-body">
-									<table width="210">
-										<tbody>
-											<tr>
-												<td></td>
-												<td class="busket-item-name"><b>Аталанта - Лацио</b></td>
-											</tr>
-										</tbody>
-									</table>
-									<div>
-										<table width="245">
-											<tbody>
-												<tr class="first-line">
-													<td class="name" colspan="2" width="70">Основные.
-														Победа первой</td>
-													<td><span class="koef"><span class="koef value"
-															title="3.12">3.12</span></span></td>
-												</tr>
-
-
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<div class="prise"></div>
-							<div class="busket-item">
-								<div class="busket-item-delete" data-id="551928904.1"
-									data-currpage="line">
-									<img th:src="@{/img/delete-item-busket.png}"  />
-								</div>
-								<div class="busket-item-body">
-									<table width="210">
-										<tbody>
-											<tr>
-												<td></td>
-												<td class="busket-item-name"><b>Милан - Торино</b></td>
-											</tr>
-										</tbody>
-									</table>
-									<div>
-
-										<table width="245">
-											<tbody>
-												<tr class="first-line">
-													<td class="name" colspan="2" width="70">Основные.
-														Победа первой</td>
-													<td><span class="koef"><span class="koef value"
-															title="1.87">1.87</span></span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<div class="prise"></div>
-							<input name="cnt" type="hidden" value="2" id="bet_cnt"/>
+						<div id="regularMode" class="busket-body hide">							
 							<div class="clear"></div>
 							<div class="busket-pay">
 								<div class="busket-item-clear">
@@ -205,130 +145,11 @@
 										<tr height="25" class="first-line">
 											<td style="padding: 3px; width: 200px"><span>Общий
 													коэфициент</span></td>
-											<td><span class="koef" id="ex_kef_sum">5.95</span> <input
-												type="hidden" name="exp_koef" value="5.95" /></td>
+											<td><span class="koef" id="ex_kef_sum">1.00</span></td>
 										</tr>
 									</tbody>
 								</table>
-								<table style="width: 98%;">
-									<tbody>
-										<tr id="max-err" style="display: none;">
-											<td colspan="3" width="92%"
-												style="background-color: #891221; color: #fff; font-size: 12px;">
-												<span
-												style="background-color: #891221; width: 100%; color: #fff;">Превышена
-													максимальная ставка на событие</span>
-											</td>
-										</tr>
-										<tr class="second-line">
-											<td width="67%"><span class="summ-basket"><input
-													name="expbet_sum" value="0" onkeyup="CalcMaxWin();"
-													id="ex_max_bet" type="text" data-min="10"
-													data-max="14000000" placeholder="Сумма"
-													style="color: rgb(132, 132, 132);" /></span></td>
-											<td margin="0" padding="0" width="38%" align="right"><span><input
-													type="button" id="btmax" class="kof msbtn_basket"
-													value="Макс.ставка" data-max="14000000" /></span></td>
-										</tr>
-									</tbody>
-								</table>
-
-								<table width="258">
-									<tbody>
-										<tr class="second-line">
-											<td nowrap="nowrap"
-												style="padding: 3px; text-align: left; width: 69%;"><span
-												style="font-weight: bold; font-size: 11px;">Потенциальный
-													выигрыш</span></td>
-											<td><span class="koef" id="ex_max_win"
-												style="font-size: 14px;">0</span> <input type="hidden"
-												name="max_win" id="max_win" value="0" /> <input
-												type="hidden" name="exp_max" id="exp_max" value="14000000" />
-											</td>
-										</tr>
-									</tbody>
-								</table>
-								<input type="hidden" value="0" name="setbonus" id="setbonus" />
-								<div class="clear"></div>
-								<div>Принимать с изменёнными коэффициентами:</div>
-								<div class="radio-item">
-									<div class="radio-box">
-										<input value="1" id="b_never" name="save_any" type="radio"
-											checked="" />
-									</div>
-									<div class="radio-text">
-										<label for="b_never" class="radio-label">никогда</label>
-									</div>
-								</div>
-								<div class="radio-item">
-									<div class="radio-box">
-										<label for="b_uper"><input value="2" id="b_uper"
-											name="save_any" type="radio" style="vertical-align: middle" />
-										</label>
-									</div>
-									<div class="radio-text">
-										<label for="b_uper" class="radio-label">при повышении</label>
-									</div>
-								</div>
-								<div class="radio-item">
-									<div class="radio-box">
-										<input value="3" id="b_ever" name="save_any" type="radio"
-											style="vertical-align: middle" />
-									</div>
-									<div class="radio-text">
-										<label for="b_ever" class="radio-label">всегда</label>
-									</div>
-								</div>
-								<div class="clear"></div>
-								<div class="rekoeff-infoblock_bt hide">
-									<div id="ischange" class="hide">
-										<table>
-											<tbody>
-												<tr>
-													<td><img th:src="@{/img/err.gif}" alt="warning" /></td>
-													<td><span style="line-height: 15px;"> Изменение
-															коэффициента </span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div id="isdep" class="hide">
-										<table>
-											<tbody>
-												<tr>
-													<td><img th:src="@{/img/err.gif}"  alt="warning" /></td>
-													<td><span style="line-height: 15px;"> В купоне
-															зависимые исходы </span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div id="isnomany" class="hide">
-										<table>
-											<tbody>
-												<tr>
-													<td><img th:src="@{/img/err.gif}"  alt="warning" /></td>
-													<td><span style="line-height: 15px;"> У Вас
-															недостаточно средств <a
-															href="/index.php?page=account&amp;action=in">Пополнить
-																счет</a>
-													</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div id="istypeerror" class="hide">
-										<table>
-											<tbody>
-												<tr>
-													<td><img th:src="@{/img/err.gif}"  alt="warning" /></td>
-													<td><span style="line-height: 15px;">
-															Недостаточно событий для эксперсса </span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
+								
 								<div class="clear"></div>
 								<div>
 									<button name="formsubmit" type="button"
@@ -352,6 +173,32 @@
 		</div>
 		<div class="bs-clear">
 			<br />
+		</div>
+
+
+		<div id="busket-item-template" class="hide">
+			<div class="busket-item-delete">
+				<img th:src="@{/img/delete-item-busket.png}" />
+			</div>
+			<div class="busket-item-body">
+				<table width="210">
+					<tbody>
+						<tr>
+							<td></td>
+							<td class="busket-item-name"><b class="match-info-wrapper"></b></td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+					<table width="245">
+						<tbody>
+							<tr class="first-line">
+								<td class="koef" colspan="2"><span class="bet-info-wrapper koef value"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -19,10 +19,12 @@ public interface GlBetRepository extends JpaRepository<GlBet, Integer> {
 
 	@Query(nativeQuery = true, value = "select distinct bet.* from gl_bet bet left join mm_bet_live_odd_fields mm on mm.bet_id=bet.id left join gl_match_live_odd_field odd_field on odd_field.id=mm.live_odd_field_id where odd_field.outcome is not null and wins is null")
 	List<GlBet> getBetsWithLiveResult();
-	
+
 	@Query(nativeQuery = true, value = "select distinct bet.* from gl_bet bet left join mm_bet_match_odds mm on mm.bet_id=bet.id left join gl_match_odd_entity odd on odd.id=mm.match_odd_id where odd.odd_result is not null and wins is null")
 	List<GlBet> getBetsWithPreMatchResult();
 
 	List<GlBet> findByOwnerOrderByIdDesc(GlUser user, Pageable page);
-	
+
+	Integer countByOwner(GlUser user);
+
 }

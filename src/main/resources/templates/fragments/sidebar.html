@@ -100,7 +100,7 @@
 
 			<tr>
 				<td align="right" nowrap="" valign="top"><b>Сумма на счету:</b></td>
-				<td align="left"><span th:text="${userAmount}"></span> <i>Тенге</i></td>
+				<td align="left"><span th:text="${#numbers.formatDecimal(userAmount,2,2)}"></span> <i>Тенге</i></td>
 			</tr>
 			
 		</tbody>

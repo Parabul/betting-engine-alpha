@@ -11,6 +11,7 @@ public class ShortOdd {
 	private String info;
 	private MatchInfoBean matchInfoBean;
 	private Boolean wins;
+	private Double oddValue;
 
 	public ShortOdd(GlMatchLiveOddField item) {
 		StringBuilder builder = new StringBuilder();
@@ -30,6 +31,7 @@ public class ShortOdd {
 		this.id = item.getId();
 		this.matchInfoBean = new MatchInfoBean(item.getLiveOdd().getMatch(), true);
 		this.wins = item.getOutcome();
+		this.oddValue = item.getValue();
 	}
 
 	public ShortOdd(GlMatchOddEntity matchOdd, String type) {
@@ -50,6 +52,7 @@ public class ShortOdd {
 		this.id = matchOdd.getId();
 		this.matchInfoBean = new MatchInfoBean(matchOdd.getMatch(), true);
 		this.wins = matchOdd.getOddResult();
+		this.oddValue = matchOdd.getValue();
 	}
 
 	public Integer getId() {
@@ -82,6 +85,14 @@ public class ShortOdd {
 
 	public void setWins(Boolean wins) {
 		this.wins = wins;
+	}
+
+	public Double getOddValue() {
+		return oddValue;
+	}
+
+	public void setOddValue(Double oddValue) {
+		this.oddValue = oddValue;
 	}
 
 }
