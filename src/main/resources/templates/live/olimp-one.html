@@ -21,24 +21,21 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<div class="tab">
-				<div class="odd-group" th:each="liveOddGroup : ${match.liveOdds}"
-					th:if="${not #lists.isEmpty(liveOddGroup.oddFields)}">
-					<b><span th:text="${liveOddGroup.name}"></span><span
-						th:if="${liveOddGroup.specialOddsValue != null}"
-						th:text="${'('+liveOddGroup.specialOddsValue+')'}"></span>:</b><br />
-					<div class="odd-item"
-						th:each="extraOdd : ${liveOddGroup.oddFields}"
-						th:if="${extraOdd.value !=null}">
-						<span th:text="${extraOdd.type}"></span> - <i><span
-							th:text="${extraOdd.value}"></span></i>
-						<div th:if="${extraOdd.value &lt; extraOdd.oldValue}"
-							class="todown"></div>
-						<div th:if="${extraOdd.value &gt; extraOdd.oldValue}" class="toup"></div>
-					</div>
-					<br /> <br />
+			<div class="odd-group" th:each="liveOddGroup : ${match.liveOdds}"
+				th:if="${not #lists.isEmpty(liveOddGroup.oddFields) and liveOddGroup.active}">
+				<b><span th:text="${liveOddGroup.name}"></span><span
+					th:if="${liveOddGroup.specialOddsValue != null}"
+					th:text="${'('+liveOddGroup.specialOddsValue+')'}"></span>:</b><br />
+				<div class="odd-item" th:each="extraOdd : ${liveOddGroup.oddFields}"
+					th:if="${extraOdd.value !=null and extraOdd.active}">
+					<span th:text="${extraOdd.type}"></span> - <b><span
+						class="live-odd" th:id="${extraOdd.id}"
+						th:text="${extraOdd.value}"></span></b>
+					<div th:if="${extraOdd.value &lt; extraOdd.oldValue}"
+						class="todown"></div>
+					<div th:if="${extraOdd.value &gt; extraOdd.oldValue}" class="toup"></div>
 				</div>
-
+				<br /> <br />
 			</div>
 		</td>
 	</tr>

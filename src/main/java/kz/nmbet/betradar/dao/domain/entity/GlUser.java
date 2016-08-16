@@ -43,6 +43,10 @@ public class GlUser {
 	private Integer cashierId;
 	
 	private Double amount;
+	
+	private Double defaultBetAmount;
+	
+	private Boolean fastBetEnabled;
 
 	public Integer getId() {
 		return id;
@@ -123,5 +127,23 @@ public class GlUser {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
+
+	public Double getDefaultBetAmount() {
+		return defaultBetAmount;
+	}
+
+	public void setDefaultBetAmount(Double defaultBetAmount) {
+		this.defaultBetAmount = defaultBetAmount;
+	}
+
+	public Boolean getFastBetEnabled() {
+		return fastBetEnabled;
+	}
+
+	public void setFastBetEnabled(Boolean fastBetEnabled) {
+		this.fastBetEnabled = fastBetEnabled;
+	}
+
+
 
 }

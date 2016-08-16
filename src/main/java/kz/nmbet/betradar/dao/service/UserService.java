@@ -31,7 +31,6 @@ public class UserService {
 		return userRepository.findByEmail(email);
 	}
 
-	
 	public GlUser findByCashierId(Integer cashierId) {
 		return userRepository.findByCashierId(cashierId);
 	}
@@ -59,6 +58,8 @@ public class UserService {
 		user.setRoles(Arrays.asList(roles));
 		user.setCashierId(cashierId);
 		user.setAmount(500.0d);
+		user.setDefaultBetAmount(50.0d);
+		user.setFastBetEnabled(false);
 		return userRepository.save(user);
 	}
 
@@ -70,5 +71,15 @@ public class UserService {
 			user.setAmount(user.getAmount() - amount);
 		}
 		userRepository.save(user);
+	}
+
+	@Transactional
+	public void updateDefaultBetAmount(Double amount, String email) {
+		userRepository.updateDefaultBetAmount(amount, email);
+	}
+	
+	@Transactional
+	public void updateFastBetEnabled(Boolean enabled, String email) {
+		userRepository.updateFastBetEnabled(enabled, email);
 	}
 }

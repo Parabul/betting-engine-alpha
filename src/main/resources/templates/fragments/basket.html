@@ -13,12 +13,18 @@
 
 		<input type="hidden" id="liveBetAction"
 			th:value="@{/client/live/bet/create}" /> <input type="hidden"
-			id="liveInfoAction" th:value="@{/client/live/oddInfo}" /> <input
-			type="hidden" id="prematchInfoAction"
+			id="liveBetsAction" th:value="@{/client/live/bets/create}" /> <input
+			type="hidden" id="liveInfoAction" th:value="@{/client/live/oddInfo}" />
+		<input type="hidden" id="prematchInfoAction"
 			th:value="@{/client/prematch/oddInfo}" /> <input type="hidden"
 			id="prematchBetAction" th:value="@{/client/prematch/bet/create}" />
 		<input type="hidden" id="prematchBetsAction"
-			th:value="@{/client/prematch/bets/create}" />
+			th:value="@{/client/prematch/bets/create}" /> <input type="hidden"
+			id="saveDefaultBetAmount" th:value="@{/client/save/defaultBetAmount}" />
+		<input type="hidden" id="fastBetEnabled"
+			th:value="${accountInfo.fastBetEnabled}" /> <input type="hidden"
+			id="saveFastBetEnabled" th:value="@{/client/save/fastBetEnabled}" />
+
 		<div>
 			<div id="nm-basket" class="busket">
 				<div class="busket-header">
@@ -67,8 +73,7 @@
 					</div>
 					<form name="F1" method="post" style="margin-bottom: 0;">
 						<div class="busket-body">
-							<div class="busket-item"></div>
-							<div class="busket-item">
+							<div>
 								<div class="busket-item-body">
 									<div class="busket-pay">
 										<table width="245" height="30">
@@ -76,8 +81,9 @@
 												<tr class="second-line">
 													<td><span class="summ-basket"><input
 															class="loginbox" name="oc_summ" id="oc_summ"
-															type="number" value="50" placeholder="Сумма" step="10"
-															min="0" /></span></td>
+															type="number"
+															th:value="${#numbers.formatDecimal(accountInfo.defaultBetAmount,1,0)}"
+															placeholder="Сумма" step="10" min="0" /></span></td>
 													<td><span><input id="save-oc-button"
 															type="button" class="enabled2 msbtn_basket" data-sum="50"
 															value="Сохранить" /></span></td>
@@ -133,7 +139,7 @@
 						</div>
 
 
-						<div id="regularMode" class="busket-body hide">							
+						<div id="regularMode" class="busket-body hide">
 							<div class="clear"></div>
 							<div class="busket-pay">
 								<div class="busket-item-clear">
@@ -149,10 +155,10 @@
 										</tr>
 									</tbody>
 								</table>
-								
+
 								<div class="clear"></div>
 								<div>
-									<button name="formsubmit" type="button"
+									<button id="formsubmit" type="button"
 										class="btn-clear-pay_busket submit">Сделать ставку</button>
 								</div>
 								<div class="clear"></div>
@@ -193,7 +199,8 @@
 					<table width="245">
 						<tbody>
 							<tr class="first-line">
-								<td class="koef" colspan="2"><span class="bet-info-wrapper koef value"></span></td>
+								<td class="koef" colspan="2"><span
+									class="bet-info-wrapper koef value"></span></td>
 							</tr>
 						</tbody>
 					</table>

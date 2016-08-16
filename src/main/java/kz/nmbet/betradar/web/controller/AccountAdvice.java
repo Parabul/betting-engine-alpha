@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
 import kz.nmbet.betradar.dao.service.UserService;
+import kz.nmbet.betradar.web.beans.AccountInfo;
 
 @ControllerAdvice
 public class AccountAdvice {
@@ -20,13 +21,14 @@ public class AccountAdvice {
 	@Autowired
 	private UserService userService;
 
-	@ModelAttribute(value = "userAmount")
-	public Double addUserAmount(Principal principal) {
+	@ModelAttribute(value = "accountInfo")
+	public AccountInfo addUserAmount(Principal principal) {
 		if (principal != null && StringUtils.isNotBlank(principal.getName())) {
 			GlUser user = userService.findByEmail(principal.getName());
 			logger.info("userAmount => " + user.getAmount());
-			return user.getAmount();
+			return new AccountInfo(user);
 		}
 		return null;
 	}
+	
 }

@@ -67,7 +67,7 @@ public class PrivateLiveService {
 	@Autowired
 	private TeamService teamService;
 
-	// @Scheduled(fixedRate = 20000)
+	@Scheduled(fixedRate = 20000)
 	@Transactional
 	public void updateInactive() {
 		liveOddRepository.updateInactive();

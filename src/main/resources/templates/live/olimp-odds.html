@@ -27,7 +27,7 @@
 		</script>
 		<script type="text/javascript" th:src="@{/js/live-update.js}"></script>
 		<h1 style="text-align: center;">Live-Ставки</h1>
-		<div>
+		<div id="live-odds-container">
 			<table class="koeftable2 match-wrapper" cellspacing="3"
 				cellpadding="3" th:id="${match.key}" th:each="match : ${matches}">
 				<tbody>
@@ -47,15 +47,16 @@
 						<td colspan="2">
 							<div class="odd-group"
 								th:each="liveOddGroup : ${match.value.liveOdds}"
-								th:if="${not #lists.isEmpty(liveOddGroup.oddFields)}">
+								th:if="${not #lists.isEmpty(liveOddGroup.oddFields) and liveOddGroup.active}">
 								<b><span th:text="${liveOddGroup.name}"></span><span
 									th:if="${liveOddGroup.specialOddsValue != null}"
 									th:text="${'('+liveOddGroup.specialOddsValue+')'}"></span>:</b><br />
 								<div class="odd-item"
 									th:each="extraOdd : ${liveOddGroup.oddFields}"
-									th:if="${extraOdd.value !=null}">
-									<span th:text="${extraOdd.type}"></span> - <i><span
-										th:text="${extraOdd.value}"></span></i>
+									th:if="${extraOdd.value !=null and extraOdd.active}">
+									<span th:text="${extraOdd.type}"></span> - <b><span
+										class="live-odd" th:id="${extraOdd.id}"
+										th:text="${extraOdd.value}"></span></b>
 									<div th:if="${extraOdd.value &lt; extraOdd.oldValue}"
 										class="todown"></div>
 									<div th:if="${extraOdd.value &gt; extraOdd.oldValue}"

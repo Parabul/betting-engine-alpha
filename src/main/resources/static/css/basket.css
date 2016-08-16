@@ -840,23 +840,34 @@ select.bas:disabled {
 	margin: 0 !important;
 }
 
-#nm-basket{
-	position:relative;
-	top:0px;
-	
+#nm-basket {
+	position: relative;
+	top: 0px;
+}
+
+ul.pagination {
+	list-style: none;
+}
+
+ul.pagination li {
+	margin-left: 10px;
+	float: left;
+	font-size: 15px;
+}
+
+ul.pagination li.active {
+	background: transparent !important;
+}
+
+.live-odd {
+	cursor: pointer;
+}
+
+.prematch-odd {
+	cursor: pointer;
 }
 
 
-ul.pagination{
-	list-style:none;
-}
+/*
 
-ul.pagination li{
-	margin-left:10px;
-	float:left;
-	font-size:15px;
-}
-
-ul.pagination li.active{
-	background:transparent !important;
-}
+*/

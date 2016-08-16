@@ -2,6 +2,7 @@ package kz.nmbet.betradar.web.controller;
 
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sportradar.sdk.shaded.org.apache.http.protocol.HTTP;
 
 import kz.nmbet.betradar.dao.service.ClientService;
 import kz.nmbet.betradar.dao.service.PaymentService;
@@ -43,16 +46,23 @@ public class ClientController {
 			@RequestParam(name = "oddId") Integer oddId, Principal principal) {
 		return clientService.createLiveBet(oddId, amount, userService.findByEmail(principal.getName()));
 	}
+	
+	@RequestMapping("/live/bets/create")
+	@ResponseBody
+	public ShortBetInfo createLiveBets(Model model, @RequestParam(name = "amount") double amount,
+			@RequestParam(name = "oddIds[]") List<Integer> oddIds, Principal principal) {
+		return clientService.createLiveBet(oddIds, amount, userService.findByEmail(principal.getName()));
+	}
 
 	@RequestMapping("/live/oddInfo")
 	@ResponseBody
-	public String getLiveOddInfo(Model model, @RequestParam(name = "oddId") Integer oddId) {
+	public ShortOdd getLiveOddInfo(Model model, @RequestParam(name = "oddId") Integer oddId) {
 		return clientService.getLiveOddInfo(oddId);
 	}
 
 	@RequestMapping("/prematch/oddInfo")
 	@ResponseBody
-	public  ShortOdd getPrematchOddInfo(Model model, @RequestParam(name = "oddId") Integer oddId) {
+	public ShortOdd getPrematchOddInfo(Model model, @RequestParam(name = "oddId") Integer oddId) {
 		return clientService.getPrematchOddInfo(oddId);
 	}
 
@@ -62,12 +72,12 @@ public class ClientController {
 			@RequestParam(name = "oddId") Integer oddId, Principal principal) {
 		return clientService.createMatchBet(oddId, amount, userService.findByEmail(principal.getName()));
 	}
-	
+
 	@RequestMapping("/prematch/bets/create")
 	@ResponseBody
 	public ShortBetInfo createMatchBets(Model model, @RequestParam(name = "amount") double amount,
-			@RequestParam(name = "oddId") Integer[] oddIds, Principal principal) {
-		return clientService.createMatchBet(Arrays.asList(oddIds), amount, userService.findByEmail(principal.getName()));
+			@RequestParam(name = "oddIds[]") List<Integer> oddIds, Principal principal) {
+		return clientService.createMatchBet(oddIds, amount, userService.findByEmail(principal.getName()));
 	}
 
 	@RequestMapping("/history")
@@ -108,6 +118,22 @@ public class ClientController {
 			@RequestParam(name = "cashboxId") Integer cashboxId, Principal principal) {
 		paymentService.createPaymentOrder(userService.findByEmail(principal.getName()), amount, cashboxId);
 		return "redirect:/client/withdrawal";
+	}
+
+	@RequestMapping("/save/defaultBetAmount")
+	@ResponseBody
+	public String createwithdrawal(Model model, @RequestParam(name = "defaultBetAmount") double defaultBetAmount,
+			Principal principal) {
+		userService.updateDefaultBetAmount(defaultBetAmount, principal.getName());
+		return "OK";
+	}
+
+	@RequestMapping("/save/fastBetEnabled")
+	@ResponseBody
+	public String updateFastBetEnabled(Model model, @RequestParam(name = "fastBetEnabled") boolean fastBetEnabled,
+			Principal principal) {
+		userService.updateFastBetEnabled(fastBetEnabled, principal.getName());
+		return "OK";
 	}
 
 }

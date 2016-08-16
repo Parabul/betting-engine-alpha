@@ -18,8 +18,11 @@
 				<tr valign="top" th:each="bet : ${bets.content}">
 					<td class="txtmed"><span
 						th:text="${#dates.format(bet.createDate, 'dd.MM.yyyy HH:mm')}"></span></td>
-					<td><b>#<span th:text="${bet.id}"></span>. Ординар. <i
-							th:if="${bet.winAmount !=null }">Выплата: <span
+					<td><b>#<span th:text="${bet.id}"></span>. <span
+							th:if="${#lists.size(bet.liveOddInfos) == 1  or #lists.size(bet.prematchOddInfos) == 1}">
+								ОРДИНАР.</span> <span
+							th:if="${#lists.size(bet.liveOddInfos) >1  or #lists.size(bet.prematchOddInfos) >1}">ЭКСПРЕСС </span>
+							<i th:if="${bet.winAmount !=null }">Выплата: <span
 								th:text="${#numbers.formatDecimal(bet.winAmount,2,2)}"></span></i></b>
 						<table class="bettable">
 							<tbody>
@@ -31,6 +34,8 @@
 								</tr>
 								<tr class="hi" th:each="liveOddInfo : ${bet.liveOddInfos}">
 									<td>Live</td>
+									
+									<td><span th:text="${liveOddInfo.matchInfoBean.shortInfo}"></span></td>
 									<td><span th:text="${liveOddInfo.info}"></span></td>
 									<td><span th:if="${liveOddInfo.wins == null}">Нерассчитанные</span><span
 										th:if="${liveOddInfo.wins}">Выйграло</span><span
@@ -56,12 +61,10 @@
 
 		<div class="table-pagination">
 			<ul class="pagination">
-				<li>
-					Страница
-				</li>
+				<li>Страница</li>
 				<li th:each="pageNo : ${#numbers.sequence(0, bets.totalPages - 1)}"
-					th:class="${bets.number eq pageNo}? 'active' : ''"><span th:if="${bets.number  eq pageNo}"
-					th:text="${pageNo + 1}"></span> <a
+					th:class="${bets.number eq pageNo}? 'active' : ''"><span
+					th:if="${bets.number  eq pageNo}" th:text="${pageNo + 1}"></span> <a
 					th:if="${not (bets.number  eq pageNo)}"
 					th:href="@{${'/client/history'}(page=${pageNo},size=${bets.size})}">
 						<span th:text="${pageNo + 1}"></span>

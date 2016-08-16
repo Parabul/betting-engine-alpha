@@ -66,7 +66,6 @@ public class ClientService {
 	private void papulateWithOddsInfo(GlBet bet, ShortBetInfo betInfo) {
 		if (bet.getLiveOdds() != null) {
 			for (GlMatchLiveOddField oddField : bet.getLiveOdds()) {
-
 				betInfo.getLiveOddInfos().add(new ShortOdd(oddField));
 			}
 		}
@@ -76,20 +75,14 @@ public class ClientService {
 			}
 		}
 	}
+	
+	
 
 	@Transactional
-	public String getLiveOddInfo(Integer oddId) {
+	public ShortOdd getLiveOddInfo(Integer oddId) {
 		GlMatchLiveOddField odd = liveOddFieldRepository.findOne(oddId);
 
-		Double value = odd.getValue();
-		String name = odd.getLiveOdd().getName();
-
-		MatchInfoBean matchInfoBean = new MatchInfoBean(odd.getLiveOdd().getMatch(), true);
-		String homeTeam = matchInfoBean.getHomeTeamName();
-		String awayTeam = matchInfoBean.getAwayTeamName();
-
-		return MessageFormat.format("[{0}] {1}-{2} : {3} {4}", matchInfoBean.getMatchId() + "", homeTeam, awayTeam,
-				name, NumberFormat.getInstance().format(value));
+		return new ShortOdd(odd);
 	}
 
 	@Transactional
@@ -155,6 +148,30 @@ public class ClientService {
 			bet.setOddValue(oddValue);
 			bet.setOwner(user);
 			bet.setBetType(BetType.PREMATCH);
+			bet = betRepository.save(bet);
+			return new ShortBetInfo(bet);
+		} else
+			throw new IllegalArgumentException("Номер ставки не указан не верно. Либо данные устарели");
+	}
+	
+
+	@Transactional
+	public ShortBetInfo createLiveBet(List<Integer> oddIds, double amount, GlUser user) {
+
+		userService.withdraw(amount, user);
+		List<GlMatchLiveOddField> odds = liveOddFieldRepository.findByIdInAndActiveTrue(oddIds);
+		double oddValue = 1.0d;
+		for (GlMatchLiveOddField odd : odds) {
+			oddValue = oddValue * odd.getValue();
+		}
+		if (odds != null && odds.size() > 0) {
+			GlBet bet = new GlBet();
+			bet.setLiveOdds(odds);
+			bet.setBetAmount(amount);
+			bet.setCreateDate(new Date());
+			bet.setOddValue(oddValue);
+			bet.setOwner(user);
+			bet.setBetType(BetType.LIVE);
 			bet = betRepository.save(bet);
 			return new ShortBetInfo(bet);
 		} else

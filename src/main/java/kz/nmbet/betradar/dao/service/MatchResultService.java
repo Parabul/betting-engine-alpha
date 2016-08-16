@@ -44,15 +44,19 @@ public class MatchResultService {
 		if (bets != null && bets.size() > 0)
 			for (GlBet bet : bets) {
 				Boolean wins = null;
+				boolean isUndefinded = false;
 				for (GlMatchLiveOddField liveOdd : bet.getLiveOdds()) {
 					if (liveOdd.getOutcome() != null) {
 						if (wins == null)
 							wins = liveOdd.getOutcome();
 						else
 							wins = wins && liveOdd.getOutcome();
+					} else {
+						isUndefinded = true;
+						break;
 					}
 				}
-				if (wins != null) {
+				if (wins != null && isUndefinded == false) {
 					bet.setWins(wins);
 					if (wins) {
 
@@ -64,7 +68,7 @@ public class MatchResultService {
 						bet.setWinAmount(0.0d);
 					}
 					bet = betRepository.save(bet);
-					remoteStoreService.updateWithResult(bet);
+					//remoteStoreService.updateWithResult(bet);
 				}
 
 			}
@@ -77,15 +81,19 @@ public class MatchResultService {
 		if (bets != null && bets.size() > 0)
 			for (GlBet bet : bets) {
 				Boolean wins = null;
+				boolean isUndefinded = false;
 				for (GlMatchOddEntity odd : bet.getMatchOddEntity()) {
 					if (odd.getOddResult() != null) {
 						if (wins == null)
 							wins = odd.getOddResult();
 						else
 							wins = wins && odd.getOddResult();
+					} else {
+						isUndefinded = true;
+						break;
 					}
 				}
-				if (wins != null) {
+				if (wins != null && isUndefinded == false) {
 					bet.setWins(wins);
 					if (wins) {
 						bet.setWinAmount(bet.getBetAmount() * bet.getOddValue());
@@ -96,7 +104,7 @@ public class MatchResultService {
 						bet.setWinAmount(0.0d);
 					}
 					bet = betRepository.save(bet);
-					remoteStoreService.updateWithResult(bet);
+					//remoteStoreService.updateWithResult(bet);
 				}
 
 			}
