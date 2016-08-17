@@ -19,6 +19,13 @@
 <script
 	th:src="@{/js/jquery-3.1.0.min.js}"></script>
 <script th:src="@{/js/jquery.blockui.min.js}"></script>
+<script th:src="@{/js/jquery.maskedinput.min.js}"></script>
+<script>
+$(function(){
+	$(".phone-number").mask("9999999999",{placeholder:"77017771234"});
+});
+</script>
+
 </head>
 <body>
 	<div class="row-fluid" th:replace="/fragments/header :: header">&nbsp;</div>

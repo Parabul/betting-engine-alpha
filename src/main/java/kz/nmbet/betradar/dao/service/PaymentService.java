@@ -1,5 +1,6 @@
 package kz.nmbet.betradar.dao.service;
 
+import java.text.MessageFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import kz.nmbet.betradar.dao.domain.entity.GlUser;
 import kz.nmbet.betradar.dao.domain.types.PaymentOrderStatus;
 import kz.nmbet.betradar.dao.repository.GlCashboxRepository;
 import kz.nmbet.betradar.dao.repository.GlPaymentOrderRepository;
+import kz.nmbet.betradar.utils.MessageByLocaleService;
+import kz.nmbet.betradar.utils.SmsUtil;
 
 @Service
 public class PaymentService {
@@ -23,6 +26,12 @@ public class PaymentService {
 
 	@Autowired
 	private GlPaymentOrderRepository paymentOrderRepository;
+
+	@Autowired
+	private MessageByLocaleService messageByLocaleService;
+
+	@Autowired
+	private SmsUtil smsUtil;
 
 	@Transactional
 	public GlCashbox createCashbox(String title, String address, Double maxAmount) {
@@ -70,7 +79,8 @@ public class PaymentService {
 		if (owner.getAmount() < amount)
 			throw new IllegalArgumentException();
 		owner.setAmount(owner.getAmount() - amount);
-
+		String template = messageByLocaleService.getMessage("tmpl.payment.order.sms");
+		smsUtil.send(owner, MessageFormat.format(template, amount, paymentOrder.getSecret()));
 		return paymentOrderRepository.save(paymentOrder);
 	}
 
