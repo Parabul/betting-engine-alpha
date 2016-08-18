@@ -82,6 +82,7 @@ public class PrivateLiveService {
 			match = new GlMatchEntity();
 			match.setActive(true);
 			match.setLiveStarted(true);
+			match.setLiveStoped(false);
 			match.setMatchId(data.getMatchHeaderInfos().get(0).getMatchHeader().getEventId());
 		}
 
@@ -152,6 +153,7 @@ public class PrivateLiveService {
 			match = new GlMatchEntity();
 			match.setActive(true);
 			match.setLiveStarted(true);
+			match.setLiveStoped(false);
 			match.setMatchId(entity.getEventId().getEventId());
 		}
 
@@ -220,6 +222,7 @@ public class PrivateLiveService {
 			return;
 		match.setLiveCheckDate(new Date());
 		match.setLiveStarted(true);
+		match.setLiveStoped(false);
 		matchEntityRepository.save(match);
 	}
 
@@ -281,15 +284,18 @@ public class PrivateLiveService {
 	public void aliveReceived(AliveEntity entity) {
 		if (entity != null && entity.getEventHeaders() != null) {
 			Date currentDate = new Date();
+			List<Integer> ids = new ArrayList<Integer>();
 			for (EventHeaderEntity eventHeader : entity.getEventHeaders()) {
 				GlMatchEntity match = matchEntityRepository.findByMatchId(eventHeader.getEventId());
 				if (match != null) {
-					liveOddRepository.aliveReceived(match.getId());
+					ids.add(match.getId());
 					match.setLiveCheckDate(currentDate);
 					match.setLiveStarted(true);
+					match.setLiveStoped(false);
 					matchEntityRepository.save(match);
 				}
 			}
+			liveOddRepository.aliveReceived(ids);
 		}
 	}
 
