@@ -292,7 +292,8 @@ public class PrivateLiveService {
 					matchEntityRepository.save(match);
 				}
 			}
-			liveOddRepository.aliveReceived(new Date(), ids);
+			if (ids.size() > 0)
+				liveOddRepository.aliveReceived(new Date(), ids);
 		}
 	}
 
