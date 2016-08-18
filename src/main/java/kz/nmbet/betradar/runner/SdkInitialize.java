@@ -25,7 +25,7 @@ import kz.nmbet.betradar.api.LiveOddsOutrightsFeedListener;
 import kz.nmbet.betradar.api.LiveOddsRaceFeedListenerImpl;
 import kz.nmbet.betradar.api.LiveScoutFeedListenerImpl;
 
-//@Component
+@Component
 public class SdkInitialize implements CommandLineRunner {
 
 	private static final Logger logger = LoggerFactory.getLogger(SdkInitialize.class);
