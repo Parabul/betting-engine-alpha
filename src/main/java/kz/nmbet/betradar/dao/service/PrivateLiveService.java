@@ -284,6 +284,7 @@ public class PrivateLiveService {
 			for (EventHeaderEntity eventHeader : entity.getEventHeaders()) {
 				GlMatchEntity match = matchEntityRepository.findByMatchId(eventHeader.getEventId());
 				if (match != null) {
+					liveOddRepository.aliveReceived(match.getId());
 					match.setLiveCheckDate(currentDate);
 					match.setLiveStarted(true);
 					matchEntityRepository.save(match);

@@ -98,4 +98,4 @@ CREATE OR REPLACE VIEW public.v_live_match_infos AS
      LEFT JOIN gl_team_entity home_team ON home_team.id = home_competitor.gl_team_id
      LEFT JOIN gl_competitor_entity away_competitor ON match.id = away_competitor.gl_match_id AND 'AWAY'::text = away_competitor.team_type::text
      LEFT JOIN gl_team_entity away_team ON away_team.id = away_competitor.gl_team_id
-  WHERE match.id IS NOT NULL and extract('epoch' from (current_timestamp-match.live_check_date)) < 20 and live_started=true;
+  WHERE match.id IS NOT NULL and extract('epoch' from (current_timestamp-match.live_check_date)) < 20 and live_started=true and (live_stoped=false or live_stoped is null);

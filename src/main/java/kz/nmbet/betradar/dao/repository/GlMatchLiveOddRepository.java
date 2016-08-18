@@ -24,7 +24,7 @@ public interface GlMatchLiveOddRepository extends JpaRepository<GlMatchLiveOdd, 
 	@Fetch(FetchMode.SUBSELECT)
 	@Query("select r from GlMatchLiveOdd r left join fetch r.oddFields where r.match.id = :id ")
 	List<GlMatchLiveOdd> getByMatchId(@Param("id") Integer id);
-	
+
 	@Query("select r from GlMatchLiveOdd r left join fetch r.oddFields where r.match.matchId = :id ")
 	List<GlMatchLiveOdd> getByRemoteMatchId(@Param("id") Long id);
 
@@ -35,5 +35,9 @@ public interface GlMatchLiveOddRepository extends JpaRepository<GlMatchLiveOdd, 
 	@Modifying
 	@Query(nativeQuery = true, value = "update gl_match_live_odd set active=false where extract('epoch' from (current_timestamp-check_date)) > 20")
 	int updateInactive();
+
+	@Modifying
+	@Query(nativeQuery = true, value = "update gl_match_live_odd set active=true where gl_match_id = ?")
+	int aliveReceived(Integer matchId);
 
 }
