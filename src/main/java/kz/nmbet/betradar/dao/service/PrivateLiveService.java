@@ -8,17 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sportradar.sdk.feed.common.entities.IdNameTuple;
-import com.sportradar.sdk.feed.lcoo.entities.TextEntity;
-import com.sportradar.sdk.feed.lcoo.entities.TextsEntity;
 import com.sportradar.sdk.feed.liveodds.classes.EventDataPackage;
 import com.sportradar.sdk.feed.liveodds.entities.common.AliveEntity;
 import com.sportradar.sdk.feed.liveodds.entities.common.BetCancelEntity;
@@ -295,7 +292,7 @@ public class PrivateLiveService {
 					matchEntityRepository.save(match);
 				}
 			}
-			liveOddRepository.aliveReceived(ids);
+			liveOddRepository.aliveReceived(new Date(), ids);
 		}
 	}
 

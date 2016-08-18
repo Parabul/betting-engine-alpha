@@ -1,5 +1,6 @@
 package kz.nmbet.betradar.dao.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.Fetch;
@@ -41,7 +42,7 @@ public interface GlMatchLiveOddRepository extends JpaRepository<GlMatchLiveOdd, 
 	int aliveReceivedNative(Integer matchId);
 
 	@Modifying
-	@Query(value = "update GlMatchLiveOdd o set o.active=true, o.check_date=current_timestamp  where o.match.id in ( :matchIds )")
-	void aliveReceived(@Param("matchIds") List<Integer> matchIds);
+	@Query(value = "update GlMatchLiveOdd o set o.active=true, o.checkDate = :curDate  where o.match.id in ( :matchIds )")
+	void aliveReceived(@Param("curDate") Date curDate,@Param("matchIds") List<Integer> matchIds);
 
 }
