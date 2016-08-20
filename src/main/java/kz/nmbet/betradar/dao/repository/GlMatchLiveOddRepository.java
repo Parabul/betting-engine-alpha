@@ -42,7 +42,7 @@ public interface GlMatchLiveOddRepository extends JpaRepository<GlMatchLiveOdd, 
 	int aliveReceivedNative(Integer matchId);
 
 	@Modifying
-	@Query(value = "update GlMatchLiveOdd o set o.active=true, o.checkDate = :curDate  where o.match.id in (:matchIds)")
+	@Query(value = "update GlMatchLiveOdd o set o.checkDate = :curDate  where o.match.id in (:matchIds)")
 	void aliveReceived(@Param("curDate") Date curDate, @Param("matchIds") List<Integer> matchIds);
 
 }
