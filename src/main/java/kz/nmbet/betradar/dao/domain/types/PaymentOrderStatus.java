@@ -1,5 +1,5 @@
 package kz.nmbet.betradar.dao.domain.types;
 
 public enum PaymentOrderStatus {
-	CREATED, PAYED, CANCELED;
+	CREATED, PAYED, CANCELED, RECEIVED;
 }

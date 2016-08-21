@@ -18,7 +18,7 @@ public class PublicOutrightController {
 	public String index(Model model) {
 		model.addAttribute("sports", outrightService.getActiveOutrights());
 		model.addAttribute("content", "outright/index");
-		return "template";
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/outright/{outrightId}/")
@@ -26,7 +26,7 @@ public class PublicOutrightController {
 		model.addAttribute("odds", outrightService.findOutrightOdds(outrightId));
 		model.addAttribute("outright", outrightService.findOne(outrightId));
 		model.addAttribute("content", "outright/outright");
-		return "template";
+		return "redirect:/";
 	}
 
 

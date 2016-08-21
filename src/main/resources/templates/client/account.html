@@ -7,7 +7,27 @@
 <body>
 	<div th:fragment="content">
 		<h1 style="text-align: center;">Пополнение счета</h1>
+		<p>Вы можете пополнить счет через кассы по указанным ниже адресам.
+			При пополнении счета достаточно указать номер телефона</p>
+		<table class="table" style="width: 100%;">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Название</th>
+					<th>Адрес</th>
+					<th>Максимальная сумма</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="cashbox : ${cashboxes}">
+					<td th:text="${cashbox.id}"></td>
+					<td th:text="${cashbox.title}"></td>
+					<td th:text="${cashbox.address}"></td>
+					<td th:text="${cashbox.maxAmount}"></td>
 
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

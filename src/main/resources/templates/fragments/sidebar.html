@@ -14,10 +14,11 @@
 							{
 								optionsItemBuilder : function(itemData,
 										element, index) {
-									return element.val().length ? '<span class="ico ico-'
+									return element.val().length
+											? '<span class="ico ico-'
 											+ index
 											+ '"></span>'
-											+ itemData.text
+													+ itemData.text
 											: itemData.text;
 								}
 							});
@@ -100,13 +101,15 @@
 
 			<tr>
 				<td align="right" nowrap="" valign="top"><b>Сумма на счету:</b></td>
-				<td align="left"><span th:text="${#numbers.formatDecimal(accountInfo.userAmount,2,2)}"></span> <i>Тенге</i></td>
+				<td align="left"><span
+					th:text="${#numbers.formatDecimal(accountInfo.userAmount,2,2)}"></span>
+					<i>Тенге</i></td>
 			</tr>
-			
+
 		</tbody>
 	</table>
 
-	<table class="smallwnd"  sec:authorize="isAuthenticated()">
+	<table class="smallwnd" sec:authorize="isAuthenticated()">
 		<tbody>
 			<tr class="m_c" align="middle">
 				<td class="smwndcap">Операции со счетом</td>
@@ -115,13 +118,13 @@
 				<td align="left">
 					<ul class="ulmnu">
 						<li><a th:href="@{/client/history}">История ставок</a></li>
-						<li><a th:href="@{/client/account}">Пополнение
-								счета</a></li>
-						<li><a th:href="@{/client/withdrawal}">Снятие
-								денег</a></li>
+						<li><a th:href="@{/client/account}">Пополнение счета</a></li>
+						<li><a th:href="@{/client/withdrawal}">Снятие денег</a></li>
 						<li><a th:href="@{/client/settings}">Настройки счета</a></li>
-						<li><a th:href="@{/admin/cashboxes}">Управление кассами обналичивания</a></li>
-						
+						<li
+							th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"><a
+							th:href="@{/admin/cashboxes}">Админка</a></li>
+
 						<li><a th:href="@{/logout}">Выход</a></li>
 					</ul>
 				</td>
@@ -144,7 +147,7 @@
 								</tr>
 								<tr>
 									<td nowrap=""><input type="text" name="username"
-										placeholder="Номер телефона"  class="phone-number"/></td>
+										placeholder="Номер телефона" class="phone-number" /></td>
 								</tr>
 								<tr>
 									<td><input type="password" name="password"
@@ -187,89 +190,19 @@
 									id="live">Live </a></td>
 							</tr>
 
+
+
 							<tr>
 								<td><hr class="hr2" /></td>
 							</tr>
-							<tr>
+
+
+							<tr th:each="sport : ${sideBarSports}">
 								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=50}"><font
-										class="txtmed" color="black">Футбол (125)</font></a></td>
+									th:href="@{/nm/prematch/sport(sportId=${sport.key})}"><font
+										class="txtmed" color="black" th:text="${sport.value}"></font></a></td>
 							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=54}"><font
-										class="txtmed" color="black">Теннис (55)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=60}"><font
-										class="txtmed" color="black">Регби (17)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=51}"><font
-										class="txtmed" color="black">Баскетбол (13)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=52}"><font
-										class="txtmed" color="black">Бейсбол (9)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=69}"><font
-										class="txtmed" color="black">Волейбол (7)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=73}"><font
-										class="txtmed" color="black">Футзал (4)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=67}"><font
-										class="txtmed" color="black">Крикет (3)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=85}"><font
-										class="txtmed" color="black">Песапалло (3)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=59}"><font
-										class="txtmed" color="black">Автоспорт (2)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=64}"><font
-										class="txtmed" color="black">Американский футбол (2)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=75}"><font
-										class="txtmed" color="black">Игра в боулз (1)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=65}"><font
-										class="txtmed" color="black">Снукер (1)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=61}"><font
-										class="txtmed" color="black">Австралийский футбол (1)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=70}"><font
-										class="txtmed" color="black">Хоккей на траве (1)</font></a></td>
-							</tr>
-							<tr>
-								<td class="ns"><a
-									th:href="@{/nm/prematch/sport?sportId=55}"><font
-										class="txtmed" color="black">Гандбол (1)</font></a></td>
-							</tr>
+
 
 						</tbody>
 					</table>

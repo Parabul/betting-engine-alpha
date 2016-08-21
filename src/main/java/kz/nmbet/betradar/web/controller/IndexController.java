@@ -6,6 +6,8 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -16,21 +18,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
 import kz.nmbet.betradar.dao.service.MatchResultService;
+import kz.nmbet.betradar.utils.MessageByLocaleService;
 
 @Controller
 public class IndexController {
+
+	private static final Logger logger = LoggerFactory.getLogger(CashierController.class);
 
 	@Autowired
 	@Qualifier("localeResolver")
 	private LocaleResolver localeResolver;
 
 	@Autowired
-	private MatchResultService matchResultService;
-
+	private MessageByLocaleService messageByLocaleService;
 
 	@RequestMapping({ "/" })
-	public String home(Model model) {
+	public String home(Model model, HttpServletRequest request, HttpServletResponse response) {
 		model.addAttribute("content", "index");
+		localeResolver.setLocale(request, response, new Locale("ru_RU"));
+		logger.info(messageByLocaleService.getMessage("paymentOrder.orderStatus.RECEIVED"));
+		model.addAttribute("keywords", messageByLocaleService.getMessage("keywords.root"));
+		model.addAttribute("description", messageByLocaleService.getMessage("description.root"));
+
 		return "olimp";
 	}
 
@@ -61,6 +70,8 @@ public class IndexController {
 	@RequestMapping("/nm/liveresults")
 	public String liveresults(Model model) {
 		model.addAttribute("content", "static/liveresults");
+		model.addAttribute("keywords", messageByLocaleService.getMessage("keywords.liveresults"));
+		model.addAttribute("description", messageByLocaleService.getMessage("description.liveresults"));
 		return "olimp";
 	}
 

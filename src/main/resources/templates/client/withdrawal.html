@@ -37,8 +37,10 @@
 					</div>
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-9">
-							<button type="submit" class="btn btn-success" style="margin-top:15px">Добавить</button>
-							<p style="color:red;">На ваш номер, указанный при регистрации будет отправлен код платежа!</p>
+							<button type="submit" class="btn btn-success"
+								style="margin-top: 15px">Добавить</button>
+							<p style="color: red;">На ваш номер, указанный при
+								регистрации будет отправлен код платежа!</p>
 						</div>
 					</div>
 				</form>
@@ -61,11 +63,15 @@
 						<tr th:each="paymentOrder : ${paymentOrders}">
 							<td style="text-align: center;" th:text="${paymentOrder.id}"></td>
 							<td style="text-align: center;" th:text="${paymentOrder.amount}"></td>
-							<td  style="text-align: center;"><span
+							<td style="text-align: center;"><span
 								th:text="${#dates.format(paymentOrder.createDate, 'dd.MM.yyyy HH:mm')}"></span></td>
-							<td  style="text-align: center;"><span th:text="${paymentOrder.cashbox.title}"></span> - <span th:text="${paymentOrder.cashbox.address}"></span></td>
-							<td  style="text-align: center;" th:text="#{${'paymentOrder.orderStatus.' + paymentOrder.orderStatus}}" ></td>
-							
+							<td style="text-align: center;"><span
+								th:if="${paymentOrder.cashbox !=null}"><span
+									th:text="${paymentOrder.cashbox.title}"></span> - <span
+									th:text="${paymentOrder.cashbox.address}"></span></span></td>
+							<td style="text-align: center;"
+								th:text="#{${'paymentOrder.orderStatus.' + paymentOrder.orderStatus}}"></td>
+
 						</tr>
 					</tbody>
 				</table>

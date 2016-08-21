@@ -41,9 +41,12 @@ public class BettingUserDetailsService implements UserDetailsService {
 
 	private List<GrantedAuthority> getGrantedAuthorities(GlUser user) {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		log.info("-----roles----");
 		for (String role : user.getRoles()) {
+			log.info(role);
 			authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 		}
+		log.info("-----/roles----");
 		return authorities;
 	}
 

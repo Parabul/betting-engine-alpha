@@ -35,9 +35,9 @@ public class DataInitialize implements CommandLineRunner {
 
 		logger.info("DataInitialize start ");
 		logger.info("-------------------------------");
-		GlUser user = userService.findByEmail("anarbek");
+		GlUser user = userService.findByEmail("77781767411");
 		if (user == null) {
-			userService.create("anarbek", "123456", UserService.ADMIN_ROLES, 0);
+			userService.create("77781767411", "123456", UserService.ADMIN_ROLES, 0);
 		}
 
 		//initTeams();

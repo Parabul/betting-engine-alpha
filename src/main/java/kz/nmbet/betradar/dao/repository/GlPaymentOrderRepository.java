@@ -13,5 +13,7 @@ import kz.nmbet.betradar.dao.domain.entity.GlUser;
 public interface GlPaymentOrderRepository extends JpaRepository<GlPaymentOrder, Integer> {
 
 	List<GlPaymentOrder> findByOwnerOrderByIdDesc(GlUser owner);
+	
+	GlPaymentOrder findByOwnerEmailAndSecret(String email, String secret);
 
 }

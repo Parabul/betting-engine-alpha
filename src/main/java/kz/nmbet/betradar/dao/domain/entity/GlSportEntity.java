@@ -33,6 +33,8 @@ public class GlSportEntity implements LocalizedEntity {
 
 	@OneToMany(mappedBy = "sport")
 	private List<GlCategoryEntity> categories;
+	
+	private Boolean isDisabled;
 
 	public Integer getId() {
 		return id;
@@ -72,6 +74,14 @@ public class GlSportEntity implements LocalizedEntity {
 
 	public void setNameEn(String nameEn) {
 		this.nameEn = nameEn;
+	}
+
+	public Boolean getIsDisabled() {
+		return isDisabled;
+	}
+
+	public void setIsDisabled(Boolean isDisabled) {
+		this.isDisabled = isDisabled;
 	}
 
 }

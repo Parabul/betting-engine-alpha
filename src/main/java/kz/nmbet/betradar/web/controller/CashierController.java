@@ -25,10 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import kz.nmbet.betradar.dao.domain.entity.GlBet;
+import kz.nmbet.betradar.dao.domain.entity.GlPaymentOrder;
 import kz.nmbet.betradar.dao.domain.entity.GlUser;
 import kz.nmbet.betradar.dao.domain.views.OutrightOdd;
 import kz.nmbet.betradar.dao.domain.views.ShortMatch;
 import kz.nmbet.betradar.dao.service.CashierService;
+import kz.nmbet.betradar.dao.service.PaymentService;
 import kz.nmbet.betradar.dao.service.PublicOutrightService;
 import kz.nmbet.betradar.dao.service.UserService;
 import kz.nmbet.betradar.web.beans.ShortOdd;
@@ -50,6 +52,9 @@ public class CashierController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private PaymentService paymentService;
 
 	@Autowired
 	AuthenticationManager authenticationManager;
@@ -195,8 +200,6 @@ public class CashierController {
 		return "redirect:/cabinet/index";
 	}
 
-
-
 	@RequestMapping({ "/cabinet/live" })
 	public String live(Model model, @RequestParam(required = false, name = "betId") Integer betId) {
 		if (betId != null) {
@@ -215,11 +218,40 @@ public class CashierController {
 		}
 		return "cabinet/prematch";
 	}
-	
+
 	@RequestMapping({ "/cabinet/preview" })
-	public String prematchPreview(Model model) {		
+	public String prematchPreview(Model model) {
 		return "cabinet/preview";
 	}
 
+	@RequestMapping({ "/cabinet/payment" })
+	public String payment(Model model) {
+		return "cabinet/payment";
+	}
 
+	@RequestMapping({ "/cabinet/payment/in" })
+	public String paymentIn(Model model, @RequestParam(required = false, name = "phoneNumber") String phoneNumber,
+			@RequestParam(required = false, name = "amount") Double amount) {
+		try {
+			paymentService.paymentOrderIncome(phoneNumber, amount);
+			model.addAttribute("msg", "Платеж успешно зачислен");
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", "Ошибка при зачислении: " + e.getMessage());
+		}
+
+		return "cabinet/payment";
+	}
+
+	@RequestMapping({ "/cabinet/payment/out" })
+	public String paymentOut(Model model, @RequestParam(required = false, name = "phoneNumber") String phoneNumber,
+			@RequestParam(required = false, name = "secret") String secret) {
+		try {
+			GlPaymentOrder bill = paymentService.footBill(phoneNumber, secret);
+			model.addAttribute("msg", "Игроку необходимо выплатить сумму: " + bill.getAmount()+" тенге.");
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", "Ошибка: " + e.getMessage());
+		}
+
+		return "cabinet/payment";
+	}
 }

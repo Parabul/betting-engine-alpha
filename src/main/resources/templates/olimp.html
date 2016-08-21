@@ -4,10 +4,16 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<meta name="description" th:if="${description !=null}"
+	th:content="${description}" />
+<meta name="keywords" th:if="${keywords !=null}"
+	th:content="${keywords}" />
 <title>NMSport - Вершина твоих побед</title>
 
 
-<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
+<link rel="shortcut icon" th:href="@{/img/favicon.ico}"
+	type="image/x-icon" />
 
 
 <link type="text/css" rel="stylesheet" th:href="@{/css/olimp/style.css}" />
@@ -15,15 +21,13 @@
 
 
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script
-	th:src="@{/js/jquery-3.1.0.min.js}"></script>
+<script th:src="@{/js/jquery-3.1.0.min.js}"></script>
 <script th:src="@{/js/jquery.blockui.min.js}"></script>
 <script th:src="@{/js/jquery.maskedinput.min.js}"></script>
 <script>
-$(function(){
-	$(".phone-number").mask("99999999999");
-});
+	$(function() {
+		$(".phone-number").mask("99999999999");
+	});
 </script>
 
 </head>
@@ -40,7 +44,7 @@ $(function(){
 				<td class="central_td" valign="top">
 					<div class="row-fluid" th:replace="${content} :: content">&nbsp;</div>
 				</td>
-				<td class="col_td"  valign="top" sec:authorize="isAuthenticated()">
+				<td class="col_td" valign="top" sec:authorize="isAuthenticated()">
 					<div class="row-fluid" th:replace="/fragments/basket :: basket">&nbsp;</div>
 				</td>
 			</tr>

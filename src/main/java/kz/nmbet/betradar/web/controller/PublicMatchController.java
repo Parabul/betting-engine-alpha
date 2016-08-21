@@ -19,23 +19,14 @@ public class PublicMatchController {
 	@Autowired
 	private PublicMatchService matchService;
 
-	@Autowired
-	private MessageByLocaleService messageByLocaleService;
-
 	@RequestMapping("/prematch")
 	public String index(Model model) {
-		model.addAttribute("sports", matchService.getActiveCategories());
-		model.addAttribute("content", "prematch/index");
-
-		return "template";
+		return "redirect:/nm/prematch";
 	}
 
 	@RequestMapping("/prematch/{tournamentId}/")
 	public String table(Model model, @PathVariable("tournamentId") Integer tournamentId) {
-		model.addAttribute("matches", matchService.getMatchesByTournament(tournamentId));
-		model.addAttribute("tournament", matchService.getTournament(tournamentId));
-		model.addAttribute("content", "prematch/category");
-		return "template";
+		return "redirect:/nm/selected?tournamentIds=" + tournamentId;
 	}
 
 	@RequestMapping("/nm/prematch")

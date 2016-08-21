@@ -17,6 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import kz.nmbet.betradar.dao.domain.types.PaymentOrderStatus;
+import kz.nmbet.betradar.dao.domain.types.PaymentOrderType;
 
 @Entity
 public class GlPaymentOrder {
@@ -34,6 +35,9 @@ public class GlPaymentOrder {
 	private Double amount;
 
 	private String secret;
+
+	@Enumerated(EnumType.STRING)
+	private PaymentOrderType orderType;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "gl_cashbox_id")
@@ -119,6 +123,14 @@ public class GlPaymentOrder {
 
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
+	}
+
+	public PaymentOrderType getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(PaymentOrderType orderType) {
+		this.orderType = orderType;
 	}
 
 }
